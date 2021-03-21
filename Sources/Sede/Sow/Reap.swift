@@ -6,7 +6,7 @@ import SwiftUI
 import Combine
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public class Reap<Msg>: ObservableObject {
+public class Reap<Msg>: UpdatableObject {
     private let reap: (Msg, EnvironmentValues) -> ()
     private let environment: EnvironmentValues
 
@@ -23,4 +23,6 @@ public class Reap<Msg>: ObservableObject {
     public func callAsFunction(_ msg: Msg) {
         reap(msg, environment)
     }
+
+    public func update() {}
 }

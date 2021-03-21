@@ -34,7 +34,6 @@ enum SelectMemoWorkflow {
         { memo in
             memoEditor.id = memo.id
             memoEditor.content = memo.content
-            memoEditor.content = memo.content   // この行で2度目の代入を行わなければViewが更新されない
             return memoEditor
         }
     }
