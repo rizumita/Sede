@@ -52,7 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6A7CA73225F826D000E0F5CC /* SedeMemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SedeMemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A7CA73225F826D000E0F5CC /* SedeMeme.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SedeMeme.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A7CA73525F826D000E0F5CC /* SedeMemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SedeMemoApp.swift; sourceTree = "<group>"; };
 		6A7CA73725F826D000E0F5CC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6A7CA73925F826D100E0F5CC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -98,7 +98,7 @@
 		6A7CA73325F826D000E0F5CC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6A7CA73225F826D000E0F5CC /* SedeMemo.app */,
+				6A7CA73225F826D000E0F5CC /* SedeMeme.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -205,9 +205,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6A7CA73125F826D000E0F5CC /* SedeMemo */ = {
+		6A7CA73125F826D000E0F5CC /* SedeMeme */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6A7CA74125F826D100E0F5CC /* Build configuration list for PBXNativeTarget "SedeMemo" */;
+			buildConfigurationList = 6A7CA74125F826D100E0F5CC /* Build configuration list for PBXNativeTarget "SedeMeme" */;
 			buildPhases = (
 				6A7CA72E25F826D000E0F5CC /* Sources */,
 				6A7CA72F25F826D000E0F5CC /* Frameworks */,
@@ -218,9 +218,9 @@
 			dependencies = (
 				6ADC923E25FDE99B00D51821 /* PBXTargetDependency */,
 			);
-			name = SedeMemo;
+			name = SedeMeme;
 			productName = SedeMemo;
-			productReference = 6A7CA73225F826D000E0F5CC /* SedeMemo.app */;
+			productReference = 6A7CA73225F826D000E0F5CC /* SedeMeme.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -237,7 +237,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 6A7CA72D25F826D000E0F5CC /* Build configuration list for PBXProject "SedeMemo" */;
+			buildConfigurationList = 6A7CA72D25F826D000E0F5CC /* Build configuration list for PBXProject "SedeSamples" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -256,7 +256,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				6A7CA73125F826D000E0F5CC /* SedeMemo */,
+				6A7CA73125F826D000E0F5CC /* SedeMeme */,
 			);
 		};
 /* End PBXProject section */
@@ -488,7 +488,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6A7CA72D25F826D000E0F5CC /* Build configuration list for PBXProject "SedeMemo" */ = {
+		6A7CA72D25F826D000E0F5CC /* Build configuration list for PBXProject "SedeSamples" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6A7CA73F25F826D100E0F5CC /* Debug */,
@@ -497,7 +497,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6A7CA74125F826D100E0F5CC /* Build configuration list for PBXNativeTarget "SedeMemo" */ = {
+		6A7CA74125F826D100E0F5CC /* Build configuration list for PBXNativeTarget "SedeMeme" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6A7CA74225F826D100E0F5CC /* Debug */,
