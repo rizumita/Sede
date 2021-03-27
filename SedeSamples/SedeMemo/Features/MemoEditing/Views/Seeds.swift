@@ -7,9 +7,15 @@ import Sede
 
 let memoEditorSeed = seeded(\.memoEditor)
 let memoStoreSeed = seeded(\.memoStore)
-let memoEditorViewStateSeed = CombinedSeed(memoEditorSeed, memoStoreSeed) { editor, store, _ -> MemoEditorViewState in
-    MemoEditorViewState(id: editor.id,
-                        content: editor.content,
-                        storesSomeMemos: !store.memos.isEmpty)
-}
+let memoEditorViewStateSeed = CombinedSeed(memoEditorSeed, memoStoreSeed,
+                                           initialize: { editor, store, _ -> MemoEditorViewState in
+                                               MemoEditorViewState(id: editor.id,
+                                                                   content: editor.content,
+                                                                   storesSomeMemos: !store.memos.isEmpty)
+                                           },
+                                           update: { _, editor, store, _ in
+                                               MemoEditorViewState(id: editor.id,
+                                                                   content: editor.content,
+                                                                   storesSomeMemos: !store.memos.isEmpty)
+                                           })
 let memosSeed = memoStoreSeed.map(\.memos)

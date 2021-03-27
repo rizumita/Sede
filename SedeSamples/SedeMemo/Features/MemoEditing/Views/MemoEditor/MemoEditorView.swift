@@ -11,10 +11,10 @@ import Sede
 
 import Combine
 
-class MemoEditorViewState: ObservableObject {
+struct MemoEditorViewState {
     let id: UUID?
-    @Published var content: String
-    @Published var storesSomeMemos: Bool
+    var content: String
+    var storesSomeMemos: Bool
     var canSave: Bool { !content.isEmpty }
 
     init(id: UUID?, content: String, storesSomeMemos: Bool) {
@@ -36,7 +36,7 @@ struct MemoEditorView: View {
     var body: some View {
         NavigationView {
             VStack {
-                TextEditor(text: $state._value.content)
+                TextEditor(text: $state.content)
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                     .navigationBarItems(leading: navigationBarItemLeading,
                                         trailing: navigationBarItemTrailing)
@@ -55,8 +55,8 @@ struct MemoEditorView: View {
     }
 
     var navigationBarItemTrailing: some View {
-        NavigationItemButton(enabled: state._value.canSave,
-                             action: { reap(.save(state._value.id, state.content)) },
+        NavigationItemButton(enabled: state.canSave,
+                             action: { reap(.save(state.id, state.content)) },
                              label: { Text("Save") })
     }
 }

@@ -13,13 +13,19 @@ public struct EnvironmentKeyPathSeed<Value: ObservableObject>: SeedProtocol {
         self.keyPath = keyPath
     }
 
-    public func value(environment: EnvironmentValues) -> Value {
+    public func initialize(environment: EnvironmentValues) -> Value {
+        environment[keyPath: keyPath]
+    }
+
+    public func update(value: Value, environment: EnvironmentValues) -> Value {
         environment[keyPath: keyPath]
     }
 
     public func seed(environment: EnvironmentValues) -> Seed<Value> {
         let value = environment[keyPath: keyPath]
-        return Seed(objectWillChange: value.objectWillChange.map { _ in }) { environment[keyPath: keyPath] }
+        return Seed(objectWillChange: value.objectWillChange,
+                    initialize: { environment[keyPath: keyPath] },
+                    update: { update(value: $0, environment: environment) })
     }
 }
 

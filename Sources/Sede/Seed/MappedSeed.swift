@@ -9,21 +9,27 @@ import SwiftUI
 public struct MappedSeed<T, U>: SeedProtocol {
     private var _seed: (EnvironmentValues) -> Seed<U>
 
-    init<S: SeedProtocol>(_ s: S, keyPath: KeyPath<T, U>) where S.T == T {
+    init<S: SeedProtocol>(_ s: S, keyPath: KeyPath<T, U>) where S.Value == T {
         _seed = { environment in
             let baseSeed = s.seed(environment: environment)
-            return Seed(objectWillChange: baseSeed.objectWillChange) { baseSeed._value[keyPath: keyPath] }
+            return Seed(objectWillChange: baseSeed.objectWillChange,
+                        initialize: { baseSeed.initialize()[keyPath: keyPath] },
+                        update: { _ in baseSeed.updateValue(baseSeed._value)[keyPath: keyPath] })
         }
     }
 
-    init<S: SeedProtocol>(_ s: S, map: @escaping (T, EnvironmentValues) -> U) where S.T == T {
+    init<S: SeedProtocol>(_ s: S, map: @escaping (T, EnvironmentValues) -> U) where S.Value == T {
         _seed = { environment in
             let baseSeed = s.seed(environment: environment)
-            return Seed(objectWillChange: baseSeed.objectWillChange) { map(baseSeed._value, environment) }
+            return Seed(objectWillChange: baseSeed.objectWillChange,
+                        initialize: { map(baseSeed.initialize(), environment) },
+                        update: { _ in map(baseSeed.updateValue(baseSeed._value), environment) })
         }
     }
 
-    public func value(environment: EnvironmentValues) -> U { fatalError() }
+    public func initialize(environment: EnvironmentValues) -> U { fatalError() }
+
+    public func update(value: U, environment: EnvironmentValues) -> U { fatalError() }
 
     public func seed(environment: EnvironmentValues) -> Seed<U> {
         _seed(environment)

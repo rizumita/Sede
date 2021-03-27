@@ -11,47 +11,49 @@ import Combine
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 @dynamicMemberLookup
-public class Seed<T>: UpdatableObject {
-    @Published public var _value: T {
+public class Seed<Value>: UpdatableObject {
+    @Published public var _value: Value {
         willSet { _objectWillChange.send() }
     }
     public var objectWillChange: AnyPublisher<(), Never> {
-        _objectWillChange.filter { [weak self] in self?.isSilent == false }
-                         .subscribe(on: RunLoop.main)
-                         .eraseToAnyPublisher()
+        _objectWillChange.subscribe(on: RunLoop.main)
+            .filter { [weak self] in self?.isSilent == false }
+            .eraseToAnyPublisher()
     }
 
-    private var getValue: () -> T
+    let initialize: () -> Value
+    let updateValue: (Value) -> Value
     private var isSilent = false
     private var isBaseUpdated = false
     private var _objectWillChange = PassthroughSubject<(), Never>()
     private var cancellables = Set<AnyCancellable>()
 
-    public init(getValue: @escaping () -> T) {
-        self._value = getValue()
-        self.getValue = getValue
+    public init(initialize: @escaping () -> Value, update: @escaping (Value) -> Value = { $0 }) {
+        self._value = initialize()
+        self.initialize = initialize
+        self.updateValue = update
     }
 
-    init<P: Publisher>(objectWillChange: P, getValue: @escaping () -> T) where P.Output == (), P.Failure == Never {
-        self._value = getValue()
-        self.getValue = getValue
-        objectWillChange.subscribe(on: RunLoop.main)
-                        .sink { [weak self] _ in
-                            self?.isBaseUpdated = true
-                            self?._objectWillChange.send()
-                        }.store(in: &cancellables)
+    init<P: Publisher>(objectWillChange: P,
+                       initialize: @escaping () -> Value,
+                       update: @escaping (Value) -> Value) {
+        self._value = initialize()
+        self.initialize = initialize
+        self.updateValue = update
+        objectWillChange.assertNoFailure()
+            .subscribe(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.isBaseUpdated = true
+                self?._objectWillChange.send()
+            }.store(in: &cancellables)
     }
 
-    init<P: Publisher>(objectWillChange: P, getValue: @escaping () -> T) where P.Output == (), P.Failure == Never, T: ObservableObject {
-        self._value = getValue()
-        self.getValue = getValue
-        objectWillChange.sink { [weak self] _ in
-            self?.isBaseUpdated = true
-            self?._objectWillChange.send()
-        }.store(in: &cancellables)
+    public subscript<U>(dynamicMember keyPath: WritableKeyPath<Value, U>) -> U {
+        get { _value[keyPath: keyPath] }
+        set { _value[keyPath: keyPath] = newValue }
     }
 
-    public subscript<U>(dynamicMember keyPath: WritableKeyPath<T, U>) -> U {
+    public subscript<U>(dynamicMember keyPath: KeyPath<Value, U>) -> U {
         _value[keyPath: keyPath]
     }
 
@@ -64,6 +66,6 @@ public class Seed<T>: UpdatableObject {
         }
 
         isSilent = true
-        _value = getValue()
+        _value = updateValue(_value)
     }
 }

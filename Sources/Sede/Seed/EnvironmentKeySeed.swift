@@ -12,12 +12,18 @@ public typealias EnvKeySeed<Key: EnvironmentKey> = EnvironmentKeySeed<Key> where
 public struct EnvironmentKeySeed<Key: EnvironmentKey>: SeedProtocol where Key.Value: ObservableObject {
     public init() {}
 
-    public func value(environment: EnvironmentValues) -> Key.Value {
+    public func initialize(environment: EnvironmentValues) -> Key.Value {
+        environment[Key]
+    }
+
+    public func update(value: Value, environment: EnvironmentValues) -> Value {
         environment[Key]
     }
 
     public func seed(environment: EnvironmentValues) -> Seed<Key.Value> {
         let value = environment[Key]
-        return Seed(objectWillChange: value.objectWillChange.map { _ in }) { environment[Key] }
+        return Seed<Key.Value>(objectWillChange: value.objectWillChange,
+                               initialize: { initialize(environment: environment) },
+                               update: { update(value: $0, environment: environment) })
     }
 }

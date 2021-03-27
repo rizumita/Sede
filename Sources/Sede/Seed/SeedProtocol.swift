@@ -8,27 +8,31 @@ import Combine
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public protocol SeedProtocol {
-    associatedtype T
+    associatedtype Value
 
-    func value(environment: EnvironmentValues) -> T
+    func initialize(environment: EnvironmentValues) -> Value
 
-    func seed(environment: EnvironmentValues) -> Seed<T>
+    func update(value: Value, environment: EnvironmentValues) -> Value
+
+    func seed(environment: EnvironmentValues) -> Seed<Value>
 }
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension SeedProtocol {
-    func map<Value>(_ keyPath: KeyPath<T, Value>) -> MappedSeed<T, Value> {
+    func map<NewValue>(_ keyPath: KeyPath<Value, NewValue>) -> MappedSeed<Value, NewValue> {
         MappedSeed(self, keyPath: keyPath)
     }
 
-    func map<Value>(_ f: @escaping (T, EnvironmentValues) -> Value) -> MappedSeed<T, Value> {
+    func map<NewValue>(_ f: @escaping (Value, EnvironmentValues) -> NewValue) -> MappedSeed<Value, NewValue> {
         MappedSeed(self, map: f)
     }
 }
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension SeedProtocol {
-    func seed(environment: EnvironmentValues) -> Seed<T> {
-        Seed(objectWillChange: Empty<(), Never>(completeImmediately: false)) { value(environment: environment) }
+    func seed(environment: EnvironmentValues) -> Seed<Value> {
+        Seed(objectWillChange: Empty<(), Never>(completeImmediately: false),
+             initialize: { initialize(environment: environment) },
+             update: { update(value: $0, environment: environment) })
     }
 }
