@@ -5,28 +5,12 @@
 import SwiftUI
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-struct InjectModifier<Object: UpdatableObject>: EnvironmentalModifier {
+struct InjectModifier<Object: ObservableObject>: EnvironmentalModifier {
     struct Modifier: ViewModifier {
         var object: Object
 
         func body(content: Content) -> some View {
-            InjectView(child: content, object: object)
-        }
-
-        private struct InjectView<V: View>: View {
-            let child: V
-            @UpdatableContainer var object: Object
-            @ObservedObject var observedObject: Object
-
-            init(child: V, object: Object) {
-                self.child = child
-                self.object = object
-                self.observedObject = object
-            }
-
-            var body: some View {
-                child.environmentObject(object)
-            }
+            content.environmentObject(object)
         }
     }
 

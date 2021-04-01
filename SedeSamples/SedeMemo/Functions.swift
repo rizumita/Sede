@@ -23,6 +23,7 @@ precedencegroup LeftApplyPrecedence {
 
 infix operator |>: LeftApplyPrecedence
 
+@discardableResult
 public func |><A, B>(a: A, f: (A) -> B) -> B {
     f(a)
 }

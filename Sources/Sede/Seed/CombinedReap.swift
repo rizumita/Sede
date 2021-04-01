@@ -6,11 +6,11 @@ import SwiftUI
 import Combine
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public struct CombinedSeed<Value>: SeedProtocol {
-    private var _seed: (EnvironmentValues) -> Seed<Value>
+public struct CombinedReap<Value>: ReapProtocol {
+    private var _reap: (EnvironmentValues) -> AnyReap<Value>
 
-    public init<S1: SeedProtocol,
-               S2: SeedProtocol>(_ s1: S1,
+    public init<S1: ReapProtocol,
+               S2: ReapProtocol>(_ s1: S1,
                                  _ s2: S2,
                                  initialize: @escaping (S1.Value,
                                                         S2.Value,
@@ -19,19 +19,19 @@ public struct CombinedSeed<Value>: SeedProtocol {
                                                     S1.Value,
                                                     S2.Value,
                                                     EnvironmentValues) -> Value = { value, _, _, _ in value }) {
-        _seed = { environment in
-            let seed1 = s1.seed(environment: environment)
-            let seed2 = s2.seed(environment: environment)
-            return Seed(objectWillChange: Publishers.MergeMany(seed1.objectWillChange,
-                                                               seed2.objectWillChange),
-                        initialize: { initialize(seed1._value, seed2._value, environment) },
-                        update: { value in update(value, seed1._value, seed2._value, environment) })
+        _reap = { environment in
+            let reap1 = s1.reap(environment: environment)
+            let reap2 = s2.reap(environment: environment)
+            return AnyReap(objectWillChange: Publishers.MergeMany(reap1.objectWillChange,
+                                                               reap2.objectWillChange),
+                        initialize: { initialize(reap1._value, reap2._value, environment) },
+                        update: { value in update(value, reap1._value, reap2._value, environment) })
         }
     }
 
-    public init<S1: SeedProtocol,
-               S2: SeedProtocol,
-               S3: SeedProtocol>(_ s1: S1,
+    public init<S1: ReapProtocol,
+               S2: ReapProtocol,
+               S3: ReapProtocol>(_ s1: S1,
                                  _ s2: S2,
                                  _ s3: S3,
                                  initialize: @escaping (S1.Value,
@@ -43,24 +43,24 @@ public struct CombinedSeed<Value>: SeedProtocol {
                                                     S2.Value,
                                                     S3.Value,
                                                     EnvironmentValues) -> Value = { value, _, _, _, _ in value }) {
-        _seed = { environment in
-            let seed1 = s1.seed(environment: environment)
-            let seed2 = s2.seed(environment: environment)
-            let seed3 = s3.seed(environment: environment)
+        _reap = { environment in
+            let reap1 = s1.reap(environment: environment)
+            let reap2 = s2.reap(environment: environment)
+            let reap3 = s3.reap(environment: environment)
 
-            return Seed(
-                objectWillChange: Publishers.MergeMany(seed1.objectWillChange,
-                                                       seed2.objectWillChange,
-                                                       seed3.objectWillChange),
-                initialize: { initialize(seed1._value, seed2._value, seed3._value, environment) },
-                update: { value in update(value, seed1._value, seed2._value, seed3._value, environment) })
+            return AnyReap(
+                objectWillChange: Publishers.MergeMany(reap1.objectWillChange,
+                                                       reap2.objectWillChange,
+                                                       reap3.objectWillChange),
+                initialize: { initialize(reap1._value, reap2._value, reap3._value, environment) },
+                update: { value in update(value, reap1._value, reap2._value, reap3._value, environment) })
         }
     }
 
-    public init<S1: SeedProtocol,
-               S2: SeedProtocol,
-               S3: SeedProtocol,
-               S4: SeedProtocol>(_ s1: S1,
+    public init<S1: ReapProtocol,
+               S2: ReapProtocol,
+               S3: ReapProtocol,
+               S4: ReapProtocol>(_ s1: S1,
                                  _ s2: S2,
                                  _ s3: S3,
                                  _ s4: S4,
@@ -75,19 +75,19 @@ public struct CombinedSeed<Value>: SeedProtocol {
                                                     S3.Value,
                                                     S4.Value,
                                                     EnvironmentValues) -> Value = { value, _, _, _, _, _ in value }) {
-        _seed = { environment in
-            let seed1 = s1.seed(environment: environment)
-            let seed2 = s2.seed(environment: environment)
-            let seed3 = s3.seed(environment: environment)
-            let seed4 = s4.seed(environment: environment)
+        _reap = { environment in
+            let reap1 = s1.reap(environment: environment)
+            let reap2 = s2.reap(environment: environment)
+            let reap3 = s3.reap(environment: environment)
+            let reap4 = s4.reap(environment: environment)
 
-            return Seed(
-                objectWillChange: Publishers.MergeMany(seed1.objectWillChange,
-                                                       seed2.objectWillChange,
-                                                       seed3.objectWillChange,
-                                                       seed4.objectWillChange),
-                initialize: { initialize(seed1._value, seed2._value, seed3._value, seed4._value, environment) },
-                update: { value in update(value, seed1._value, seed2._value, seed3._value, seed4._value, environment) })
+            return AnyReap(
+                objectWillChange: Publishers.MergeMany(reap1.objectWillChange,
+                                                       reap2.objectWillChange,
+                                                       reap3.objectWillChange,
+                                                       reap4.objectWillChange),
+                initialize: { initialize(reap1._value, reap2._value, reap3._value, reap4._value, environment) },
+                update: { value in update(value, reap1._value, reap2._value, reap3._value, reap4._value, environment) })
         }
     }
 
@@ -99,5 +99,5 @@ public struct CombinedSeed<Value>: SeedProtocol {
         fatalError()
     }
 
-    public func seed(environment: EnvironmentValues) -> Seed<Value> { _seed(environment) }
+    public func reap(environment: EnvironmentValues) -> AnyReap<Value> { _reap(environment) }
 }

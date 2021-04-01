@@ -6,7 +6,7 @@ import SwiftUI
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension View {
-    func seed<S: SeedProtocol>(_ sede: S) -> some View {
-        modifier(InjectModifier(factory: sede.seed(environment:)))
+    func reap<S: ReapProtocol>(_ reap: S) -> some View {
+        modifier(InjectModifier(factory: reap.reap(environment:)))
     }
 }

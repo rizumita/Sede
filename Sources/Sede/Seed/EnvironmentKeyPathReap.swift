@@ -4,9 +4,10 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public struct EnvironmentKeyPathSeed<Value: ObservableObject>: SeedProtocol {
+public struct EnvironmentKeyPathReap<Value: ObservableObject>: ReapProtocol {
     private var keyPath: KeyPath<EnvironmentValues, Value>
 
     public init(_ keyPath: KeyPath<EnvironmentValues, Value>) {
@@ -21,15 +22,22 @@ public struct EnvironmentKeyPathSeed<Value: ObservableObject>: SeedProtocol {
         environment[keyPath: keyPath]
     }
 
-    public func seed(environment: EnvironmentValues) -> Seed<Value> {
+    public func reap(environment: EnvironmentValues) -> AnyReap<Value> {
         let value = environment[keyPath: keyPath]
-        return Seed(objectWillChange: value.objectWillChange,
+        return AnyReap(objectWillChange: value.objectWillChange,
                     initialize: { environment[keyPath: keyPath] },
                     update: { update(value: $0, environment: environment) })
     }
 }
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public func seeded<Value: ObservableObject>(_ keyPath: KeyPath<EnvironmentValues, Value>) -> EnvironmentKeyPathSeed<Value> {
-    EnvironmentKeyPathSeed(keyPath)
+public func reaped<Value: ObservableObject>(_ keyPath: KeyPath<EnvironmentValues, Value>) -> EnvironmentKeyPathReap<Value> {
+    EnvironmentKeyPathReap(keyPath)
+}
+
+@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+extension EnvironmentKeyPathReap: EnvironmentalObservableObjectProtocol {
+    public func observable(environment: EnvironmentValues) -> AnyPublisher<(), Never> {
+        initialize(environment: environment).objectWillChange.map { _ in }.eraseToAnyPublisher()
+    }
 }

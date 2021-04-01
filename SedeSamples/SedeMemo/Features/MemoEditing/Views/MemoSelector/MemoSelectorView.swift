@@ -14,12 +14,12 @@ enum MemoSelectorMsg {
 }
 
 struct MemoSelectorView: View {
-    @EnvironmentObject var reap: Reap<MemoSelectorMsg>
-    @EnvironmentObject var memos: Seed<[Memo]>
+    @Seed var reap: (MemoSelectorMsg) -> ()
+    @Reaped var memos: [Memo]
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
-        List(memos._value, id: \.id) { memo in
+        List(memos, id: \.id) { memo in
             Button(action: {
                 reap(.select(memo.id))
                 presentationMode.wrappedValue.dismiss()
@@ -33,7 +33,7 @@ struct MemoSelectorView: View {
 struct MemoSelectorView_Previews: PreviewProvider {
     static var previews: some View {
         MemoSelectorView()
-            .environmentObject(Seed { [Memo(id: UUID(), content: "Preview")] })
-            .environmentObject(Reap<MemoSelectorMsg> { msg, _ in print(msg) })
+            .environmentObject(AnyReap { [Memo(id: UUID(), content: "Preview")] })
+            .environmentObject(AnySeed<MemoSelectorMsg> { msg, _ in print(msg) })
     }
 }

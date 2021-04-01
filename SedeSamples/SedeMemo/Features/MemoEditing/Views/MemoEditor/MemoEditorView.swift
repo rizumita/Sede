@@ -29,14 +29,15 @@ enum MemoEditorMsg {
 }
 
 struct MemoEditorView: View {
-    @EnvironmentObject var reap: Reap<MemoEditorMsg>
-    @EnvironmentObject var state: Seed<MemoEditorViewState>
+    @Seed var reap: (MemoEditorMsg) -> ()
+    @Reaped var seed: MemoEditorViewState
     @State var showsMemoSelector = false
 
     var body: some View {
-        NavigationView {
+        print("body")
+        return NavigationView {
             VStack {
-                TextEditor(text: $state.content)
+                TextEditor(text: $seed.content)
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                     .navigationBarItems(leading: navigationBarItemLeading,
                                         trailing: navigationBarItemTrailing)
@@ -44,19 +45,19 @@ struct MemoEditorView: View {
                     .navigationBarTitle("", displayMode: .inline)
             }
         }.sheet(isPresented: $showsMemoSelector) {
-            MemoSelectorView().seed(memosSeed).reap(MemoSelectorReap())
+            MemoSelectorView().reap(memosReap).seed(MemoSelectorSeed.seed)
         }
     }
 
     var navigationBarItemLeading: some View {
-        NavigationItemButton(enabled: state.storesSomeMemos,
+        NavigationItemButton(enabled: seed.storesSomeMemos,
                              action: { showsMemoSelector.toggle() },
                              label: { Text("Memos") })
     }
 
     var navigationBarItemTrailing: some View {
-        NavigationItemButton(enabled: state.canSave,
-                             action: { reap(.save(state.id, state.content)) },
+        NavigationItemButton(enabled: seed.canSave,
+                             action: { reap(.save(seed.id, seed.content)) },
                              label: { Text("Save") })
     }
 }
@@ -64,11 +65,11 @@ struct MemoEditorView: View {
 struct MemoEditorView_Previews: PreviewProvider {
     static var previews: some View {
         MemoEditorView()
-            .environmentObject(Seed {
+            .environmentObject(AnyReap {
                 MemoEditorViewState(id: .none,
                                     content: "Preview",
                                     storesSomeMemos: false)
             })
-            .environmentObject(Reap<MemoEditorMsg> { msg, _ in print(msg) })
+            .environmentObject(AnySeed<MemoEditorMsg> { msg, _ in print(msg) })
     }
 }

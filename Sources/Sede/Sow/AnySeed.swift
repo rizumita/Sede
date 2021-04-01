@@ -6,7 +6,7 @@ import SwiftUI
 import Combine
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public class Reap<Msg>: UpdatableObject {
+public class AnySeed<Msg>: ObservableObject {
     private let reap: (Msg, EnvironmentValues) -> ()
     private let environment: EnvironmentValues
 
@@ -15,8 +15,8 @@ public class Reap<Msg>: UpdatableObject {
         environment = EnvironmentValues()
     }
 
-    init(reap: @escaping (Msg, EnvironmentValues) -> (), environment: EnvironmentValues) {
-        self.reap = reap
+    init(seed: @escaping (Msg, EnvironmentValues) -> (), environment: EnvironmentValues) {
+        self.reap = seed
         self.environment = environment
     }
 

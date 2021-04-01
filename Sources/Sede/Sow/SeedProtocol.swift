@@ -6,15 +6,15 @@ import Foundation
 import SwiftUI
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public protocol ReapProtocol {
+public protocol SeedProtocol {
     associatedtype Msg
 
-    func reap(msg: Msg, environment: EnvironmentValues)
+    func seed(msg: Msg, environment: EnvironmentValues)
 }
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-extension ReapProtocol {
-    func genReap(environment: EnvironmentValues) -> Reap<Msg> {
-        Reap(reap: reap, environment: environment)
+extension SeedProtocol {
+    func genSeed(environment: EnvironmentValues) -> AnySeed<Msg> {
+        AnySeed(seed: seed, environment: environment)
     }
 }

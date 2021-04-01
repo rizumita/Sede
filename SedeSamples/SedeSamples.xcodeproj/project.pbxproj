@@ -11,19 +11,34 @@
 		6A7CA73825F826D000E0F5CC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7CA73725F826D000E0F5CC /* ContentView.swift */; };
 		6A7CA73A25F826D100E0F5CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A7CA73925F826D100E0F5CC /* Assets.xcassets */; };
 		6A7CA73D25F826D100E0F5CC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A7CA73C25F826D100E0F5CC /* Preview Assets.xcassets */; };
+		6AEAD6D22608C569009B560E /* GitHubSearchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEAD6D12608C569009B560E /* GitHubSearchApp.swift */; };
+		6AEAD6D42608C569009B560E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEAD6D32608C569009B560E /* ContentView.swift */; };
+		6AEAD6D62608C56A009B560E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6AEAD6D52608C56A009B560E /* Assets.xcassets */; };
+		6AEAD6D92608C56A009B560E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6AEAD6D82608C56A009B560E /* Preview Assets.xcassets */; };
+		6AEAD6E72608C6A4009B560E /* RepositoriesSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEAD6E62608C6A4009B560E /* RepositoriesSearchView.swift */; };
+		CB876036C9CAD679297DF03C /* Seeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876F4FF9A4A00F773FF022 /* Seeds.swift */; };
 		CB876048F8D9C0DC85781004 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB87602AB3CE27D7920EAF60 /* Functions.swift */; };
-		CB8763B059A75C15D84A4398 /* MemoSelectorReap.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876B23D545CA779F9DA2B1 /* MemoSelectorReap.swift */; };
+		CB87618D3A833E3FAE7CC71B /* Environments.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876FAD60172AE6C5A55A8C /* Environments.swift */; };
+		CB87632EC5DA79F11A05B088 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB87646363AD968E9784EF74 /* SearchField.swift */; };
+		CB8763BAC07DAD721D2B5852 /* RepositoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8768BB5AEAAE18F8444687 /* RepositoryListView.swift */; };
 		CB8763C1BAA4676F369A8016 /* MemoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876E81E165D11F4FB8A026 /* MemoStore.swift */; };
 		CB87654A682F2F623F8FDFB8 /* UpdateMemoEditorWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8768F16E4D0D68C785CA9A /* UpdateMemoEditorWorkflow.swift */; };
+		CB8765EFA1B10065A065D9B3 /* SearchRepositoriesWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB87606EACC834B1714F2BCA /* SearchRepositoriesWorkflow.swift */; };
+		CB8765F0A43F7FB0C65B1DD0 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876A61AEB315A8E862DDF5 /* SearchTextField.swift */; };
 		CB87661DAE312B2928E4B7C9 /* MemoEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876B28C50E05B7BB217F4B /* MemoEditor.swift */; };
+		CB876649B8B838E67C75E907 /* Environments.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876334AED8688ECE66ECFD /* Environments.swift */; };
 		CB87664AD9944E619916D302 /* MemoEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8760864B94148A1BBE30E2 /* MemoEditorView.swift */; };
-		CB8766BFE028C9A74509E6F4 /* Environments.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876BC5BB2E2DBB08DA15B9 /* Environments.swift */; };
+		CB87676595B58FE56C43DDD0 /* SearchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876C3CE8F62C692B9AB40A /* SearchButton.swift */; };
 		CB8767FC49B17D5204324AE2 /* SelectMemoWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876188842098B4E9B64F69 /* SelectMemoWorkflow.swift */; };
+		CB87691C7622D595EA540DCA /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8766DDCFEE91B62F0B555F /* Repository.swift */; };
 		CB876A230E7E84D7FB788925 /* NavigationItemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876CF2684A20E0568E9689 /* NavigationItemButton.swift */; };
-		CB876BA2550FDBEAE07C5645 /* MemoEditorReap.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB87675E38E38DC9428204BA /* MemoEditorReap.swift */; };
-		CB876CBD0E7B72E82D31D8D5 /* Seeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876D68F5DB46AF16A6073D /* Seeds.swift */; };
+		CB876C811B7290B60C3533AD /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB87602AB3CE27D7920EAF60 /* Functions.swift */; };
+		CB876CBD0E7B72E82D31D8D5 /* Reaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876D68F5DB46AF16A6073D /* Reaps.swift */; };
+		CB876D1408C603FCD342C8B6 /* RepositoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB87631A26BCE7065A878C07 /* RepositoryStore.swift */; };
 		CB876DDB5267BC1E20F8DADF /* SaveMemoWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876A1CE5EB5A92AC692BC2 /* SaveMemoWorkflow.swift */; };
+		CB876EF4A4F4533BC2549603 /* Reaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB87672E778854B6D8B38927 /* Reaps.swift */; };
 		CB876F459214A1A60983529A /* MemoSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876DC9DC547F4BD5B3707C /* MemoSelectorView.swift */; };
+		CB876FE860F141A886798C74 /* Seeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876A4772F1D8DCBECB1AC7 /* Seeds.swift */; };
 		CB876FEA782791B799FC0411 /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876B7CC7B1BB7D93F65DF6 /* Memo.swift */; };
 /* End PBXBuildFile section */
 
@@ -49,34 +64,64 @@
 			remoteGlobalIDString = "Sede::Sede";
 			remoteInfo = Sede;
 		};
+		6AEAD6EC2608C7A1009B560E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6ADC923225FDE99400D51821 /* Sede.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = "Sede::Sede";
+			remoteInfo = Sede;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6A7CA73225F826D000E0F5CC /* SedeMeme.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SedeMeme.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A7CA73225F826D000E0F5CC /* SedeMemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SedeMemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A7CA73525F826D000E0F5CC /* SedeMemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SedeMemoApp.swift; sourceTree = "<group>"; };
 		6A7CA73725F826D000E0F5CC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6A7CA73925F826D100E0F5CC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6A7CA73C25F826D100E0F5CC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6A7CA73E25F826D100E0F5CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6ADC923225FDE99400D51821 /* Sede.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sede.xcodeproj; path = ../Sede.xcodeproj; sourceTree = "<group>"; };
+		6AEAD6CF2608C569009B560E /* GitHubSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6AEAD6D12608C569009B560E /* GitHubSearchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubSearchApp.swift; sourceTree = "<group>"; };
+		6AEAD6D32608C569009B560E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		6AEAD6D52608C56A009B560E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6AEAD6D82608C56A009B560E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		6AEAD6DA2608C56A009B560E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6AEAD6E62608C6A4009B560E /* RepositoriesSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesSearchView.swift; sourceTree = "<group>"; };
 		CB87602AB3CE27D7920EAF60 /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
+		CB87606EACC834B1714F2BCA /* SearchRepositoriesWorkflow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRepositoriesWorkflow.swift; sourceTree = "<group>"; };
 		CB8760864B94148A1BBE30E2 /* MemoEditorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoEditorView.swift; sourceTree = "<group>"; };
 		CB876188842098B4E9B64F69 /* SelectMemoWorkflow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectMemoWorkflow.swift; sourceTree = "<group>"; };
-		CB87675E38E38DC9428204BA /* MemoEditorReap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoEditorReap.swift; sourceTree = "<group>"; };
+		CB87631A26BCE7065A878C07 /* RepositoryStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryStore.swift; sourceTree = "<group>"; };
+		CB876334AED8688ECE66ECFD /* Environments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environments.swift; sourceTree = "<group>"; };
+		CB87646363AD968E9784EF74 /* SearchField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
+		CB8766DDCFEE91B62F0B555F /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		CB87672E778854B6D8B38927 /* Reaps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reaps.swift; sourceTree = "<group>"; };
+		CB8768BB5AEAAE18F8444687 /* RepositoryListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryListView.swift; sourceTree = "<group>"; };
 		CB8768F16E4D0D68C785CA9A /* UpdateMemoEditorWorkflow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateMemoEditorWorkflow.swift; sourceTree = "<group>"; };
 		CB876A1CE5EB5A92AC692BC2 /* SaveMemoWorkflow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveMemoWorkflow.swift; sourceTree = "<group>"; };
-		CB876B23D545CA779F9DA2B1 /* MemoSelectorReap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoSelectorReap.swift; sourceTree = "<group>"; };
+		CB876A4772F1D8DCBECB1AC7 /* Seeds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seeds.swift; sourceTree = "<group>"; };
+		CB876A61AEB315A8E862DDF5 /* SearchTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		CB876B28C50E05B7BB217F4B /* MemoEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoEditor.swift; sourceTree = "<group>"; };
 		CB876B7CC7B1BB7D93F65DF6 /* Memo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
-		CB876BC5BB2E2DBB08DA15B9 /* Environments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environments.swift; sourceTree = "<group>"; };
+		CB876C3CE8F62C692B9AB40A /* SearchButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchButton.swift; sourceTree = "<group>"; };
 		CB876CF2684A20E0568E9689 /* NavigationItemButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationItemButton.swift; sourceTree = "<group>"; };
-		CB876D68F5DB46AF16A6073D /* Seeds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seeds.swift; sourceTree = "<group>"; };
+		CB876D68F5DB46AF16A6073D /* Reaps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reaps.swift; sourceTree = "<group>"; };
 		CB876DC9DC547F4BD5B3707C /* MemoSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoSelectorView.swift; sourceTree = "<group>"; };
 		CB876E81E165D11F4FB8A026 /* MemoStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoStore.swift; sourceTree = "<group>"; };
+		CB876F4FF9A4A00F773FF022 /* Seeds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seeds.swift; sourceTree = "<group>"; };
+		CB876FAD60172AE6C5A55A8C /* Environments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environments.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		6A7CA72F25F826D000E0F5CC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6AEAD6CC2608C569009B560E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -91,6 +136,7 @@
 			children = (
 				6ADC923225FDE99400D51821 /* Sede.xcodeproj */,
 				6A7CA73425F826D000E0F5CC /* SedeMemo */,
+				6AEAD6D02608C569009B560E /* GitHubSearch */,
 				6A7CA73325F826D000E0F5CC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -98,7 +144,8 @@
 		6A7CA73325F826D000E0F5CC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6A7CA73225F826D000E0F5CC /* SedeMeme.app */,
+				6A7CA73225F826D000E0F5CC /* SedeMemo.app */,
+				6AEAD6CF2608C569009B560E /* GitHubSearch.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -134,14 +181,68 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		6AEAD6D02608C569009B560E /* GitHubSearch */ = {
+			isa = PBXGroup;
+			children = (
+				6AEAD6E32608C64D009B560E /* Features */,
+				6AEAD6D12608C569009B560E /* GitHubSearchApp.swift */,
+				6AEAD6D32608C569009B560E /* ContentView.swift */,
+				6AEAD6D52608C56A009B560E /* Assets.xcassets */,
+				6AEAD6DA2608C56A009B560E /* Info.plist */,
+				6AEAD6D72608C56A009B560E /* Preview Content */,
+			);
+			path = GitHubSearch;
+			sourceTree = "<group>";
+		};
+		6AEAD6D72608C56A009B560E /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				6AEAD6D82608C56A009B560E /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		6AEAD6E32608C64D009B560E /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				6AEAD6E42608C65F009B560E /* SearchingRepositories */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		6AEAD6E42608C65F009B560E /* SearchingRepositories */ = {
+			isa = PBXGroup;
+			children = (
+				6AEAD6E52608C686009B560E /* Views */,
+				CB87672E778854B6D8B38927 /* Reaps.swift */,
+				CB876E2BF9D9EC43611D7BB6 /* Workflows */,
+				CB876A4772F1D8DCBECB1AC7 /* Seeds.swift */,
+				CB87646126EE990153DE1845 /* Models */,
+				CB876FAD60172AE6C5A55A8C /* Environments.swift */,
+			);
+			path = SearchingRepositories;
+			sourceTree = "<group>";
+		};
+		6AEAD6E52608C686009B560E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6AEAD6E62608C6A4009B560E /* RepositoriesSearchView.swift */,
+				CB8768BB5AEAAE18F8444687 /* RepositoryListView.swift */,
+				CB876A61AEB315A8E862DDF5 /* SearchTextField.swift */,
+				CB876C3CE8F62C692B9AB40A /* SearchButton.swift */,
+				CB87646363AD968E9784EF74 /* SearchField.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		CB8761A9B890EB85A679B3C1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				CB876D68F5DB46AF16A6073D /* Seeds.swift */,
-				CB876BC5BB2E2DBB08DA15B9 /* Environments.swift */,
+				CB876D68F5DB46AF16A6073D /* Reaps.swift */,
 				CB876CF2684A20E0568E9689 /* NavigationItemButton.swift */,
 				CB8762A066FE01AB75309CEF /* MemoEditor */,
 				CB87636476D7AAA003FFB5AA /* MemoSelector */,
+				CB876F4FF9A4A00F773FF022 /* Seeds.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -149,7 +250,6 @@
 		CB8762A066FE01AB75309CEF /* MemoEditor */ = {
 			isa = PBXGroup;
 			children = (
-				CB87675E38E38DC9428204BA /* MemoEditorReap.swift */,
 				CB8760864B94148A1BBE30E2 /* MemoEditorView.swift */,
 			);
 			path = MemoEditor;
@@ -159,9 +259,17 @@
 			isa = PBXGroup;
 			children = (
 				CB876DC9DC547F4BD5B3707C /* MemoSelectorView.swift */,
-				CB876B23D545CA779F9DA2B1 /* MemoSelectorReap.swift */,
 			);
 			path = MemoSelector;
+			sourceTree = "<group>";
+		};
+		CB87646126EE990153DE1845 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CB8766DDCFEE91B62F0B555F /* Repository.swift */,
+				CB87631A26BCE7065A878C07 /* RepositoryStore.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		CB876C4052D33A292265F546 /* MemoEditing */ = {
@@ -170,6 +278,7 @@
 				CB8761A9B890EB85A679B3C1 /* Views */,
 				CB876CE58C8B827EE007C461 /* Models */,
 				CB876DF00DE694CDFC74E254 /* Workflows */,
+				CB876334AED8688ECE66ECFD /* Environments.swift */,
 			);
 			path = MemoEditing;
 			sourceTree = "<group>";
@@ -202,12 +311,20 @@
 			path = Workflows;
 			sourceTree = "<group>";
 		};
+		CB876E2BF9D9EC43611D7BB6 /* Workflows */ = {
+			isa = PBXGroup;
+			children = (
+				CB87606EACC834B1714F2BCA /* SearchRepositoriesWorkflow.swift */,
+			);
+			path = Workflows;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6A7CA73125F826D000E0F5CC /* SedeMeme */ = {
+		6A7CA73125F826D000E0F5CC /* SedeMemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6A7CA74125F826D100E0F5CC /* Build configuration list for PBXNativeTarget "SedeMeme" */;
+			buildConfigurationList = 6A7CA74125F826D100E0F5CC /* Build configuration list for PBXNativeTarget "SedeMemo" */;
 			buildPhases = (
 				6A7CA72E25F826D000E0F5CC /* Sources */,
 				6A7CA72F25F826D000E0F5CC /* Frameworks */,
@@ -218,9 +335,27 @@
 			dependencies = (
 				6ADC923E25FDE99B00D51821 /* PBXTargetDependency */,
 			);
-			name = SedeMeme;
+			name = SedeMemo;
 			productName = SedeMemo;
-			productReference = 6A7CA73225F826D000E0F5CC /* SedeMeme.app */;
+			productReference = 6A7CA73225F826D000E0F5CC /* SedeMemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6AEAD6CE2608C569009B560E /* GitHubSearch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6AEAD6E02608C56A009B560E /* Build configuration list for PBXNativeTarget "GitHubSearch" */;
+			buildPhases = (
+				6AEAD6CB2608C569009B560E /* Sources */,
+				6AEAD6CC2608C569009B560E /* Frameworks */,
+				6AEAD6CD2608C569009B560E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6AEAD6ED2608C7A1009B560E /* PBXTargetDependency */,
+			);
+			name = GitHubSearch;
+			productName = GitHubSearch;
+			productReference = 6AEAD6CF2608C569009B560E /* GitHubSearch.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -233,6 +368,9 @@
 				LastUpgradeCheck = 1240;
 				TargetAttributes = {
 					6A7CA73125F826D000E0F5CC = {
+						CreatedOnToolsVersion = 12.4;
+					};
+					6AEAD6CE2608C569009B560E = {
 						CreatedOnToolsVersion = 12.4;
 					};
 				};
@@ -256,7 +394,8 @@
 			);
 			projectRoot = "";
 			targets = (
-				6A7CA73125F826D000E0F5CC /* SedeMeme */,
+				6A7CA73125F826D000E0F5CC /* SedeMemo */,
+				6AEAD6CE2608C569009B560E /* GitHubSearch */,
 			);
 		};
 /* End PBXProject section */
@@ -288,6 +427,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6AEAD6CD2608C569009B560E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6AEAD6D92608C56A009B560E /* Preview Assets.xcassets in Resources */,
+				6AEAD6D62608C56A009B560E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -298,19 +446,39 @@
 				6A7CA73825F826D000E0F5CC /* ContentView.swift in Sources */,
 				6A7CA73625F826D000E0F5CC /* SedeMemoApp.swift in Sources */,
 				CB876FEA782791B799FC0411 /* Memo.swift in Sources */,
-				CB876CBD0E7B72E82D31D8D5 /* Seeds.swift in Sources */,
+				CB876CBD0E7B72E82D31D8D5 /* Reaps.swift in Sources */,
 				CB876048F8D9C0DC85781004 /* Functions.swift in Sources */,
 				CB87661DAE312B2928E4B7C9 /* MemoEditor.swift in Sources */,
-				CB8766BFE028C9A74509E6F4 /* Environments.swift in Sources */,
 				CB8763C1BAA4676F369A8016 /* MemoStore.swift in Sources */,
 				CB8767FC49B17D5204324AE2 /* SelectMemoWorkflow.swift in Sources */,
 				CB87654A682F2F623F8FDFB8 /* UpdateMemoEditorWorkflow.swift in Sources */,
 				CB876DDB5267BC1E20F8DADF /* SaveMemoWorkflow.swift in Sources */,
 				CB876A230E7E84D7FB788925 /* NavigationItemButton.swift in Sources */,
-				CB876BA2550FDBEAE07C5645 /* MemoEditorReap.swift in Sources */,
 				CB87664AD9944E619916D302 /* MemoEditorView.swift in Sources */,
 				CB876F459214A1A60983529A /* MemoSelectorView.swift in Sources */,
-				CB8763B059A75C15D84A4398 /* MemoSelectorReap.swift in Sources */,
+				CB876649B8B838E67C75E907 /* Environments.swift in Sources */,
+				CB876036C9CAD679297DF03C /* Seeds.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6AEAD6CB2608C569009B560E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6AEAD6D42608C569009B560E /* ContentView.swift in Sources */,
+				6AEAD6D22608C569009B560E /* GitHubSearchApp.swift in Sources */,
+				6AEAD6E72608C6A4009B560E /* RepositoriesSearchView.swift in Sources */,
+				CB876EF4A4F4533BC2549603 /* Reaps.swift in Sources */,
+				CB8765EFA1B10065A065D9B3 /* SearchRepositoriesWorkflow.swift in Sources */,
+				CB876FE860F141A886798C74 /* Seeds.swift in Sources */,
+				CB876C811B7290B60C3533AD /* Functions.swift in Sources */,
+				CB87691C7622D595EA540DCA /* Repository.swift in Sources */,
+				CB876D1408C603FCD342C8B6 /* RepositoryStore.swift in Sources */,
+				CB87618D3A833E3FAE7CC71B /* Environments.swift in Sources */,
+				CB8763BAC07DAD721D2B5852 /* RepositoryListView.swift in Sources */,
+				CB8765F0A43F7FB0C65B1DD0 /* SearchTextField.swift in Sources */,
+				CB87676595B58FE56C43DDD0 /* SearchButton.swift in Sources */,
+				CB87632EC5DA79F11A05B088 /* SearchField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +489,11 @@
 			isa = PBXTargetDependency;
 			name = Sede;
 			targetProxy = 6ADC923D25FDE99B00D51821 /* PBXContainerItemProxy */;
+		};
+		6AEAD6ED2608C7A1009B560E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Sede;
+			targetProxy = 6AEAD6EC2608C7A1009B560E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -485,6 +658,50 @@
 			};
 			name = Release;
 		};
+		6AEAD6DB2608C56A009B560E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"GitHubSearch/Preview Content\"";
+				DEVELOPMENT_TEAM = RV6DJ2NMCD;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = GitHubSearch/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = jp.caph.GitHubSearch;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6AEAD6DC2608C56A009B560E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"GitHubSearch/Preview Content\"";
+				DEVELOPMENT_TEAM = RV6DJ2NMCD;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = GitHubSearch/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = jp.caph.GitHubSearch;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -497,11 +714,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6A7CA74125F826D100E0F5CC /* Build configuration list for PBXNativeTarget "SedeMeme" */ = {
+		6A7CA74125F826D100E0F5CC /* Build configuration list for PBXNativeTarget "SedeMemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6A7CA74225F826D100E0F5CC /* Debug */,
 				6A7CA74325F826D100E0F5CC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6AEAD6E02608C56A009B560E /* Build configuration list for PBXNativeTarget "GitHubSearch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6AEAD6DB2608C56A009B560E /* Debug */,
+				6AEAD6DC2608C56A009B560E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
