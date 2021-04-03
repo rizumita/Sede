@@ -8,9 +8,15 @@ import Sede
 let repositoryStoreReap = reaped(\.repositoryStore)
 
 struct RepositoriesSearchViewModelReap: ReapProtocol {
+    @Environment(\.repositoryStore) var repositoryStore
+
+    var observedObjects: [AnyObservableObject] {
+        [_repositoryStore]
+    }
+
     func initialize(environment: EnvironmentValues) -> RepositoriesSearchView.Model {
-        RepositoriesSearchView.Model(searchText: environment.repositoryStore.searchText,
-                                     repositories: environment.repositoryStore.repositories,
+        RepositoriesSearchView.Model(searchText: repositoryStore.searchText,
+                                     repositories: repositoryStore.repositories,
                                      appearedIndex: 0)
     }
 }

@@ -26,9 +26,9 @@ public struct EnvironmentKeyReap<Key: EnvironmentKey>: ReapProtocol where Key.Va
     }
 }
 
-@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-extension EnvironmentKeyReap: EnvironmentalObservableObjectProtocol {
-    public func observable(environment: EnvironmentValues) -> AnyPublisher<(), Never> {
-        initialize(environment: environment).objectWillChange.map { _ in }.eraseToAnyPublisher()
-    }
-}
+//@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+//extension EnvironmentKeyReap: EnvironmentalObservableObjectProtocol {
+//    public func observable(environment: EnvironmentValues) -> AnyPublisher<(), Never> {
+//        initialize(environment: environment).objectWillChange.map { _ in }.eraseToAnyPublisher()
+//    }
+//}

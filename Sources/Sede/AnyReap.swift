@@ -31,9 +31,9 @@ public class AnyReap<Value>: ObservableObject {
     init<R: ReapProtocol>(_ reap: R, environment: EnvironmentValues) where R.Value == Value {
         _value = reap.initialize(environment: environment)
         updateValue = { reap.update(value: $0, environment: environment) }
-        Publishers.MergeMany(reap.observing.map { $0.observable(environment: environment) })
+        reap.objectWillChange
             .subscribe(on: RunLoop.main)
-            .sink { [weak self] _ in
+            .sink { [weak self] in
                 self?.isBaseUpdated = true
                 self?.objectWillChange.send()
             }.store(in: &cancellables)
@@ -42,9 +42,7 @@ public class AnyReap<Value>: ObservableObject {
     init<R: ReapProtocol>(_ reap: R, environment: EnvironmentValues) where R.Value == Value, R.Value: ObservableObject {
         _value = reap.initialize(environment: environment)
         updateValue = { reap.update(value: $0, environment: environment) }
-        let observing = reap.observing.map { $0.observable(environment: environment) }
-                        + [_value.objectWillChange.map { _ in }.eraseToAnyPublisher()]
-        Publishers.MergeMany(observing)
+        Publishers.MergeMany(reap.objectWillChange, _value.objectWillChange.map { _ in }.eraseToAnyPublisher())
             .subscribe(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.isBaseUpdated = true

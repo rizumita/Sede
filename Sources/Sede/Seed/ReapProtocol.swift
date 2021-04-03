@@ -7,10 +7,10 @@ import SwiftUI
 import Combine
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public protocol ReapProtocol {
+public protocol ReapProtocol: ViewModifier, AnyObservableObject {
     associatedtype Value
 
-    var observing: [EnvironmentalObservableObjectProtocol] { get }
+    var observedObjects: [AnyObservableObject] { get }
 
     func initialize(environment: EnvironmentValues) -> Value
 
@@ -21,7 +21,16 @@ public protocol ReapProtocol {
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension ReapProtocol {
-    var observing: [EnvironmentalObservableObjectProtocol] { [] }
+    var observedObjects: [AnyObservableObject] { [] }
+
+    var objectWillChange: AnyPublisher<(), Never> {
+        Publishers.MergeMany(observedObjects.map(\.objectWillChange)).eraseToAnyPublisher()
+    }
+
+    func body(content: Content) -> some View {
+        print(String(describing: Self.self))
+        return content.environmentObject(reap(environment: EnvironmentValues()))
+    }
 }
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)

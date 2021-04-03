@@ -34,10 +34,10 @@ public struct EnvironmentKeyPathReap<Value: ObservableObject>: ReapProtocol {
 public func reaped<Value: ObservableObject>(_ keyPath: KeyPath<EnvironmentValues, Value>) -> EnvironmentKeyPathReap<Value> {
     EnvironmentKeyPathReap(keyPath)
 }
-
-@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-extension EnvironmentKeyPathReap: EnvironmentalObservableObjectProtocol {
-    public func observable(environment: EnvironmentValues) -> AnyPublisher<(), Never> {
-        initialize(environment: environment).objectWillChange.map { _ in }.eraseToAnyPublisher()
-    }
-}
+//
+//@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+//extension EnvironmentKeyPathReap: EnvironmentalObservableObjectProtocol {
+//    public func observable(environment: EnvironmentValues) -> AnyPublisher<(), Never> {
+//        initialize(environment: environment).objectWillChange.map { _ in }.eraseToAnyPublisher()
+//    }
+//}
