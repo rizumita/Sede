@@ -5,18 +5,22 @@
 import SwiftUI
 import Sede
 
-let repositoryStoreReap = reaped(\.repositoryStore)
-
-struct RepositoriesSearchViewModelReap: ReapProtocol {
+struct RepositoriesSearchViewModelReap: Reap {
     @Environment(\.repositoryStore) var repositoryStore
 
     var observedObjects: [AnyObservableObject] {
         [_repositoryStore]
     }
 
-    func initialize(environment: EnvironmentValues) -> RepositoriesSearchView.Model {
+    func initialize() -> RepositoriesSearchView.Model {
         RepositoriesSearchView.Model(searchText: repositoryStore.searchText,
                                      repositories: repositoryStore.repositories,
                                      appearedIndex: 0)
+    }
+
+    func update(value: RepositoriesSearchView.Model) -> RepositoriesSearchView.Model {
+        .init(searchText: repositoryStore.searchText,
+              repositories: repositoryStore.repositories,
+              appearedIndex: value.appearedIndex)
     }
 }

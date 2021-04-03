@@ -15,7 +15,7 @@ struct RepositoryListView: View {
     var body: some View {
         ForEach(repositories.enumerated().map { $0 }, id: \.element.id) { index, repository in
             NavigationLink(repository.name, destination: Text(repository.name))
-                .onAppear { appearedIndex = index }
+//                .onAppear { appearedIndex = index }
         }
     }
 }

@@ -22,19 +22,10 @@ struct InjectModifier<Object: ObservableObject>: EnvironmentalModifier {
 }
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-struct ReapModifier<Reap>: EnvironmentalModifier where Reap: ReapProtocol {
-    struct Modifier: ViewModifier {
-        var reap: Reap
-        var anyReap: AnyReap<Reap.Value>
+struct ReapModifier<R>: ViewModifier where R: Reap {
+    var reap: R
 
-        func body(content: Content) -> some View {
-            content.modifier(reap).environmentObject(anyReap)
-        }
-    }
-
-    var reap: Reap
-
-    func resolve(in environment: EnvironmentValues) -> some ViewModifier {
-        Modifier(reap: reap, anyReap: reap.reap(environment: environment))
+    func body(content: Content) -> some View {
+        content.modifier(reap)
     }
 }

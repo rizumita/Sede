@@ -18,7 +18,6 @@ class SearchRepositoriesSeed: SeedProtocol {
             let workflow = SearchRepositoriesWorkflow.workflow(update: repositoryStore.update)
             workflow(text: text, page: repositoryStore.reachedPage + 1)
                 .subscribe(on: DispatchQueue.global())
-                .print("search")
                 .sink { _ in }
                 .store(in: &cancellables)
 
