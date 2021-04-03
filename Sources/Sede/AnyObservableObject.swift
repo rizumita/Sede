@@ -7,17 +7,23 @@ import Combine
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public protocol AnyObservableObject {
-    var objectWillChange: AnyPublisher<(), Never> { get }
+    var observedObjects: [AnyObservableObject] { get }
+
+    var anyObjectWillChange: AnyPublisher<(), Never> { get }
 }
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension AnyObservableObject {
-    var objectWillChange: AnyPublisher<(), Never> { Empty<(), Never>(completeImmediately: false).eraseToAnyPublisher() }
+    var observedObjects: [AnyObservableObject] { [] }
+
+    var anyObjectWillChange: AnyPublisher<(), Never> {
+        Publishers.MergeMany(observedObjects.map(\.anyObjectWillChange)).eraseToAnyPublisher()
+    }
 }
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension Environment: AnyObservableObject where Value: ObservableObject {
-    public var objectWillChange: AnyPublisher<(), Never> {
+    public var anyObjectWillChange: AnyPublisher<(), Never> {
         self.wrappedValue.objectWillChange.map { _ in }.eraseToAnyPublisher()
     }
 }

@@ -6,14 +6,14 @@ import Foundation
 import SwiftUI
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public protocol SeedProtocol {
+public protocol Seedable {
     associatedtype Msg
 
     func seed(msg: Msg, environment: EnvironmentValues)
 }
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-extension SeedProtocol {
+extension Seedable {
     func genSeed(environment: EnvironmentValues) -> AnySeed<Msg> {
         AnySeed(seed: seed, environment: environment)
     }

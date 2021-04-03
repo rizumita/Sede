@@ -10,8 +10,6 @@ import Combine
 public protocol Reap: ViewModifier, AnyObservableObject {
     associatedtype Value
 
-    var observedObjects: [AnyObservableObject] { get }
-
     func initialize() -> Value
 
     func update(value: Value) -> Value
@@ -19,12 +17,6 @@ public protocol Reap: ViewModifier, AnyObservableObject {
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension Reap {
-    var observedObjects: [AnyObservableObject] { [] }
-
-    var objectWillChange: AnyPublisher<(), Never> {
-        Publishers.MergeMany(observedObjects.map(\.objectWillChange)).eraseToAnyPublisher()
-    }
-
     func update(value: Value) -> Value { value }
 }
 

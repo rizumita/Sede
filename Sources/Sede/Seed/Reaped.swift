@@ -11,8 +11,8 @@ public struct Reaped<Value>: DynamicProperty {
     @EnvironmentObject var reap: AnyReap<Value>
 
     public var wrappedValue: Value {
-        get { reap._value }
-        nonmutating set { reap._value = newValue }
+        get { reap.value ?? reap.initialize() }
+        nonmutating set { reap.value = newValue }
     }
 
     public var projectedValue: Binding<Value> {
@@ -34,6 +34,6 @@ public struct Reaped<Value>: DynamicProperty {
     }
 
     public func update() {
-        reap.update()
+        wrappedValue = reap.update(value: wrappedValue)
     }
 }

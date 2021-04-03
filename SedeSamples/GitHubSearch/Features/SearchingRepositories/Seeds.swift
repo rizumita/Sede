@@ -6,7 +6,7 @@ import SwiftUI
 import Combine
 import Sede
 
-class SearchRepositoriesSeed: SeedProtocol {
+class SearchRepositoriesSeed: Seedable {
     private var cancellables = Set<AnyCancellable>()
 
     func seed(msg: RepositoriesSearchView.Msg, environment: EnvironmentValues) {

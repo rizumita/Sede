@@ -19,7 +19,7 @@ struct RepositoriesSearchViewModelReap: Reap {
     }
 
     func update(value: RepositoriesSearchView.Model) -> RepositoriesSearchView.Model {
-        .init(searchText: repositoryStore.searchText,
+        .init(searchText: value.searchText,
               repositories: repositoryStore.repositories,
               appearedIndex: value.appearedIndex)
     }
