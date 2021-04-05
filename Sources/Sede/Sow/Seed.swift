@@ -9,7 +9,7 @@ import SwiftUI
 public struct Seed<Msg>: DynamicProperty {
     @EnvironmentObject var seed: AnySeed<Msg>
 
-    public var wrappedValue: (Msg) -> () { seed.callAsFunction }
+    public var wrappedValue: (Msg) -> () { seed.seed(msg:) }
 
     public init() {}
 }

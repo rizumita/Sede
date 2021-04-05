@@ -6,23 +6,16 @@ import SwiftUI
 import Combine
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public class AnySeed<Msg>: ObservableObject {
-    private let reap: (Msg, EnvironmentValues) -> ()
-    private let environment: EnvironmentValues
+final public class AnySeed<Msg>: Seedable, ObservableObject {
+    private let _seed: (Msg) -> ()
 
-    public init(_ r: @escaping (Msg, EnvironmentValues) -> ()) {
-        reap = r
-        environment = EnvironmentValues()
+    public init(_ seed: @escaping (Msg) -> ()) {
+        _seed = seed
     }
 
-    init(seed: @escaping (Msg, EnvironmentValues) -> (), environment: EnvironmentValues) {
-        self.reap = seed
-        self.environment = environment
+    init<S>(_ s: S) where S: Seedable, S.Msg == Msg {
+        _seed = s.seed(msg:)
     }
 
-    public func callAsFunction(_ msg: Msg) {
-        reap(msg, environment)
-    }
-
-    public func update() {}
+    public func seed(msg: Msg) { _seed(msg) }
 }

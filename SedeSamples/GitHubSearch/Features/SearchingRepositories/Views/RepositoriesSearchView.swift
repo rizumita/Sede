@@ -42,7 +42,8 @@ extension RepositoriesSearchView {
 
 struct RepositoriesSearchView_Previews: PreviewProvider {
     static var previews: some View {
-        RepositoriesSearchView().environmentObject(
-            AnyReap<RepositoriesSearchView.Model>(initialize: RepositoriesSearchView.Model.init))
+        RepositoriesSearchView()
+            .environmentObject(AnyReaped<RepositoriesSearchView.Model>(initialize: RepositoriesSearchView.Model.init))
+            .environmentObject(AnySeed<RepositoriesSearchView.Msg> { print($0) })
     }
 }

@@ -7,7 +7,7 @@ import SwiftUI
 import Combine
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public protocol Reap: ViewModifier, AnyObservableObject {
+public protocol Reapable: ViewModifier, AnyObservableObject {
     associatedtype Value
 
     func initialize() -> Value
@@ -16,11 +16,11 @@ public protocol Reap: ViewModifier, AnyObservableObject {
 }
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public extension Reap {
+public extension Reapable {
     func update(value: Value) -> Value { value }
 }
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public extension Reap {
-    func body(content: Content) -> some View { content.environmentObject(AnyReap(self)) }
+public extension Reapable {
+    func body(content: Content) -> some View { content.environmentObject(AnyReaped(self)) }
 }

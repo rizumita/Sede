@@ -6,15 +6,13 @@ import Foundation
 import SwiftUI
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public protocol Seedable {
+public protocol Seedable: ViewModifier {
     associatedtype Msg
 
-    func seed(msg: Msg, environment: EnvironmentValues)
+    func seed(msg: Msg)
 }
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-extension Seedable {
-    func genSeed(environment: EnvironmentValues) -> AnySeed<Msg> {
-        AnySeed(seed: seed, environment: environment)
-    }
+public extension Seedable {
+    func body(content: Content) -> some View { content.environmentObject(AnySeed(self)) }
 }

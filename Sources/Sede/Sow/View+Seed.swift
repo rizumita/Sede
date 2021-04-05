@@ -6,11 +6,7 @@ import SwiftUI
 
 @available(OSX 10.15, iOS 14.0, tvOS 13.0, watchOS 6.0, *)
 public extension View {
-    func seed<R: Seedable>(_ r: R) -> some View {
-        modifier(InjectModifier(factory: r.genSeed(environment:)))
-    }
-
-    func seed<Msg>(_ r: @escaping (Msg, EnvironmentValues) -> ()) -> some View {
-        modifier(InjectModifier { environment in AnySeed(seed: r, environment: environment) })
+    func seed<S>(_ seed: S) -> some View where S: Seedable {
+        modifier(InjectModifier(object: seed))
     }
 }

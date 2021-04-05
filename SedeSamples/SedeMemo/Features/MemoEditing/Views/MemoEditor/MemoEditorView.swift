@@ -65,7 +65,7 @@ struct MemoEditorView: View {
 struct MemoEditorView_Previews: PreviewProvider {
     static var previews: some View {
         MemoEditorView()
-            .environmentObject(AnyReap {
+            .environmentObject(AnyReaped {
                 MemoEditorViewState(id: .none,
                                     content: "Preview",
                                     storesSomeMemos: false)

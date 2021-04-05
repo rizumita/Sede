@@ -6,15 +6,14 @@ import SwiftUI
 import Combine
 import Sede
 
-class SearchRepositoriesSeed: Seedable {
-    private var cancellables = Set<AnyCancellable>()
+struct SearchRepositoriesSeed: Seedable {
+    @Environment(\.repositoryStore) var repositoryStore
 
-    func seed(msg: RepositoriesSearchView.Msg, environment: EnvironmentValues) {
+    @State private var cancellables = Set<AnyCancellable>()
+
+    func seed(msg: RepositoriesSearchView.Msg) {
         switch msg {
         case .search(let text):
-            cancellables = Set<AnyCancellable>()
-
-            let repositoryStore = environment.repositoryStore
             let workflow = SearchRepositoriesWorkflow.workflow(update: repositoryStore.update)
             workflow(text: text, page: repositoryStore.reachedPage + 1)
                 .subscribe(on: DispatchQueue.global())

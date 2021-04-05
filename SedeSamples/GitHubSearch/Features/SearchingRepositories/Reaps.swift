@@ -5,7 +5,7 @@
 import SwiftUI
 import Sede
 
-struct RepositoriesSearchViewModelReap: Reap {
+struct RepositoriesSearchViewModelReap: Reapable {
     @Environment(\.repositoryStore) var repositoryStore
 
     var observedObjects: [AnyObservableObject] {

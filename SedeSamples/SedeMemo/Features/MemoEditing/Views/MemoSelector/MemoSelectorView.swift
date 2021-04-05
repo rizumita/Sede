@@ -33,7 +33,7 @@ struct MemoSelectorView: View {
 struct MemoSelectorView_Previews: PreviewProvider {
     static var previews: some View {
         MemoSelectorView()
-            .environmentObject(AnyReap { [Memo(id: UUID(), content: "Preview")] })
+            .environmentObject(AnyReaped { [Memo(id: UUID(), content: "Preview")] })
             .environmentObject(AnySeed<MemoSelectorMsg> { msg, _ in print(msg) })
     }
 }

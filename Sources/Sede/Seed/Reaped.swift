@@ -8,7 +8,7 @@ import SwiftUI
 @propertyWrapper
 @dynamicMemberLookup
 public struct Reaped<Value>: DynamicProperty {
-    @EnvironmentObject var reap: AnyReap<Value>
+    @EnvironmentObject var reap: AnyReaped<Value>
 
     public var wrappedValue: Value {
         get { reap.value ?? reap.initialize() }
