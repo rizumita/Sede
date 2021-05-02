@@ -11,8 +11,8 @@ import Sede
 struct ContentView: View {
     var body: some View {
         RepositoriesSearchView()
-            .reap(RepositoriesSearchViewModelReap())
-            .seed(SearchRepositoriesSeed())
+            .inject(RepositoriesSearchViewModelReap())
+            .inject(SearchRepositoriesSeed())
             .padding()
     }
 }

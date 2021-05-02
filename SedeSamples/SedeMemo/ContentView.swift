@@ -9,12 +9,9 @@ import SwiftUI
 import Sede
 
 struct ContentView: View {
-    @Environment(\.memoEditor) var memoEditor
-
     var body: some View {
         MemoEditorView()
-            .reap(memoEditorViewStateReap)
-            .seed(MemoEditorSeed.seed)
+            .sede(MemoEditorViewSeeder())
     }
 }
 

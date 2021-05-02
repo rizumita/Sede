@@ -4,20 +4,11 @@
 
 import SwiftUI
 
-struct MemoEditorKey: EnvironmentKey {
-    static let defaultValue = MemoEditor()
-}
-
 struct MemoStoreKey: EnvironmentKey {
     static let defaultValue = MemoStore()
 }
 
 extension EnvironmentValues {
-    var memoEditor: MemoEditor {
-        get { self[MemoEditorKey.self] }
-        set { self[MemoEditorKey.self] = newValue }
-    }
-
     var memoStore: MemoStore {
         get { self[MemoStoreKey.self] }
         set { self[MemoStoreKey.self] = newValue }

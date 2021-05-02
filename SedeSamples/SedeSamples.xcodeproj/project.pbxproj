@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A2F656A263CD90300BA10FA /* Sede in Frameworks */ = {isa = PBXBuildFile; productRef = 6A2F6569263CD90300BA10FA /* Sede */; };
+		6A2F6571263CD91800BA10FA /* Sede in Frameworks */ = {isa = PBXBuildFile; productRef = 6A2F6570263CD91800BA10FA /* Sede */; };
 		6A7CA73625F826D000E0F5CC /* SedeMemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7CA73525F826D000E0F5CC /* SedeMemoApp.swift */; };
 		6A7CA73825F826D000E0F5CC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7CA73725F826D000E0F5CC /* ContentView.swift */; };
 		6A7CA73A25F826D100E0F5CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A7CA73925F826D100E0F5CC /* Assets.xcassets */; };
@@ -16,62 +18,26 @@
 		6AEAD6D62608C56A009B560E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6AEAD6D52608C56A009B560E /* Assets.xcassets */; };
 		6AEAD6D92608C56A009B560E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6AEAD6D82608C56A009B560E /* Preview Assets.xcassets */; };
 		6AEAD6E72608C6A4009B560E /* RepositoriesSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEAD6E62608C6A4009B560E /* RepositoriesSearchView.swift */; };
-		CB876036C9CAD679297DF03C /* Seeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876F4FF9A4A00F773FF022 /* Seeds.swift */; };
 		CB876048F8D9C0DC85781004 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB87602AB3CE27D7920EAF60 /* Functions.swift */; };
 		CB87618D3A833E3FAE7CC71B /* Environments.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876FAD60172AE6C5A55A8C /* Environments.swift */; };
 		CB87632EC5DA79F11A05B088 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB87646363AD968E9784EF74 /* SearchField.swift */; };
 		CB8763BAC07DAD721D2B5852 /* RepositoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8768BB5AEAAE18F8444687 /* RepositoryListView.swift */; };
 		CB8763C1BAA4676F369A8016 /* MemoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876E81E165D11F4FB8A026 /* MemoStore.swift */; };
-		CB87654A682F2F623F8FDFB8 /* UpdateMemoEditorWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8768F16E4D0D68C785CA9A /* UpdateMemoEditorWorkflow.swift */; };
 		CB8765EFA1B10065A065D9B3 /* SearchRepositoriesWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB87606EACC834B1714F2BCA /* SearchRepositoriesWorkflow.swift */; };
 		CB8765F0A43F7FB0C65B1DD0 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876A61AEB315A8E862DDF5 /* SearchTextField.swift */; };
-		CB87661DAE312B2928E4B7C9 /* MemoEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876B28C50E05B7BB217F4B /* MemoEditor.swift */; };
 		CB876649B8B838E67C75E907 /* Environments.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876334AED8688ECE66ECFD /* Environments.swift */; };
 		CB87664AD9944E619916D302 /* MemoEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8760864B94148A1BBE30E2 /* MemoEditorView.swift */; };
+		CB876751E13343AE2EBE1D2C /* Seeders.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8769F8119ADE16FC4CB7DA /* Seeders.swift */; };
 		CB87676595B58FE56C43DDD0 /* SearchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876C3CE8F62C692B9AB40A /* SearchButton.swift */; };
-		CB8767FC49B17D5204324AE2 /* SelectMemoWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876188842098B4E9B64F69 /* SelectMemoWorkflow.swift */; };
 		CB87691C7622D595EA540DCA /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8766DDCFEE91B62F0B555F /* Repository.swift */; };
 		CB876A230E7E84D7FB788925 /* NavigationItemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876CF2684A20E0568E9689 /* NavigationItemButton.swift */; };
 		CB876C811B7290B60C3533AD /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB87602AB3CE27D7920EAF60 /* Functions.swift */; };
-		CB876CBD0E7B72E82D31D8D5 /* Reaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876D68F5DB46AF16A6073D /* Reaps.swift */; };
 		CB876D1408C603FCD342C8B6 /* RepositoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB87631A26BCE7065A878C07 /* RepositoryStore.swift */; };
-		CB876DDB5267BC1E20F8DADF /* SaveMemoWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876A1CE5EB5A92AC692BC2 /* SaveMemoWorkflow.swift */; };
 		CB876EF4A4F4533BC2549603 /* Reaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB87672E778854B6D8B38927 /* Reaps.swift */; };
 		CB876F459214A1A60983529A /* MemoSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876DC9DC547F4BD5B3707C /* MemoSelectorView.swift */; };
 		CB876FE860F141A886798C74 /* Seeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876A4772F1D8DCBECB1AC7 /* Seeds.swift */; };
 		CB876FEA782791B799FC0411 /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876B7CC7B1BB7D93F65DF6 /* Memo.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		6ADC923925FDE99400D51821 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6ADC923225FDE99400D51821 /* Sede.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = "Sede::Sede::Product";
-			remoteInfo = Sede;
-		};
-		6ADC923B25FDE99400D51821 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6ADC923225FDE99400D51821 /* Sede.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = "Sede::SedeTests::Product";
-			remoteInfo = SedeTests;
-		};
-		6ADC923D25FDE99B00D51821 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6ADC923225FDE99400D51821 /* Sede.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = "Sede::Sede";
-			remoteInfo = Sede;
-		};
-		6AEAD6EC2608C7A1009B560E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6ADC923225FDE99400D51821 /* Sede.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = "Sede::Sede";
-			remoteInfo = Sede;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		6A7CA73225F826D000E0F5CC /* SedeMemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SedeMemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,7 +46,6 @@
 		6A7CA73925F826D100E0F5CC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6A7CA73C25F826D100E0F5CC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6A7CA73E25F826D100E0F5CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6ADC923225FDE99400D51821 /* Sede.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sede.xcodeproj; path = ../Sede.xcodeproj; sourceTree = "<group>"; };
 		6AEAD6CF2608C569009B560E /* GitHubSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AEAD6D12608C569009B560E /* GitHubSearchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubSearchApp.swift; sourceTree = "<group>"; };
 		6AEAD6D32608C569009B560E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -91,25 +56,20 @@
 		CB87602AB3CE27D7920EAF60 /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		CB87606EACC834B1714F2BCA /* SearchRepositoriesWorkflow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRepositoriesWorkflow.swift; sourceTree = "<group>"; };
 		CB8760864B94148A1BBE30E2 /* MemoEditorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoEditorView.swift; sourceTree = "<group>"; };
-		CB876188842098B4E9B64F69 /* SelectMemoWorkflow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectMemoWorkflow.swift; sourceTree = "<group>"; };
 		CB87631A26BCE7065A878C07 /* RepositoryStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryStore.swift; sourceTree = "<group>"; };
 		CB876334AED8688ECE66ECFD /* Environments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environments.swift; sourceTree = "<group>"; };
 		CB87646363AD968E9784EF74 /* SearchField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		CB8766DDCFEE91B62F0B555F /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		CB87672E778854B6D8B38927 /* Reaps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reaps.swift; sourceTree = "<group>"; };
 		CB8768BB5AEAAE18F8444687 /* RepositoryListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryListView.swift; sourceTree = "<group>"; };
-		CB8768F16E4D0D68C785CA9A /* UpdateMemoEditorWorkflow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateMemoEditorWorkflow.swift; sourceTree = "<group>"; };
-		CB876A1CE5EB5A92AC692BC2 /* SaveMemoWorkflow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveMemoWorkflow.swift; sourceTree = "<group>"; };
+		CB8769F8119ADE16FC4CB7DA /* Seeders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seeders.swift; sourceTree = "<group>"; };
 		CB876A4772F1D8DCBECB1AC7 /* Seeds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seeds.swift; sourceTree = "<group>"; };
 		CB876A61AEB315A8E862DDF5 /* SearchTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
-		CB876B28C50E05B7BB217F4B /* MemoEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoEditor.swift; sourceTree = "<group>"; };
 		CB876B7CC7B1BB7D93F65DF6 /* Memo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
 		CB876C3CE8F62C692B9AB40A /* SearchButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchButton.swift; sourceTree = "<group>"; };
 		CB876CF2684A20E0568E9689 /* NavigationItemButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationItemButton.swift; sourceTree = "<group>"; };
-		CB876D68F5DB46AF16A6073D /* Reaps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reaps.swift; sourceTree = "<group>"; };
 		CB876DC9DC547F4BD5B3707C /* MemoSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoSelectorView.swift; sourceTree = "<group>"; };
 		CB876E81E165D11F4FB8A026 /* MemoStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoStore.swift; sourceTree = "<group>"; };
-		CB876F4FF9A4A00F773FF022 /* Seeds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seeds.swift; sourceTree = "<group>"; };
 		CB876FAD60172AE6C5A55A8C /* Environments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environments.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -118,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A2F656A263CD90300BA10FA /* Sede in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,19 +86,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A2F6571263CD91800BA10FA /* Sede in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6A2F656F263CD91800BA10FA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6A7CA72925F826D000E0F5CC = {
 			isa = PBXGroup;
 			children = (
-				6ADC923225FDE99400D51821 /* Sede.xcodeproj */,
 				6A7CA73425F826D000E0F5CC /* SedeMemo */,
 				6AEAD6D02608C569009B560E /* GitHubSearch */,
 				6A7CA73325F826D000E0F5CC /* Products */,
+				6A2F656F263CD91800BA10FA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -170,15 +139,6 @@
 				6A7CA73C25F826D100E0F5CC /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		6ADC923325FDE99400D51821 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				6ADC923A25FDE99400D51821 /* Sede.framework */,
-				6ADC923C25FDE99400D51821 /* SedeTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		6AEAD6D02608C569009B560E /* GitHubSearch */ = {
@@ -238,11 +198,9 @@
 		CB8761A9B890EB85A679B3C1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				CB876D68F5DB46AF16A6073D /* Reaps.swift */,
 				CB876CF2684A20E0568E9689 /* NavigationItemButton.swift */,
 				CB8762A066FE01AB75309CEF /* MemoEditor */,
 				CB87636476D7AAA003FFB5AA /* MemoSelector */,
-				CB876F4FF9A4A00F773FF022 /* Seeds.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -277,8 +235,8 @@
 			children = (
 				CB8761A9B890EB85A679B3C1 /* Views */,
 				CB876CE58C8B827EE007C461 /* Models */,
-				CB876DF00DE694CDFC74E254 /* Workflows */,
 				CB876334AED8688ECE66ECFD /* Environments.swift */,
+				CB8769F8119ADE16FC4CB7DA /* Seeders.swift */,
 			);
 			path = MemoEditing;
 			sourceTree = "<group>";
@@ -287,7 +245,6 @@
 			isa = PBXGroup;
 			children = (
 				CB876B7CC7B1BB7D93F65DF6 /* Memo.swift */,
-				CB876B28C50E05B7BB217F4B /* MemoEditor.swift */,
 				CB876E81E165D11F4FB8A026 /* MemoStore.swift */,
 			);
 			path = Models;
@@ -299,16 +256,6 @@
 				CB876C4052D33A292265F546 /* MemoEditing */,
 			);
 			path = Features;
-			sourceTree = "<group>";
-		};
-		CB876DF00DE694CDFC74E254 /* Workflows */ = {
-			isa = PBXGroup;
-			children = (
-				CB876188842098B4E9B64F69 /* SelectMemoWorkflow.swift */,
-				CB8768F16E4D0D68C785CA9A /* UpdateMemoEditorWorkflow.swift */,
-				CB876A1CE5EB5A92AC692BC2 /* SaveMemoWorkflow.swift */,
-			);
-			path = Workflows;
 			sourceTree = "<group>";
 		};
 		CB876E2BF9D9EC43611D7BB6 /* Workflows */ = {
@@ -333,9 +280,12 @@
 			buildRules = (
 			);
 			dependencies = (
-				6ADC923E25FDE99B00D51821 /* PBXTargetDependency */,
+				6A2F656C263CD90D00BA10FA /* PBXTargetDependency */,
 			);
 			name = SedeMemo;
+			packageProductDependencies = (
+				6A2F6569263CD90300BA10FA /* Sede */,
+			);
 			productName = SedeMemo;
 			productReference = 6A7CA73225F826D000E0F5CC /* SedeMemo.app */;
 			productType = "com.apple.product-type.application";
@@ -351,9 +301,12 @@
 			buildRules = (
 			);
 			dependencies = (
-				6AEAD6ED2608C7A1009B560E /* PBXTargetDependency */,
+				6A2F656E263CD91100BA10FA /* PBXTargetDependency */,
 			);
 			name = GitHubSearch;
+			packageProductDependencies = (
+				6A2F6570263CD91800BA10FA /* Sede */,
+			);
 			productName = GitHubSearch;
 			productReference = 6AEAD6CF2608C569009B560E /* GitHubSearch.app */;
 			productType = "com.apple.product-type.application";
@@ -384,14 +337,11 @@
 				Base,
 			);
 			mainGroup = 6A7CA72925F826D000E0F5CC;
+			packageReferences = (
+				6A2F6568263CD90300BA10FA /* XCRemoteSwiftPackageReference "Sede" */,
+			);
 			productRefGroup = 6A7CA73325F826D000E0F5CC /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 6ADC923325FDE99400D51821 /* Products */;
-					ProjectRef = 6ADC923225FDE99400D51821 /* Sede.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				6A7CA73125F826D000E0F5CC /* SedeMemo */,
@@ -399,23 +349,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		6ADC923A25FDE99400D51821 /* Sede.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Sede.framework;
-			remoteRef = 6ADC923925FDE99400D51821 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		6ADC923C25FDE99400D51821 /* SedeTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = file;
-			path = SedeTests.xctest;
-			remoteRef = 6ADC923B25FDE99400D51821 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		6A7CA73025F826D000E0F5CC /* Resources */ = {
@@ -446,18 +379,13 @@
 				6A7CA73825F826D000E0F5CC /* ContentView.swift in Sources */,
 				6A7CA73625F826D000E0F5CC /* SedeMemoApp.swift in Sources */,
 				CB876FEA782791B799FC0411 /* Memo.swift in Sources */,
-				CB876CBD0E7B72E82D31D8D5 /* Reaps.swift in Sources */,
 				CB876048F8D9C0DC85781004 /* Functions.swift in Sources */,
-				CB87661DAE312B2928E4B7C9 /* MemoEditor.swift in Sources */,
 				CB8763C1BAA4676F369A8016 /* MemoStore.swift in Sources */,
-				CB8767FC49B17D5204324AE2 /* SelectMemoWorkflow.swift in Sources */,
-				CB87654A682F2F623F8FDFB8 /* UpdateMemoEditorWorkflow.swift in Sources */,
-				CB876DDB5267BC1E20F8DADF /* SaveMemoWorkflow.swift in Sources */,
 				CB876A230E7E84D7FB788925 /* NavigationItemButton.swift in Sources */,
 				CB87664AD9944E619916D302 /* MemoEditorView.swift in Sources */,
 				CB876F459214A1A60983529A /* MemoSelectorView.swift in Sources */,
 				CB876649B8B838E67C75E907 /* Environments.swift in Sources */,
-				CB876036C9CAD679297DF03C /* Seeds.swift in Sources */,
+				CB876751E13343AE2EBE1D2C /* Seeders.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,15 +413,13 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		6ADC923E25FDE99B00D51821 /* PBXTargetDependency */ = {
+		6A2F656C263CD90D00BA10FA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = Sede;
-			targetProxy = 6ADC923D25FDE99B00D51821 /* PBXContainerItemProxy */;
+			productRef = 6A2F656B263CD90D00BA10FA /* Sede */;
 		};
-		6AEAD6ED2608C7A1009B560E /* PBXTargetDependency */ = {
+		6A2F656E263CD91100BA10FA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = Sede;
-			targetProxy = 6AEAD6EC2608C7A1009B560E /* PBXContainerItemProxy */;
+			productRef = 6A2F656D263CD91100BA10FA /* Sede */;
 		};
 /* End PBXTargetDependency section */
 
@@ -733,6 +659,37 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6A2F6568263CD90300BA10FA /* XCRemoteSwiftPackageReference "Sede" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "file:///Users/rizumita/Workspace/CAPHTECH/Sede";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6A2F6569263CD90300BA10FA /* Sede */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6A2F6568263CD90300BA10FA /* XCRemoteSwiftPackageReference "Sede" */;
+			productName = Sede;
+		};
+		6A2F656B263CD90D00BA10FA /* Sede */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Sede;
+		};
+		6A2F656D263CD91100BA10FA /* Sede */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Sede;
+		};
+		6A2F6570263CD91800BA10FA /* Sede */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Sede;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6A7CA72A25F826D000E0F5CC /* Project object */;
 }

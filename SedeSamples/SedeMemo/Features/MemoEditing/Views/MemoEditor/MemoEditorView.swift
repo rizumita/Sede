@@ -11,16 +11,16 @@ import Sede
 
 import Combine
 
-struct MemoEditorViewState {
+struct MemoEditorViewModel {
     let id: UUID?
     var content: String
-    var storesSomeMemos: Bool
+    var memosButtonEnabled: Bool
     var canSave: Bool { !content.isEmpty }
 
-    init(id: UUID?, content: String, storesSomeMemos: Bool) {
+    init(id: UUID?, content: String, memosButtonEnabled: Bool) {
         self.id = id
         self.content = content
-        self.storesSomeMemos = storesSomeMemos
+        self.memosButtonEnabled = memosButtonEnabled
     }
 }
 
@@ -29,13 +29,11 @@ enum MemoEditorMsg {
 }
 
 struct MemoEditorView: View {
-    @Seed var reap: (MemoEditorMsg) -> ()
-    @Reaped var seed: MemoEditorViewState
+    @Seed<MemoEditorViewModel, MemoEditorMsg> var seed: MemoEditorViewModel
     @State var showsMemoSelector = false
 
     var body: some View {
-        print("body")
-        return NavigationView {
+        NavigationView {
             VStack {
                 TextEditor(text: $seed.content)
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
@@ -45,19 +43,19 @@ struct MemoEditorView: View {
                     .navigationBarTitle("", displayMode: .inline)
             }
         }.sheet(isPresented: $showsMemoSelector) {
-            MemoSelectorView().reap(memosReap).seed(MemoSelectorSeed.seed)
+            MemoSelectorView().sede(MemoSelectorSeeder())
         }
     }
 
     var navigationBarItemLeading: some View {
-        NavigationItemButton(enabled: seed.storesSomeMemos,
+        NavigationItemButton(enabled: seed.memosButtonEnabled,
                              action: { showsMemoSelector.toggle() },
                              label: { Text("Memos") })
     }
 
     var navigationBarItemTrailing: some View {
         NavigationItemButton(enabled: seed.canSave,
-                             action: { reap(.save(seed.id, seed.content)) },
+                             action: { _seed(.save(seed.id, seed.content)) },
                              label: { Text("Save") })
     }
 }
@@ -65,11 +63,8 @@ struct MemoEditorView: View {
 struct MemoEditorView_Previews: PreviewProvider {
     static var previews: some View {
         MemoEditorView()
-            .environmentObject(AnyReaped {
-                MemoEditorViewState(id: .none,
-                                    content: "Preview",
-                                    storesSomeMemos: false)
-            })
-            .environmentObject(AnySeed<MemoEditorMsg> { msg, _ in print(msg) })
+            .environmentObject(AnySeeder {
+                MemoEditorViewModel(id: .none, content: "Preview", memosButtonEnabled: false)
+            } receive: { (msg: MemoEditorMsg) in })
     }
 }
