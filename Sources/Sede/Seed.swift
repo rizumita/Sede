@@ -1,69 +1,48 @@
 //
-//  SedeProtocol.swift
-//  Sede
+//  Seed.swift
 //
-//  Created by Ryoichi Izumita on 2021/03/10.
+//  Created by 和泉田 領一 on 2021/05/02.
 //
 
-import Foundation
 import SwiftUI
-import Combine
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+@propertyWrapper
 @dynamicMemberLookup
-public class Seed<T>: UpdatableObject {
-    @Published public var _value: T {
-        willSet { _objectWillChange.send() }
-    }
-    public var objectWillChange: AnyPublisher<(), Never> {
-        _objectWillChange.filter { [weak self] in self?.isSilent == false }
-                         .subscribe(on: RunLoop.main)
-                         .eraseToAnyPublisher()
+public struct Seed<Model, Msg> {
+    @EnvironmentObject var seeder: AnySeeder<Model, Msg>
+
+    public var wrappedValue: Model {
+        get { seeder.model }
+        nonmutating set { seeder.set(model: newValue) }
     }
 
-    private var getValue: () -> T
-    private var isSilent = false
-    private var isBaseUpdated = false
-    private var _objectWillChange = PassthroughSubject<(), Never>()
-    private var cancellables = Set<AnyCancellable>()
-
-    public init(getValue: @escaping () -> T) {
-        self._value = getValue()
-        self.getValue = getValue
+    public var projectedValue: Binding<Model> {
+        Binding(
+            get: { wrappedValue },
+            set: { wrappedValue = $0 }
+        )
     }
 
-    init<P: Publisher>(objectWillChange: P, getValue: @escaping () -> T) where P.Output == (), P.Failure == Never {
-        self._value = getValue()
-        self.getValue = getValue
-        objectWillChange.subscribe(on: RunLoop.main)
-                        .sink { [weak self] _ in
-                            self?.isBaseUpdated = true
-                            self?._objectWillChange.send()
-                        }.store(in: &cancellables)
+    public init() {}
+
+    public subscript<U>(dynamicMember keyPath: WritableKeyPath<Model, U>) -> U {
+        get { wrappedValue[keyPath: keyPath] }
+        set { wrappedValue[keyPath: keyPath] = newValue }
     }
 
-    init<P: Publisher>(objectWillChange: P, getValue: @escaping () -> T) where P.Output == (), P.Failure == Never, T: ObservableObject {
-        self._value = getValue()
-        self.getValue = getValue
-        objectWillChange.sink { [weak self] _ in
-            self?.isBaseUpdated = true
-            self?._objectWillChange.send()
-        }.store(in: &cancellables)
+    public subscript<U>(dynamicMember keyPath: KeyPath<Model, U>) -> U {
+        wrappedValue[keyPath: keyPath]
     }
 
-    public subscript<U>(dynamicMember keyPath: WritableKeyPath<T, U>) -> U {
-        _value[keyPath: keyPath]
+    public func callAsFunction(_ msg: Msg) {
+        seeder.receive(model: wrappedValue, msg: msg)
     }
+}
 
+@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+extension Seed: DynamicProperty {
     public func update() {
-        guard isBaseUpdated else { return }
-
-        defer {
-            isSilent = false
-            isBaseUpdated = false
-        }
-
-        isSilent = true
-        _value = getValue()
+        seeder.updateCyclically()
     }
 }

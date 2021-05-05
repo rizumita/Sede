@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Sede",
+        "repositoryURL": "/Users/rizumita/Workspace/CAPHTECH/Sede",
+        "state": {
+          "branch": null,
+          "revision": "d46026d5b004a32faa6c1d8abaa82930083362b0",
+          "version": "0.2.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
