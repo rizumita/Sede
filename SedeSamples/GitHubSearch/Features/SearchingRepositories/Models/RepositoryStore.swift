@@ -5,7 +5,7 @@
 import Foundation
 
 class RepositoryStore: ObservableObject {
-    @Published var searchText: String = "Sede"
+    @Published var searchText: String = ""
     @Published var reachedPage = 0
     @Published var repositories: [Repository] = []
 

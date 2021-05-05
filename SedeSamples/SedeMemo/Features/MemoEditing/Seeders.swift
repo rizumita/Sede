@@ -12,13 +12,14 @@ struct MemoEditorViewSeeder: Seeder {
         [_memoStore]
     }
 
-    func initialize() -> MemoEditorViewModel {
-        MemoEditorViewModel(id: memoStore.selectedMemo?.id,
-                            content: memoStore.selectedMemo?.content ?? "",
-                            memosButtonEnabled: !memoStore.memos.isEmpty)
+    func initialize() -> Diad<MemoEditorViewModel, MemoEditorMsg> {
+        (MemoEditorViewModel(id: memoStore.selectedMemo?.id,
+                             content: memoStore.selectedMemo?.content ?? "",
+                             memosButtonEnabled: !memoStore.memos.isEmpty),
+         .none)
     }
 
-    func receive(msg: MemoEditorMsg) {
+    func receive(model: MemoEditorViewModel, msg: MemoEditorMsg) {
         switch msg {
         case .save(let id, let content):
             let memo = Memo(id: id ?? UUID(), content: content)
@@ -31,11 +32,11 @@ struct MemoEditorViewSeeder: Seeder {
 struct MemoSelectorSeeder: Seeder {
     @Environment(\.memoStore) var memoStore
 
-    func initialize() -> [Memo] {
-        memoStore.memos
+    func initialize() -> Diad<[Memo], MemoSelectorMsg> {
+        (memoStore.memos, .none)
     }
 
-    func receive(msg: MemoSelectorMsg) {
+    func receive(model: [Memo], msg: MemoSelectorMsg) {
         switch msg {
         case .select(let id):
             memoStore.selectedMemo = memoStore.memos.first { $0.id == id }

@@ -63,8 +63,8 @@ struct MemoEditorView: View {
 struct MemoEditorView_Previews: PreviewProvider {
     static var previews: some View {
         MemoEditorView()
-            .environmentObject(AnySeeder {
+            .environmentObject(AnySeeder<MemoEditorViewModel, MemoEditorMsg> {
                 MemoEditorViewModel(id: .none, content: "Preview", memosButtonEnabled: false)
-            } receive: { (msg: MemoEditorMsg) in })
+            } receive: { _, _ in })
     }
 }

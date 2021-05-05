@@ -35,9 +35,7 @@ extension RepositoriesSearchView {
     struct Model {
         var searchText:    String       = ""
         var repositories:  [Repository] = []
-        var title:         String {
-            repositories.isEmpty ? "Search Repositories" : searchText
-        }
+        var title:         String = "Search Repositories"
     }
 }
 

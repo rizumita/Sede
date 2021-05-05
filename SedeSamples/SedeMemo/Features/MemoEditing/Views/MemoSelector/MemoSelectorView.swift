@@ -14,7 +14,7 @@ enum MemoSelectorMsg {
 }
 
 struct MemoSelectorView: View {
-    @Seed<[Memo], MemoSelectorMsg> var seed: [Memo]
+    @Seed<[Memo], MemoSelectorMsg> var   seed: [Memo]
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
@@ -33,6 +33,6 @@ struct MemoSelectorView_Previews: PreviewProvider {
     static var previews: some View {
         MemoSelectorView()
             .environmentObject(
-                AnySeeder { [Memo(id: UUID(), content: "Preview")] } receive: { (msg: MemoSelectorMsg) in })
+                AnySeeder<[Memo], MemoSelectorMsg> { [Memo(id: UUID(), content: "Preview")] } receive: { _, _ in })
     }
 }

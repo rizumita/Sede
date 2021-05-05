@@ -16,7 +16,7 @@ final public class AnySeeder<Model, Msg>: ObservableObject {
     private var isUpdating   = false
     private var cancellables = Set<AnyCancellable>()
 
-    lazy var model: Model = {
+    private(set) lazy var model: Model = {
         let (newModel, cmd) = initialize()
         defer { cmd.dispatch { msg in self.receive(model: newModel, msg: msg) } }
         self.isActivated = true
@@ -58,6 +58,11 @@ final public class AnySeeder<Model, Msg>: ObservableObject {
         } else {
             _ = model
         }
+    }
+
+    func set(model: Model) {
+        self.model = model
+        objectWillChange.send()
     }
 }
 

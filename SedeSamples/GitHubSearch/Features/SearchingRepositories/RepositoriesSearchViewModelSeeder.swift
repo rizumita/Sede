@@ -16,14 +16,16 @@ struct RepositoriesSearchViewModelSeeder: Seeder {
     }
 
     func initialize() -> Diad<RepositoriesSearchView.Model, RepositoriesSearchView.Msg> {
-        (RepositoriesSearchView.Model(searchText: repositoryStore.searchText,
-                                      repositories: repositoryStore.repositories),
+        (RepositoriesSearchView.Model(searchText: "Sede",
+                                      repositories: repositoryStore.repositories,
+                                      title: "Sede"),
          .ofMsg(.search))
     }
 
     func update(model: RepositoriesSearchView.Model) -> Diad<RepositoriesSearchView.Model, RepositoriesSearchView.Msg> {
         (.init(searchText: model.searchText,
-               repositories: repositoryStore.repositories),
+               repositories: repositoryStore.repositories,
+               title: model.searchText),
          .none)
     }
 
