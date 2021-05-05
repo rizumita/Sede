@@ -13,8 +13,8 @@ public struct Seed<Model, Msg> {
     @EnvironmentObject var seeder: AnySeeder<Model, Msg>
 
     public var wrappedValue: Model {
-        get { seeder.model ?? seeder.initialize() }
-        nonmutating set { seeder.set(model: newValue, needsPropagating: true) }
+        get { seeder.model }
+        nonmutating set { seeder.model = newValue }
     }
 
     public var projectedValue: Binding<Model> {
@@ -36,11 +36,13 @@ public struct Seed<Model, Msg> {
     }
 
     public func callAsFunction(_ msg: Msg) {
-        seeder.receive(msg: msg)
+        seeder.receive(model: wrappedValue, msg: msg)
     }
 }
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension Seed: DynamicProperty {
-    public func update() {}
+    public func update() {
+        seeder.updateCyclically()
+    }
 }

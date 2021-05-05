@@ -17,27 +17,25 @@ struct RepositoriesSearchView: View {
         NavigationView {
             List {
                 SearchField(searchText: $seed.searchText) {
-                    _seed(.search(seed.searchText))
+                    _seed(.search)
                 }
 
-                RepositoryListView(repositories: seed.repositories, appearedIndex: $seed.appearedIndex)
+                RepositoryListView(repositories: seed.repositories) { _seed(.search) }
             }
-                    .navigationTitle(seed.title)
+                .navigationTitle(seed.title)
         }
     }
 }
 
 extension RepositoriesSearchView {
     enum Msg {
-        case search(String)
-        case loadIfNeeded(Int)
+        case search
     }
 
     struct Model {
-        var searchText: String = ""
-        var repositories: [Repository] = []
-        var appearedIndex: Int = 0
-        var title: String {
+        var searchText:    String       = ""
+        var repositories:  [Repository] = []
+        var title:         String {
             repositories.isEmpty ? "Search Repositories" : searchText
         }
     }
@@ -46,7 +44,8 @@ extension RepositoriesSearchView {
 struct RepositoriesSearchView_Previews: PreviewProvider {
     static var previews: some View {
         RepositoriesSearchView()
-                .environmentObject(AnySeeder(initialize: RepositoriesSearchView.Model.init) { (msg: RepositoriesSearchView.Msg) in
-                })
+            .environmentObject(AnySeeder<RepositoriesSearchView.Model, RepositoriesSearchView.Msg>() { .init() } receive: {
+                _, _ in
+            })
     }
 }

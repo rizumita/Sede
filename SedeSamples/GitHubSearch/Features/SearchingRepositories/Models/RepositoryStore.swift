@@ -5,11 +5,13 @@
 import Foundation
 
 class RepositoryStore: ObservableObject {
-    @Published var searchText: String = ""
+    @Published var searchText: String = "Sede"
     @Published var reachedPage = 0
     @Published var repositories: [Repository] = []
 
-    func update(searchText: String, reachedPag: Int, repositories: [Repository]) {
+    init(repositories: [Repository]) { self.repositories = repositories }
+
+    func update(searchText: String, reachedPage: Int, repositories: [Repository]) {
         if searchText != self.searchText {
             self.repositories = repositories
         } else {
@@ -17,6 +19,6 @@ class RepositoryStore: ObservableObject {
         }
 
         self.searchText = searchText
-        self.reachedPage = reachedPag
+        self.reachedPage = reachedPage
     }
 }

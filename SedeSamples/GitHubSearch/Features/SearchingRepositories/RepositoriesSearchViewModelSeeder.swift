@@ -8,35 +8,40 @@ import Sede
 
 struct RepositoriesSearchViewModelSeeder: Seeder {
     @Environment(\.repositoryStore) var repositoryStore
-    @State var cancellables = Set<AnyCancellable>()
+    @State var                          cancellables = Set<AnyCancellable>()
+    @State var                          page         = 0
 
     var observedObjects: [AnyObservableObject] {
         [_repositoryStore]
     }
 
-    func initialize() -> RepositoriesSearchView.Model {
-        RepositoriesSearchView.Model(searchText: repositoryStore.searchText,
-                                     repositories: repositoryStore.repositories,
-                                     appearedIndex: 0)
+    func initialize() -> Diad<RepositoriesSearchView.Model, RepositoriesSearchView.Msg> {
+        (RepositoriesSearchView.Model(searchText: repositoryStore.searchText,
+                                      repositories: repositoryStore.repositories),
+         .ofMsg(.search))
     }
 
-    func update(value: RepositoriesSearchView.Model) -> RepositoriesSearchView.Model {
-        .init(searchText: value.searchText,
-              repositories: repositoryStore.repositories,
-              appearedIndex: value.appearedIndex)
+    func update(model: RepositoriesSearchView.Model) -> Diad<RepositoriesSearchView.Model, RepositoriesSearchView.Msg> {
+        (.init(searchText: model.searchText,
+               repositories: repositoryStore.repositories),
+         .none)
     }
 
-    func receive(msg: RepositoriesSearchView.Msg) {
+    func receive(model: RepositoriesSearchView.Model, msg: RepositoriesSearchView.Msg) {
         switch msg {
-        case .search(let text):
-            let workflow = SearchRepositoriesWorkflow.workflow(update: repositoryStore.update)
-            workflow(text: text, page: repositoryStore.reachedPage + 1)
+        case .search:
+            let page = model.searchText == repositoryStore.searchText ? self.page : 0
+            self.page = page + 1
+
+            let workflow = SearchRepositoriesWorkflow.workflow { searchText, page, repositories in
+                repositoryStore.update(searchText: searchText,
+                                       reachedPage: page,
+                                       repositories: repositories)
+            }
+            workflow(text: model.searchText, page: repositoryStore.reachedPage + 1)
                 .subscribe(on: DispatchQueue.global())
                 .sink { _ in }
                 .store(in: &cancellables)
-
-        case .loadIfNeeded(let page):
-            ()
         }
     }
 }

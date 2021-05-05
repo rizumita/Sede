@@ -5,7 +5,7 @@
 import SwiftUI
 
 struct RepositoryStoreKey: EnvironmentKey {
-    static let defaultValue = RepositoryStore()
+    static let defaultValue = RepositoryStore(repositories: [])
 }
 
 extension EnvironmentValues {
