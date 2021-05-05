@@ -9,19 +9,20 @@ import SwiftUI
 import Sede
 
 struct RepositoriesSearchView: View {
-    @_Seed var seed: (Msg) -> ()
-    @Reaped var model: Model
+    @Seed<Model, Msg> var seed
 
     @State private var selectedID: Int? = nil
 
     var body: some View {
         NavigationView {
             List {
-                SearchField(searchText: $model.searchText) { seed(.search(model.searchText)) }
+                SearchField(searchText: $seed.searchText) {
+                    _seed(.search(seed.searchText))
+                }
 
-                RepositoryListView(repositories: model.repositories, appearedIndex: $model.appearedIndex)
+                RepositoryListView(repositories: seed.repositories, appearedIndex: $seed.appearedIndex)
             }
-                .navigationTitle(model.title)
+                    .navigationTitle(seed.title)
         }
     }
 }
@@ -36,14 +37,16 @@ extension RepositoriesSearchView {
         var searchText: String = ""
         var repositories: [Repository] = []
         var appearedIndex: Int = 0
-        var title: String { repositories.isEmpty ? "Search Repositories" : searchText }
+        var title: String {
+            repositories.isEmpty ? "Search Repositories" : searchText
+        }
     }
 }
 
 struct RepositoriesSearchView_Previews: PreviewProvider {
     static var previews: some View {
         RepositoriesSearchView()
-            .environmentObject(AnyReaped<RepositoriesSearchView.Model>(initialize: RepositoriesSearchView.Model.init))
-            .environmentObject(AnySeed<RepositoriesSearchView.Msg> { print($0) })
+                .environmentObject(AnySeeder(initialize: RepositoriesSearchView.Model.init) { (msg: RepositoriesSearchView.Msg) in
+                })
     }
 }

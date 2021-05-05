@@ -3,10 +3,12 @@
 //
 
 import SwiftUI
+import Combine
 import Sede
 
-struct RepositoriesSearchViewModelReap: Reapable {
+struct RepositoriesSearchViewModelSeeder: Seeder {
     @Environment(\.repositoryStore) var repositoryStore
+    @State var cancellables = Set<AnyCancellable>()
 
     var observedObjects: [AnyObservableObject] {
         [_repositoryStore]
@@ -22,5 +24,19 @@ struct RepositoriesSearchViewModelReap: Reapable {
         .init(searchText: value.searchText,
               repositories: repositoryStore.repositories,
               appearedIndex: value.appearedIndex)
+    }
+
+    func receive(msg: RepositoriesSearchView.Msg) {
+        switch msg {
+        case .search(let text):
+            let workflow = SearchRepositoriesWorkflow.workflow(update: repositoryStore.update)
+            workflow(text: text, page: repositoryStore.reachedPage + 1)
+                .subscribe(on: DispatchQueue.global())
+                .sink { _ in }
+                .store(in: &cancellables)
+
+        case .loadIfNeeded(let page):
+            ()
+        }
     }
 }

@@ -19,7 +19,6 @@ struct MemoEditorViewSeeder: Seeder {
     }
 
     func receive(msg: MemoEditorMsg) {
-        print(#function)
         switch msg {
         case .save(let id, let content):
             let memo = Memo(id: id ?? UUID(), content: content)

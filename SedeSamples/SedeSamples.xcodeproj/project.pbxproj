@@ -33,9 +33,8 @@
 		CB876A230E7E84D7FB788925 /* NavigationItemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876CF2684A20E0568E9689 /* NavigationItemButton.swift */; };
 		CB876C811B7290B60C3533AD /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB87602AB3CE27D7920EAF60 /* Functions.swift */; };
 		CB876D1408C603FCD342C8B6 /* RepositoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB87631A26BCE7065A878C07 /* RepositoryStore.swift */; };
-		CB876EF4A4F4533BC2549603 /* Reaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB87672E778854B6D8B38927 /* Reaps.swift */; };
+		CB876EF4A4F4533BC2549603 /* RepositoriesSearchViewModelSeeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB87672E778854B6D8B38927 /* RepositoriesSearchViewModelSeeder.swift */; };
 		CB876F459214A1A60983529A /* MemoSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876DC9DC547F4BD5B3707C /* MemoSelectorView.swift */; };
-		CB876FE860F141A886798C74 /* Seeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876A4772F1D8DCBECB1AC7 /* Seeds.swift */; };
 		CB876FEA782791B799FC0411 /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB876B7CC7B1BB7D93F65DF6 /* Memo.swift */; };
 /* End PBXBuildFile section */
 
@@ -60,10 +59,9 @@
 		CB876334AED8688ECE66ECFD /* Environments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environments.swift; sourceTree = "<group>"; };
 		CB87646363AD968E9784EF74 /* SearchField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		CB8766DDCFEE91B62F0B555F /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
-		CB87672E778854B6D8B38927 /* Reaps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reaps.swift; sourceTree = "<group>"; };
+		CB87672E778854B6D8B38927 /* RepositoriesSearchViewModelSeeder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoriesSearchViewModelSeeder.swift; sourceTree = "<group>"; };
 		CB8768BB5AEAAE18F8444687 /* RepositoryListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryListView.swift; sourceTree = "<group>"; };
 		CB8769F8119ADE16FC4CB7DA /* Seeders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seeders.swift; sourceTree = "<group>"; };
-		CB876A4772F1D8DCBECB1AC7 /* Seeds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Seeds.swift; sourceTree = "<group>"; };
 		CB876A61AEB315A8E862DDF5 /* SearchTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		CB876B7CC7B1BB7D93F65DF6 /* Memo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
 		CB876C3CE8F62C692B9AB40A /* SearchButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchButton.swift; sourceTree = "<group>"; };
@@ -174,9 +172,8 @@
 			isa = PBXGroup;
 			children = (
 				6AEAD6E52608C686009B560E /* Views */,
-				CB87672E778854B6D8B38927 /* Reaps.swift */,
+				CB87672E778854B6D8B38927 /* RepositoriesSearchViewModelSeeder.swift */,
 				CB876E2BF9D9EC43611D7BB6 /* Workflows */,
-				CB876A4772F1D8DCBECB1AC7 /* Seeds.swift */,
 				CB87646126EE990153DE1845 /* Models */,
 				CB876FAD60172AE6C5A55A8C /* Environments.swift */,
 			);
@@ -396,9 +393,8 @@
 				6AEAD6D42608C569009B560E /* ContentView.swift in Sources */,
 				6AEAD6D22608C569009B560E /* GitHubSearchApp.swift in Sources */,
 				6AEAD6E72608C6A4009B560E /* RepositoriesSearchView.swift in Sources */,
-				CB876EF4A4F4533BC2549603 /* Reaps.swift in Sources */,
+				CB876EF4A4F4533BC2549603 /* RepositoriesSearchViewModelSeeder.swift in Sources */,
 				CB8765EFA1B10065A065D9B3 /* SearchRepositoriesWorkflow.swift in Sources */,
-				CB876FE860F141A886798C74 /* Seeds.swift in Sources */,
 				CB876C811B7290B60C3533AD /* Functions.swift in Sources */,
 				CB87691C7622D595EA540DCA /* Repository.swift in Sources */,
 				CB876D1408C603FCD342C8B6 /* RepositoryStore.swift in Sources */,
