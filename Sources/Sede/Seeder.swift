@@ -29,6 +29,16 @@ public extension Seeder {
 }
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+public extension Seeder where Model == Never {
+    func initialize() -> Diad<Model, Msg> { fatalError() }
+}
+
+@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+public extension Seeder where Msg == Never {
+    func receive(model: Model, msg: Msg) {}
+}
+
+@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension Seeder {
     func body(content: Content) -> some View {
         content.environmentObject(AnySeeder(seeder: self))
