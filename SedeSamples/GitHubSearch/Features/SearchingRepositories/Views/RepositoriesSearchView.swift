@@ -42,7 +42,7 @@ extension RepositoriesSearchView {
 struct RepositoriesSearchView_Previews: PreviewProvider {
     static var previews: some View {
         RepositoriesSearchView()
-            .environmentObject(AnySeeder<RepositoriesSearchView.Model, RepositoriesSearchView.Msg>() { .init() } receive: {
+            .environmentObject(SeederWrapper<RepositoriesSearchView.Model, RepositoriesSearchView.Msg>() { .init() } receive: {
                 _, _ in
             })
     }

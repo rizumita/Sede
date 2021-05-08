@@ -10,7 +10,7 @@ import SwiftUI
 @propertyWrapper
 @dynamicMemberLookup
 public struct Seed<Model, Msg> {
-    @EnvironmentObject var seeder: AnySeeder<Model, Msg>
+    @EnvironmentObject private var seeder: SeederWrapper<Model, Msg>
 
     public var wrappedValue: Model {
         get { seeder.model }

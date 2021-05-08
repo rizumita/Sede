@@ -1,5 +1,5 @@
 //
-//  AnySeeder.swift
+//  SeederWrapper.swift
 //
 //  Created by 和泉田 領一 on 2021/05/02.
 //
@@ -8,11 +8,10 @@ import Foundation
 import Combine
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-final public class AnySeeder<Model, Msg>: ObservableObject {
+final public class SeederWrapper<Model, Msg>: ObservableObject {
     private var _initialize: () -> Diad<Model, Msg>
     private var _update:     (Model) -> Diad<Model, Msg>
     private var _receive:    (Model, Msg) -> ()
-    private var isActivated  = false
     private var isUpdating   = false
     private var cancellables = Set<AnyCancellable>()
 
@@ -60,11 +59,10 @@ final public class AnySeeder<Model, Msg>: ObservableObject {
 }
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-extension AnySeeder {
+extension SeederWrapper {
     public func initialize() {
         let (newModel, cmd) = _initialize()
         defer { cmd.dispatch { msg in self.receive(model: newModel, msg: msg) } }
-        self.isActivated = true
         _model = newModel
     }
 
@@ -82,13 +80,13 @@ extension AnySeeder {
 }
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-extension AnySeeder where Model == Never {
+extension SeederWrapper where Model == Never {
     public func initialize() {}
 
     func updateCyclically() {}
 }
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-extension AnySeeder where Msg == Never {
+extension SeederWrapper where Msg == Never {
     public func receive(model: Model, msg: Msg) {}
 }

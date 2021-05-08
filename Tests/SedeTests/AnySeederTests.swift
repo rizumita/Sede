@@ -20,7 +20,7 @@ final class AnySeederTests: XCTestCase {
 
     func testInitialize() {
         XCTContext.runActivity(named: "Model: Never, Msg: Never") { _ in
-            let seeder = AnySeeder(seeder: TestSeeder<Never, Never>(injectedInitialized: { fatalError() },
+            let seeder = SeederWrapper(seeder: TestSeeder<Never, Never>(injectedInitialized: { fatalError() },
                                                                     injectedReceive: { _, _ in }))
             seeder.initialize()
         }
@@ -28,7 +28,7 @@ final class AnySeederTests: XCTestCase {
 
     func testUpdateCyclically() {
         XCTContext.runActivity(named: "Model: Never, Msg: Never") { _ in
-            let seeder = AnySeeder(seeder: TestSeeder<Never, Never>(injectedInitialized: { fatalError() },
+            let seeder = SeederWrapper(seeder: TestSeeder<Never, Never>(injectedInitialized: { fatalError() },
                                                                     injectedReceive: { _, _ in }))
             seeder.updateCyclically()
         }

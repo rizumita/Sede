@@ -14,12 +14,12 @@ public extension View {
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 private struct InjectModifier<S>: ViewModifier, DynamicProperty where S: Seeder {
-    @ObservedObject var object: AnySeeder<S.Model, S.Msg>
+    @ObservedObject var object: SeederWrapper<S.Model, S.Msg>
     var                 seeder: S
 
     init(seeder: S) {
         self.seeder = seeder
-        object = AnySeeder(seeder: seeder)
+        object = SeederWrapper(seeder: seeder)
     }
 
     func body(content: Content) -> some View {

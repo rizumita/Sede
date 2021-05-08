@@ -41,6 +41,6 @@ public extension Seeder where Msg == Never {
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension Seeder {
     func body(content: Content) -> some View {
-        content.environmentObject(AnySeeder(seeder: self))
+        content.environmentObject(SeederWrapper(seeder: self))
     }
 }
