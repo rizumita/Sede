@@ -1,5 +1,5 @@
 //
-// Created by 和泉田 領一 on 2021/03/10.
+// Created by Ryoichi Izumita on 2021/03/10.
 //
 
 import SwiftUI
@@ -12,7 +12,7 @@ struct MemoEditorViewSeeder: Seeder {
         [_memoStore]
     }
 
-    func initialize() -> Diad<MemoEditorViewModel, MemoEditorMsg> {
+    func initialize() -> (MemoEditorViewModel, Cmd<MemoEditorMsg>) {
         (MemoEditorViewModel(id: memoStore.selectedMemo?.id,
                              content: memoStore.selectedMemo?.content ?? "",
                              memosButtonEnabled: !memoStore.memos.isEmpty),
@@ -32,7 +32,7 @@ struct MemoEditorViewSeeder: Seeder {
 struct MemoSelectorSeeder: Seeder {
     @Environment(\.memoStore) var memoStore
 
-    func initialize() -> Diad<[Memo], MemoSelectorMsg> {
+    func initialize() -> ([Memo], Cmd<MemoSelectorMsg>) {
         (memoStore.memos, .none)
     }
 

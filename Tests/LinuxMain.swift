@@ -3,5 +3,5 @@ import XCTest
 import SedeTests
 
 var tests = [XCTestCaseEntry]()
-tests += AnySeederTests.allTests()
+tests += SeederWrapperTests.allTests()
 XCTMain(tests)
