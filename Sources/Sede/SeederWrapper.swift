@@ -1,17 +1,17 @@
 //
 //  SeederWrapper.swift
 //
-//  Created by 和泉田 領一 on 2021/05/02.
+//  Created by Ryoichi Izumita on 2021/05/02.
 //
 
 import Foundation
 import Combine
 
-@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 final public class SeederWrapper<Model, Msg>: ObservableObject {
-    private var _initialize: () -> Diad<Model, Msg>
-    private var _update:     (Model) -> Diad<Model, Msg>
-    private var _receive:    (Model, Msg) -> ()
+    private let _initialize: () -> Diad<Model, Msg>
+    private let _update:     (Model) -> Diad<Model, Msg>
+    private let _receive:    (Model, Msg) -> ()
     private var isUpdating   = false
     private var cancellables = Set<AnyCancellable>()
 
@@ -58,7 +58,7 @@ final public class SeederWrapper<Model, Msg>: ObservableObject {
     }
 }
 
-@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension SeederWrapper {
     public func initialize() {
         let (newModel, cmd) = _initialize()
@@ -79,14 +79,14 @@ extension SeederWrapper {
     }
 }
 
-@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension SeederWrapper where Model == Never {
     public func initialize() {}
 
     func updateCyclically() {}
 }
 
-@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension SeederWrapper where Msg == Never {
     public func receive(model: Model, msg: Msg) {}
 }

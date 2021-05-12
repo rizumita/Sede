@@ -2,7 +2,7 @@
 //  MemoEditorView.swift
 //  SedeMemo
 //
-//  Created by 和泉田 領一 on 2021/03/10.
+//  Created by Ryoichi Izumita on 2021/03/10.
 //
 //
 

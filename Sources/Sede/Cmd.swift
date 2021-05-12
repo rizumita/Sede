@@ -2,7 +2,7 @@
 //  Cmd.swift
 //  
 //
-//  Created by 和泉田 領一 on 2021/05/05.
+//  Created by Ryoichi Izumita on 2021/05/05.
 //
 
 import Foundation
@@ -10,7 +10,7 @@ import Foundation
 public typealias Dispatch<Msg> = (Msg) -> ()
 public typealias Sub<Msg> = (@escaping Dispatch<Msg>) -> ()
 
-@available(OSX 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 public struct Cmd<Msg> {
     let value: [Sub<Msg>]
 
