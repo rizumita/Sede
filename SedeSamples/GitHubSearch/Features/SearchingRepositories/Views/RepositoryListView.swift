@@ -7,14 +7,16 @@
 //
 
 import SwiftUI
+import Sede
 
 struct RepositoryListView: View {
     var repositories: [Repository]
     var readMore:     () -> ()
+    @Route<GitHubSearchRoute> private var route
 
     var body: some View {
         ForEach(repositories.enumerated().map { $0 }, id: \.element.id) { index, repository in
-            NavigationLink(repository.name, destination: Text(repository.name))
+            route(.repository(repository))
                 .onAppear {
                     guard index == (repositories.count - 1) else { return }
                     readMore()

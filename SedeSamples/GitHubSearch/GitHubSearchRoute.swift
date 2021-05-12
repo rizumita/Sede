@@ -7,4 +7,5 @@ import SwiftUI
 enum GitHubSearchRoute {
     case searchingRepositories
     case searchingUsers
+    case repository(Repository)
 }

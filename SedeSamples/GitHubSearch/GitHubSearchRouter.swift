@@ -17,7 +17,10 @@ struct GitHubSearchRouter: Router {
 
         case .searchingUsers:
             Button(action: { seed.feature = .searchingRepositories },
-                   label: { Text("Not implemented.\nGo searching repositories view") })
+                   label: { Text("Searching user view is not implemented.\nGo to searching repositories view") })
+
+        case .repository(let repository):
+            NavigationLink(repository.name, destination: RepositoryView(repository: repository))
         }
     }
 }
