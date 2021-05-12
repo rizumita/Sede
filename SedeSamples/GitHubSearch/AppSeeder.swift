@@ -15,7 +15,7 @@ struct AppModel {
 }
 
 struct AppSeeder: Seeder {
-    func initialize() -> Diad<AppModel, Never> {
+    func initialize() -> (AppModel, Cmd<Never>){
         (AppModel(feature: .searchingUsers), .none)
     }
 }

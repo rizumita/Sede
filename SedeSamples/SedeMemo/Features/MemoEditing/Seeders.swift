@@ -12,7 +12,7 @@ struct MemoEditorViewSeeder: Seeder {
         [_memoStore]
     }
 
-    func initialize() -> Diad<MemoEditorViewModel, MemoEditorMsg> {
+    func initialize() -> (MemoEditorViewModel, Cmd<MemoEditorMsg>) {
         (MemoEditorViewModel(id: memoStore.selectedMemo?.id,
                              content: memoStore.selectedMemo?.content ?? "",
                              memosButtonEnabled: !memoStore.memos.isEmpty),
@@ -32,7 +32,7 @@ struct MemoEditorViewSeeder: Seeder {
 struct MemoSelectorSeeder: Seeder {
     @Environment(\.memoStore) var memoStore
 
-    func initialize() -> Diad<[Memo], MemoSelectorMsg> {
+    func initialize() -> ([Memo], Cmd<MemoSelectorMsg>) {
         (memoStore.memos, .none)
     }
 

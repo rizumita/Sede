@@ -10,10 +10,10 @@ import XCTest
 
 final class SeederWrapperTests: XCTestCase {
     struct TestSeeder<Model, Msg>: Seeder {
-        let injectedInitialized: () -> Diad<Model, Msg>
+        let injectedInitialized: () -> (Model, Cmd<Msg>)
         let injectedReceive:     (Model, Msg) -> ()
 
-        func initialize() -> Diad<Model, Msg> { injectedInitialized() }
+        func initialize() -> (Model, Cmd<Msg>) { injectedInitialized() }
 
         func receive(model: Model, msg: Msg) { injectedReceive(model, msg) }
     }

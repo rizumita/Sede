@@ -9,8 +9,8 @@ import Combine
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 final public class SeederWrapper<Model, Msg>: ObservableObject {
-    private let _initialize: () -> Diad<Model, Msg>
-    private let _update:     (Model) -> Diad<Model, Msg>
+    private let _initialize: () -> (Model, Cmd<Msg>)
+    private let _update:     (Model) -> (Model, Cmd<Msg>)
     private let _receive:    (Model, Msg) -> ()
     private var isUpdating   = false
     private var cancellables = Set<AnyCancellable>()
