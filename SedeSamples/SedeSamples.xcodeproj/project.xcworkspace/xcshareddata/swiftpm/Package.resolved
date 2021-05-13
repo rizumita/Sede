@@ -3,11 +3,11 @@
     "pins": [
       {
         "package": "Sede",
-        "repositoryURL": "/Users/rizumita/Workspace/CAPHTECH/Sede",
+        "repositoryURL": "https://github.com/rizumita/Sede",
         "state": {
           "branch": null,
-          "revision": "d46026d5b004a32faa6c1d8abaa82930083362b0",
-          "version": "0.2.0"
+          "revision": "a1fed7ab84342a0864b91df847625825734bda41",
+          "version": "0.3.3"
         }
       }
     ]
