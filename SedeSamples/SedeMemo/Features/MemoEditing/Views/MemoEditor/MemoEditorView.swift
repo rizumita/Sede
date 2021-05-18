@@ -11,26 +11,10 @@ import Sede
 
 import Combine
 
-struct MemoEditorViewModel {
-    let id: UUID?
-    var content: String
-    var memosButtonEnabled: Bool
-    var canSave: Bool { !content.isEmpty }
-
-    init(id: UUID?, content: String, memosButtonEnabled: Bool) {
-        self.id = id
-        self.content = content
-        self.memosButtonEnabled = memosButtonEnabled
-    }
-}
-
-enum MemoEditorMsg {
-    case save(UUID?, String)
-}
-
 struct MemoEditorView: View {
-    @Seed<MemoEditorViewModel, MemoEditorMsg> var seed: MemoEditorViewModel
+    @Seed<Model, Msg> var seed
     @State var showsMemoSelector = false
+    @Router<SedeMemoRoute> var router
 
     var body: some View {
         NavigationView {
@@ -43,7 +27,7 @@ struct MemoEditorView: View {
                     .navigationBarTitle("", displayMode: .inline)
             }
         }.sheet(isPresented: $showsMemoSelector) {
-            MemoSelectorView().sede(MemoSelectorSeeder())
+            router(.selector)
         }
     }
 
@@ -60,11 +44,30 @@ struct MemoEditorView: View {
     }
 }
 
+extension MemoEditorView  {
+    struct Model {
+        let id: UUID?
+        var content: String
+        var memosButtonEnabled: Bool
+        var canSave: Bool { !content.isEmpty }
+
+        init(id: UUID?, content: String, memosButtonEnabled: Bool) {
+            self.id = id
+            self.content = content
+            self.memosButtonEnabled = memosButtonEnabled
+        }
+    }
+
+    enum Msg {
+        case save(UUID?, String)
+    }
+}
+
 struct MemoEditorView_Previews: PreviewProvider {
     static var previews: some View {
         MemoEditorView()
-            .environmentObject(SeederWrapper<MemoEditorViewModel, MemoEditorMsg> {
-                MemoEditorViewModel(id: .none, content: "Preview", memosButtonEnabled: false)
+            .environmentObject(SeederWrapper<MemoEditorView.Model, MemoEditorView.Msg> {
+                MemoEditorView.Model(id: .none, content: "Preview", memosButtonEnabled: false)
             } receive: { _, _ in })
     }
 }

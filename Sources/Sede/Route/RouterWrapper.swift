@@ -11,7 +11,7 @@ import SwiftUI
 final public class RouterWrapper<Route>: ObservableObject {
     private let _locate: (Route) -> AnyView
 
-    init<R>(router: R) where R: Router, Route == R.Route {
+    init<R>(router: R) where R: Routable, Route == R.RouteType {
         _locate = { AnyView(router.locate(route: $0)) }
     }
 }

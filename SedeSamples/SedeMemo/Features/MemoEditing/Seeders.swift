@@ -5,21 +5,17 @@
 import SwiftUI
 import Sede
 
-struct MemoEditorViewSeeder: Seeder {
-    @Environment(\.memoStore) var memoStore
+struct MemoEditorViewSeeder: Seedable {
+    @EnvironmentObject var memoStore: MemoStore
 
-    var observedObjects: [AnyObservableObject] {
-        [_memoStore]
-    }
-
-    func initialize() -> (MemoEditorViewModel, Cmd<MemoEditorMsg>) {
-        (MemoEditorViewModel(id: memoStore.selectedMemo?.id,
-                             content: memoStore.selectedMemo?.content ?? "",
-                             memosButtonEnabled: !memoStore.memos.isEmpty),
+    func initialize() -> (MemoEditorView.Model, Cmd<MemoEditorView.Msg>) {
+        (MemoEditorView.Model(id: memoStore.selectedMemo?.id,
+                              content: memoStore.selectedMemo?.content ?? "",
+                              memosButtonEnabled: !memoStore.memos.isEmpty),
          .none)
     }
 
-    func receive(model: MemoEditorViewModel, msg: MemoEditorMsg) {
+    func receive(model: MemoEditorView.Model, msg: MemoEditorView.Msg) {
         switch msg {
         case .save(let id, let content):
             let memo = Memo(id: id ?? UUID(), content: content)
@@ -29,8 +25,8 @@ struct MemoEditorViewSeeder: Seeder {
     }
 }
 
-struct MemoSelectorSeeder: Seeder {
-    @Environment(\.memoStore) var memoStore
+struct MemoSelectorSeeder: Seedable {
+    @EnvironmentObject var memoStore: MemoStore
 
     func initialize() -> ([Memo], Cmd<MemoSelectorMsg>) {
         (memoStore.memos, .none)

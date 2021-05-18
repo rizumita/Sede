@@ -14,7 +14,7 @@ struct AppModel {
     var feature: Feature
 }
 
-struct AppSeeder: Seeder {
+struct AppSeeder: Seedable {
     func initialize() -> (AppModel, Cmd<Never>){
         (AppModel(feature: .searchingUsers), .none)
     }

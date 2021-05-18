@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import Sede
 
 @main
 struct SedeMemoApp: App {
+    var router = SedeMemoRouter()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            router.base(.editor).environmentObject(MemoStore())
         }
     }
 }

@@ -11,12 +11,12 @@ import Sede
 
 struct RepositoryListView: View {
     var repositories: [Repository]
-    var readMore:     () -> ()
-    @Route<GitHubSearchRoute> private var route
+    var readMore: () -> ()
+    @Router<GitHubSearchRoute> private var router
 
     var body: some View {
         ForEach(repositories.enumerated().map { $0 }, id: \.element.id) { index, repository in
-            route(.repository(repository))
+            router(.repository(repository))
                 .onAppear {
                     guard index == (repositories.count - 1) else { return }
                     readMore()

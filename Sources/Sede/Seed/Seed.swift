@@ -14,7 +14,7 @@ public struct Seed<Model, Msg> {
 
     public var wrappedValue: Model {
         get { seeder.model }
-        nonmutating set { seeder.set(model: newValue) }
+        nonmutating set { seeder.model = newValue }
     }
 
     public var projectedValue: Binding<Model> {

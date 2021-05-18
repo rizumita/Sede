@@ -10,14 +10,14 @@ import Sede
 
 struct ContentView: View {
     @Seed<AppModel, Never> var seed
-    @Route<GitHubSearchRoute> var route
+    @Router<GitHubSearchRoute> var router
 
     var body: some View {
         switch seed.feature {
         case .searchingRepositories:
-            route(.searchingRepositories)
+            router(.searchingRepositories)
         case .searchingUsers:
-            route(.searchingUsers)
+            router(.searchingUsers)
         }
     }
 }

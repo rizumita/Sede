@@ -1,22 +1,21 @@
 //
-//  Route.swift
-//
 //  Created by Ryoichi Izumita on 2021/05/13.
 //
 
 import SwiftUI
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public protocol Router: ViewModifier {
-    associatedtype Route
-    associatedtype Location: View
+@propertyWrapper
+public struct Router<R>: DynamicProperty {
+    @EnvironmentObject private var router: RouterWrapper<R>
 
-    @ViewBuilder func locate(route: Route) -> Location
-}
+    public var wrappedValue: (R) -> AnyView {
+        router.locate(route:)
+    }
 
-@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-extension Router {
-    public func body(content: Content) -> some View {
-        content.environmentObject(RouterWrapper(router: self))
+    public init() {}
+
+    public init<A>(_ router: A) where A: Routable, A.RouteType == R {
+        self._router = EnvironmentObject()
     }
 }

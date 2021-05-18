@@ -9,21 +9,13 @@ import XCTest
 @testable import Sede
 
 final class SeederWrapperTests: XCTestCase {
-    struct TestSeeder<Model, Msg>: Seeder {
+    struct TestSeeder<Model, Msg>: Seedable {
         let injectedInitialized: () -> (Model, Cmd<Msg>)
         let injectedReceive:     (Model, Msg) -> ()
 
         func initialize() -> (Model, Cmd<Msg>) { injectedInitialized() }
 
         func receive(model: Model, msg: Msg) { injectedReceive(model, msg) }
-    }
-
-    func testInitialize() {
-        XCTContext.runActivity(named: "Model: Never, Msg: Never") { _ in
-            let seeder = SeederWrapper(seeder: TestSeeder<Never, Never>(injectedInitialized: { fatalError() },
-                                                                    injectedReceive: { _, _ in }))
-            seeder.initialize()
-        }
     }
 
     func testUpdateCyclically() {
@@ -35,7 +27,6 @@ final class SeederWrapperTests: XCTestCase {
     }
 
     static var allTests = [
-        ("testInitialize", testInitialize),
         ("testUpdateCyclically", testUpdateCyclically)
     ]
 }

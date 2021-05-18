@@ -9,7 +9,7 @@ import SwiftUI
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension View {
-    func route<R>(_ router: R) -> some View where R: Router {
+    func route<R>(_ router: R) -> some View where R: Routable {
         modifier(router)
     }
 }

@@ -6,7 +6,7 @@ import SwiftUI
 import Combine
 import Sede
 
-struct RepositoriesSearchViewModelSeeder: Seeder {
+struct RepositoriesSearchViewModelSeeder: Seedable {
     @Environment(\.repositoryStore) var repositoryStore
     @State var                          cancellables = Set<AnyCancellable>()
     @State var                          page         = 0
