@@ -9,4 +9,9 @@ public extension View {
     func seed<S>(_ seeder: S) -> some View where S: Seedable {
         modifier(seeder)
     }
+
+    func seed<Model, Msg>(initialize: @autoclosure @escaping () -> Model,
+                          receive: @escaping (Model, Msg) -> ()) -> some View {
+        environmentObject(SeederWrapper(initialize: initialize, receive: receive))
+    }
 }

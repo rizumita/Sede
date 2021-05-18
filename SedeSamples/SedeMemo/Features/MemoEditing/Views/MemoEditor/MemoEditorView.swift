@@ -66,8 +66,7 @@ extension MemoEditorView {
 struct MemoEditorView_Previews: PreviewProvider {
     static var previews: some View {
         MemoEditorView()
-            .environmentObject(SeederWrapper<MemoEditorView.Model, MemoEditorView.Msg> {
-                MemoEditorView.Model(id: .none, content: "Preview", memosButtonEnabled: false)
-            } receive: { _, _ in })
+            .seed(initialize: MemoEditorView.Model(id: .none, content: "Preview", memosButtonEnabled: false),
+                  receive: { (_, _: MemoEditorView.Msg) in })
     }
 }

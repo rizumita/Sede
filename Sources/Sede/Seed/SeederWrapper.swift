@@ -34,8 +34,7 @@ final public class SeederWrapper<Model, Msg>: ObservableObject {
                   .store(in: &cancellables)
     }
 
-    /// For previewing
-    public init(initialize: @escaping () -> Model,
+    init(initialize: @escaping () -> Model,
                 receive: @escaping (Model, Msg) -> ()) {
         model = initialize()
         _update = { ($0, .none) }

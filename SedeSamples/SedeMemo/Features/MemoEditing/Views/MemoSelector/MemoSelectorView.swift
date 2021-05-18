@@ -32,7 +32,6 @@ struct MemoSelectorView: View {
 struct MemoSelectorView_Previews: PreviewProvider {
     static var previews: some View {
         MemoSelectorView()
-            .environmentObject(
-                SeederWrapper<[Memo], MemoSelectorMsg> { [Memo(id: UUID(), content: "Preview")] } receive: { _, _ in })
+            .seed(initialize: [Memo(id: UUID(), content: "Preview")], receive: { (_, _: MemoSelectorMsg) in })
     }
 }

@@ -2,7 +2,7 @@
 //  RepositoryView.swift
 //  SedeSamples
 //
-//  Created by 和泉田 領一 on 2021/05/13.
+//  Created by Ryoichi Izumita on 2021/05/13.
 //
 //
 
