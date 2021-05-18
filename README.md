@@ -4,7 +4,7 @@ Sede is a library for SwiftUI to bind a view and a model.
 ## Concept
 Sede aimed to compatible with SwiftUI by fully utilizing SwiftUI features.
 It can be loose coupling SwiftUI's View and Model, and Model can use View's Environment and EnvironmentObject freely.
-And View can reference Model and send messages freely.
+View can reference Model and send messages freely.
 
 ## Install
 
@@ -105,9 +105,9 @@ class PeopleRepository: ObservableObject {
 
 ### Create seeders
 
-`Seedable.initialize()` method must return a tuple of a model and a message wrapped by Cmd.
+`Seedable.initialize()` method must return a tuple of a model and message wrapped by Cmd.
 
-`Seedable.update(model:)` method must return a tuple of updated model and a message wrapped by Cmd.
+`Seedable.update(model:)` method must return a tuple of updated model and message wrapped by Cmd.
 
 ```swift
 struct PersonInputSeeder: Seedable {
