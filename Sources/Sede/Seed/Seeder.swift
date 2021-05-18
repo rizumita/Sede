@@ -1,6 +1,4 @@
 //
-//  Seed.swift
-//
 //  Created by Ryoichi Izumita on 2021/05/02.
 //
 
@@ -9,7 +7,7 @@ import SwiftUI
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 @propertyWrapper
 @dynamicMemberLookup
-public struct Seed<Model, Msg> {
+public struct Seeder<Model, Msg> {
     @EnvironmentObject private var seeder: SeederWrapper<Model, Msg>
 
     public var wrappedValue: Model {
@@ -41,7 +39,7 @@ public struct Seed<Model, Msg> {
 }
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-extension Seed: DynamicProperty {
+extension Seeder: DynamicProperty {
     public func update() {
         seeder.updateCyclically()
     }

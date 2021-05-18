@@ -14,13 +14,13 @@ enum MemoSelectorMsg {
 }
 
 struct MemoSelectorView: View {
-    @Seed<[Memo], MemoSelectorMsg> var   seed: [Memo]
+    @Seeder<[Memo], MemoSelectorMsg> var seeder: [Memo]
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
-        List(seed, id: \.id) { memo in
+        List(seeder, id: \.id) { memo in
             Button(action: {
-                _seed(.select(memo.id))
+                _seeder(.select(memo.id))
                 presentationMode.wrappedValue.dismiss()
             },
                    label: { Text(memo.content) })

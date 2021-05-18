@@ -6,17 +6,17 @@ import SwiftUI
 import Sede
 
 struct GitHubSearchRouter: Routable {
-    @Seed<AppModel, Never> var seed
+    @Seeder<AppModel, Never> var seeder
 
     func locate(route: GitHubSearchRoute) -> some View {
         switch route {
         case .searchingRepositories:
             RepositoriesSearchView()
-                .sede(RepositoriesSearchViewModelSeeder())
+                .seed(RepositoriesSearchViewModelSeeder())
                 .padding()
 
         case .searchingUsers:
-            Button(action: { seed.feature = .searchingRepositories },
+            Button(action: { seeder.feature = .searchingRepositories },
                    label: { Text("Searching user view is not implemented.\nGo to searching repositories view") })
 
         case .repository(let repository):

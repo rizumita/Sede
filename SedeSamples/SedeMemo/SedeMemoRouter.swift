@@ -15,11 +15,11 @@ struct SedeMemoRouter: Routable {
         switch route {
         case .editor:
             MemoEditorView()
-                .sede(MemoEditorViewSeeder())
+                .seed(MemoEditorViewSeeder())
 
         case .selector:
             MemoSelectorView()
-                .sede(MemoSelectorSeeder())
+                .seed(MemoSelectorSeeder())
         }
     }
 }

@@ -13,7 +13,7 @@ struct GitHubSearchApp: App {
         WindowGroup {
             ContentView()
                 .route(GitHubSearchRouter())
-                .sede(AppSeeder())
+                .seed(AppSeeder())
         }
     }
 }

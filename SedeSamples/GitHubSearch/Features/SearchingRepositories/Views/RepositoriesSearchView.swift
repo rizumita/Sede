@@ -9,20 +9,20 @@ import SwiftUI
 import Sede
 
 struct RepositoriesSearchView: View {
-    @Seed<Model, Msg> var seed
+    @Seeder<Model, Msg> var seeder
 
     @State private var selectedID: Int? = nil
 
     var body: some View {
         NavigationView {
             List {
-                SearchField(searchText: $seed.searchText) {
-                    _seed(.search)
+                SearchField(searchText: $seeder.searchText) {
+                    _seeder(.search)
                 }
 
-                RepositoryListView(repositories: seed.repositories) { _seed(.search) }
+                RepositoryListView(repositories: seeder.repositories) { _seeder(.search) }
             }
-                .navigationTitle(seed.title)
+                .navigationTitle(seeder.title)
         }
     }
 }
@@ -33,9 +33,9 @@ extension RepositoriesSearchView {
     }
 
     struct Model {
-        var searchText:    String       = ""
-        var repositories:  [Repository] = []
-        var title:         String = "Search Repositories"
+        var searchText: String = ""
+        var repositories: [Repository] = []
+        var title: String = "Search Repositories"
     }
 }
 

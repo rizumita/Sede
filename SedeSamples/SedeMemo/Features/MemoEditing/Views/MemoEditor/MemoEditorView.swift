@@ -12,14 +12,14 @@ import Sede
 import Combine
 
 struct MemoEditorView: View {
-    @Seed<Model, Msg> var seed
+    @Seeder<Model, Msg> var seeder
     @State var showsMemoSelector = false
     @Router<SedeMemoRoute> var router
 
     var body: some View {
         NavigationView {
             VStack {
-                TextEditor(text: $seed.content)
+                TextEditor(text: $seeder.content)
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                     .navigationBarItems(leading: navigationBarItemLeading,
                                         trailing: navigationBarItemTrailing)
@@ -32,19 +32,19 @@ struct MemoEditorView: View {
     }
 
     var navigationBarItemLeading: some View {
-        NavigationItemButton(enabled: seed.memosButtonEnabled,
+        NavigationItemButton(enabled: seeder.memosButtonEnabled,
                              action: { showsMemoSelector.toggle() },
                              label: { Text("Memos") })
     }
 
     var navigationBarItemTrailing: some View {
-        NavigationItemButton(enabled: seed.canSave,
-                             action: { _seed(.save(seed.id, seed.content)) },
+        NavigationItemButton(enabled: seeder.canSave,
+                             action: { _seeder(.save(seeder.id, seeder.content)) },
                              label: { Text("Save") })
     }
 }
 
-extension MemoEditorView  {
+extension MemoEditorView {
     struct Model {
         let id: UUID?
         var content: String
