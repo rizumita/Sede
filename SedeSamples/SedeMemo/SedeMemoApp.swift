@@ -10,11 +10,9 @@ import Sede
 
 @main
 struct SedeMemoApp: App {
-    var router = SedeMemoRouter()
-
     var body: some Scene {
         WindowGroup {
-            router.base(.editor).environmentObject(MemoStore())
+            SedeMemoRouter().base(.editor).environmentObject(MemoStore())
         }
     }
 }
