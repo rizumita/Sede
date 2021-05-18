@@ -14,8 +14,4 @@ public struct Router<R>: DynamicProperty {
     }
 
     public init() {}
-
-    public init<A>(_ router: A) where A: Routable, A.RouteType == R {
-        self._router = EnvironmentObject()
-    }
 }
