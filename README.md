@@ -1,5 +1,5 @@
 # Sede
-Sede is a library for SwiftUI to bind a view and a model.
+Sede is a library for SwiftUI to bind a view and a model, and to provide routing.
 
 ## Concept
 Sede aimed to compatible with SwiftUI by fully utilizing SwiftUI features.
@@ -114,12 +114,12 @@ struct PersonInputSeeder: Seedable {
     @EnvironmentObject var peopleRepository: PeopleRepository
     
     func initialize() -> (PersonInputView.Model, Cmd<PersonInputView.Msg>) {    // Return Model and Msg wrapped by Cmd
-        (.init(name: "", profile: "", people: []),
+        (.init(name: "", people: []),
          .none)
     }
     
     func update(model: PersonInputView.Model) -> (PersonInputView.Model, Cmd<PersonInputView.Msg>) {    // Return update model and Msg wrapped by Cmd
-        (.init(name: model.name, profile: model.profile, people: peopleRepository.people),
+        (.init(name: model.name, people: peopleRepository.people),
          .none)
     }
     
@@ -127,7 +127,7 @@ struct PersonInputSeeder: Seedable {
         switch msg {
         case .save:
             guard !model.name.isEmpty else { return }
-            peopleRepository.add(person: Person(name: model.name, profile: model.profile))  // Repository sends with objectWillChanged by @Published and Self.update(model:Model) method will be called
+            peopleRepository.add(person: Person(name: model.name))  // Repository sends with objectWillChanged by @Published and Self.update(model:Model) method will be called
         }
     }
 }
