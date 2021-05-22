@@ -35,8 +35,4 @@ public struct Seeder<Model, Msg>: DynamicProperty {
     public func callAsFunction(_ msg: Msg) {
         seeder.receive(msg: msg)
     }
-
-    public func update() {
-        seeder.update()
-    }
 }

@@ -14,16 +14,12 @@ public protocol Seedable: ViewModifier, ObservableValue, Hashable {
 
     func initialize() -> Cmd<Msg>
 
-    func update()
-
     func receive(msg: Msg)
 }
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension Seedable {
     func initialize() -> Cmd<Msg> { .none }
-
-    func update() {}
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(String(describing: Self.self))

@@ -10,32 +10,31 @@ struct RepositoriesSearchViewModelSeeder: Seedable {
     @Environment(\.repositoryStore) var repositoryStore
     @Seed var seed = RepositoriesSearchView.Model()
     @Seed var cancellables = Set<AnyCancellable>()
-    @Seed var page = 0
-    var objectWillChange: some Publisher {
-        repositoryStore.objectWillChange
-        seed.objectWillChange
-    }
+    @State var page = 0
 
     func initialize() -> Cmd<RepositoriesSearchView.Msg> {
-        seed.searchText = "Sede"
-        seed.repositories = repositoryStore.repositories
-        seed.title = "Sede"
-        return .ofMsg(.searchFirst)
+        repositoryStore.searchText = "Sede"
+        return .batch([.ofMsg(.update),
+                       Task(repositoryStore.objectWillChange
+                                .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main))
+                           .attemptToMsg { _ in .update },
+                       .ofMsg(.searchFirst)])
     }
 
     func receive(msg: RepositoriesSearchView.Msg) {
         let workflow = SearchRepositoriesWorkflow.workflow { searchText, page, repositories in
-            repositoryStore.update(searchText: searchText,
-                                   reachedPage: page,
-                                   repositories: repositories)
-            seed.searchText = searchText
-            seed.repositories = repositoryStore.repositories
-            seed.title = searchText
+            repositoryStore.update(searchText: searchText, reachedPage: page, repositories: repositories)
             self.page = page
         }
 
         switch msg {
+        case .update:
+            seed.searchText = repositoryStore.searchText
+            seed.repositories = repositoryStore.repositories
+            seed.title = repositoryStore.searchText
+
         case .searchFirst:
+            repositoryStore.searchText = seed.searchText
             repositoryStore.repositories = []
             workflow(text: seed.searchText, page: 0)
                 .subscribe(on: DispatchQueue.global())

@@ -36,6 +36,7 @@ extension PersonInputView {
     }
     
     enum Msg {
+        case update
         case save
     }
 }

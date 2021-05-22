@@ -29,6 +29,7 @@ struct RepositoriesSearchView: View {
 
 extension RepositoriesSearchView {
     enum Msg {
+        case update
         case searchFirst
         case searchNext
     }
