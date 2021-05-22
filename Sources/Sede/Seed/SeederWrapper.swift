@@ -11,9 +11,8 @@ import Combine
 final public class SeederWrapper<Model, Msg>: ObservableObject {
     private var _getModel: () -> Model
     private var _setModel: (Model) -> () = { _ in }
-    private var _receive: (Msg) -> ()
+    private var _receive: (Msg) -> Cmd<Msg>
     private var cancellables = Set<AnyCancellable>()
-    private var cancellables2 = Set<AnyCancellable>()
 
     var model: Model {
         get { _getModel() }
@@ -27,10 +26,10 @@ final public class SeederWrapper<Model, Msg>: ObservableObject {
         seeder.objectWillChange
             .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] _ in self?.objectWillChange.send() })
             .store(in: &cancellables)
-        seeder.initialize().dispatch(seeder.receive(msg:), cancellables: &cancellables)
+        seeder.initialize().dispatch({ [weak self] msg in self?.receive(msg: msg) }, cancellables: &cancellables)
     }
 
-    init(model: Model, receive: @escaping (Msg) -> ()) {
+    init(model: Model, receive: @escaping (Msg) -> Cmd<Msg> = { _ in .none }) {
         _getModel = { model }
         _receive = receive
     }
@@ -39,7 +38,9 @@ final public class SeederWrapper<Model, Msg>: ObservableObject {
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension SeederWrapper {
     func receive(msg: Msg) {
-        _receive(msg)
+        DispatchQueue.main.async {
+            self._receive(msg).dispatch({ [weak self] msg in self?.receive(msg: msg) }, cancellables: &self.cancellables)
+        }
     }
 }
 

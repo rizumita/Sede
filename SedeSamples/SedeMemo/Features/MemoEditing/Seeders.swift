@@ -11,28 +11,25 @@ struct MemoEditorViewSeeder: Seedable {
     @State var seed = MemoEditorView.Model(id: .none, content: "", memosButtonEnabled: false)
 
     func initialize() -> Cmd<MemoEditorView.Msg> {
-        .batch([Task(memoStore.objectWillChange).attemptToMsg { _ in .memoStoreUpdated },
+        .batch([Task(memoStore.objectWillChange).attemptToMsg { _ in .update },
                 .ofMsg(.save(.none, "a")),
                 .ofMsg(.save(.none, "b")),
                 .ofMsg(.save(.none, "c"))])
     }
 
-    func receive(msg: MemoEditorView.Msg) {
+    func receive(msg: MemoEditorView.Msg) -> Cmd<MemoEditorView.Msg> {
         switch msg {
-        case .memoStoreUpdated:
+        case .update:
             seed.id = memoStore.selectedMemo?.id
             seed.content = memoStore.selectedMemo?.content ?? ""
             seed.memosButtonEnabled = !memoStore.memos.isEmpty
-
-        case .load:
-            seed.id = memoStore.selectedMemo?.id
-            seed.content = memoStore.selectedMemo?.content ?? seed.content
-            seed.memosButtonEnabled = !memoStore.memos.isEmpty
+            return .none
 
         case .save(let id, let content):
             let memo = Memo(id: id ?? UUID(), content: content)
             memoStore.insert(memo: memo)
             memoStore.selectedMemo = .none
+            return .none
         }
     }
 }
@@ -47,11 +44,12 @@ struct MemoSelectorSeeder: Seedable {
         return .none
     }
 
-    func receive(msg: MemoSelectorMsg) {
+    func receive(msg: MemoSelectorMsg) -> Cmd<MemoSelectorMsg> {
         switch msg {
         case .select(let id):
             memoStore.selectedMemo = memoStore.memos.first { $0.id == id }
-            _editorSeeder(.load)
+            _editorSeeder(.update)
+            return .none
         }
     }
 }

@@ -32,6 +32,6 @@ struct MemoSelectorView: View {
 struct MemoSelectorView_Previews: PreviewProvider {
     static var previews: some View {
         MemoSelectorView()
-            .seed(model: [Memo(id: UUID(), content: "Preview")], receive: { (_: MemoSelectorMsg) in })
+            .seed(model: [Memo(id: UUID(), content: "Preview")], receive: { (_: MemoSelectorMsg) in .none })
     }
 }

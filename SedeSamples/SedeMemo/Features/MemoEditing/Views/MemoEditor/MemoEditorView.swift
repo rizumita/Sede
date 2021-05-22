@@ -59,8 +59,7 @@ extension MemoEditorView {
     }
 
     enum Msg {
-        case memoStoreUpdated
-        case load
+        case update
         case save(UUID?, String)
     }
 }
@@ -69,6 +68,6 @@ struct MemoEditorView_Previews: PreviewProvider {
     static var previews: some View {
         MemoEditorView()
             .seed(model: MemoEditorView.Model(id: .none, content: "Preview", memosButtonEnabled: false),
-                  receive: { (_: MemoEditorView.Msg) in })
+                  receive: { (_: MemoEditorView.Msg) in .none })
     }
 }

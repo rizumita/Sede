@@ -14,27 +14,26 @@ struct PersonInputSeeder: Seedable {
     @Seed var seed = PersonInputView.Model(name: "test", profile: "", people: [])
 
     func initialize() -> Cmd<PersonInputView.Msg> {
-        .batch([
-                   Task(peopleRepository.objectWillChange.debounce(for: .milliseconds(500),
-                                                                   scheduler: DispatchQueue.main))
-                       .attemptToMsg { _ in .update },
-                   .ofMsg(.update)]
-        )
+        .batch([Task(peopleRepository.objectWillChange.debounce(for: .milliseconds(500), scheduler: DispatchQueue.main))
+                    .attemptToMsg { _ in .update },
+                .ofMsg(.update)])
     }
 
-    func receive(msg: PersonInputView.Msg) {
+    func receive(msg: PersonInputView.Msg) -> Cmd<PersonInputView.Msg> {
+        print(msg)
         switch msg {
         case .update:
             seed.people = peopleRepository.people
+            return .none
 
         case .save:
-            guard !seed.name.isEmpty else { return }
+            guard !seed.name.isEmpty else { return .none }
 
-            // After adding, EnvironmentObject will publish, and PersonInputSeeder.initialize() will be invoked.
             peopleRepository.add(person: Person(name: seed.name, profile: seed.profile))
 
             seed.name = ""
             seed.profile = ""
+            return .none
         }
     }
 }

@@ -11,7 +11,7 @@ public extension View {
     }
 
     func seed<Model, Msg>(model: @autoclosure @escaping () -> Model,
-                          receive: @escaping (Msg) -> ()) -> some View {
+                          receive: @escaping (Msg) -> Cmd<Msg>) -> some View {
         environmentObject(SeederWrapper(model: model, receive: receive))
     }
 }

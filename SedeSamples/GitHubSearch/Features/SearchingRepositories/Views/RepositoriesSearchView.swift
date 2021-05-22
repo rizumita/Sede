@@ -45,6 +45,6 @@ extension RepositoriesSearchView {
 struct RepositoriesSearchView_Previews: PreviewProvider {
     static var previews: some View {
         RepositoriesSearchView()
-            .seed(model: RepositoriesSearchView.Model()) { (_: RepositoriesSearchView.Msg) in }
+            .seed(model: RepositoriesSearchView.Model()) { (_: RepositoriesSearchView.Msg) in .none }
     }
 }

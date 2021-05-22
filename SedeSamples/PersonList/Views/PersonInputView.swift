@@ -29,10 +29,16 @@ struct PersonInputView: View {
 }
 
 extension PersonInputView {
-    struct Model {
+    class Model: ObservableObject {
         var name: String
         var profile: String
-        var people: [Person]
+        @Published var people: [Person]
+
+        init(name: String, profile: String, people: [Person]) {
+            self.name = name
+            self.profile = profile
+            self.people = people
+        }
     }
     
     enum Msg {
