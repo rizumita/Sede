@@ -13,7 +13,7 @@ public protocol Seedable: ViewModifier, Hashable {
 
     var seed: Model { get nonmutating set }
 
-    var objectWillChange: Observed { get }
+    @ObservedBuilder var objectWillChange: Observed { get }
 
     func initialize() -> Cmd<Msg>
 
@@ -82,7 +82,7 @@ private final class WeakRef {
     weak var value: AnyObject?
 }
 
-private var cachedWrappers = [AnyHashable: WeakRef]()
+private var cachedWrappers = [AnyHashable : WeakRef]()
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 private func getWrappers<S>(seeder: S) -> SeederWrapper<S.Model, S.Msg> where S: Seedable {

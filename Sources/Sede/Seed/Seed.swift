@@ -1,5 +1,5 @@
 //
-//  Created by 和泉田 領一 on 2021/05/22.
+//  Created by Ryoichi Izumita on 2021/05/22.
 //
 
 import Foundation
