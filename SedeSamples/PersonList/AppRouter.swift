@@ -19,7 +19,7 @@ struct AppRouter: Routable {
 
         case .displayPerson(let person):
             PersonDisplayView()
-                .seed(PersonDisplaySeeder(person: person))
+                .seed(PersonDisplaySeeder(seed: person))
         }
     }
 }

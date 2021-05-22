@@ -18,6 +18,6 @@ struct PersonDisplayView: View {
 
 struct PersonDisplayView_Previews: PreviewProvider {
     static var previews: some View {
-        PersonDisplayView().seed(initialize: Person(name: "Preview", profile: "Profile"), receive: { (_, _: Never) in })
+        PersonDisplayView().seed(model: Person(name: "Preview", profile: "Profile"), receive: { (_: Never) in })
     }
 }

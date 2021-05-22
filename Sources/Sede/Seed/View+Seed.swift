@@ -10,8 +10,8 @@ public extension View {
         modifier(seeder)
     }
 
-    func seed<Model, Msg>(initialize: @autoclosure @escaping () -> Model,
-                          receive: @escaping (Model, Msg) -> ()) -> some View {
-        environmentObject(SeederWrapper(initialize: initialize, receive: receive))
+    func seed<Model, Msg>(model: @autoclosure @escaping () -> Model,
+                          receive: @escaping (Msg) -> ()) -> some View {
+        environmentObject(SeederWrapper(model: model, receive: receive))
     }
 }

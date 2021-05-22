@@ -7,33 +7,37 @@
 
 import SwiftUI
 import Sede
+import Combine
 
 struct PersonInputSeeder: Seedable {
     @EnvironmentObject var peopleRepository: PeopleRepository
-    
-    func initialize() -> (PersonInputView.Model, Cmd<PersonInputView.Msg>) {
-        (.init(name: "", profile: "", people: []),
-         .none)
+    @Seed var seed = PersonInputView.Model(name: "test", profile: "", people: [])
+    var objectWillChange: some Publisher { peopleRepository.objectWillChange }
+
+    func initialize() -> Cmd<PersonInputView.Msg> {
+        seed.people = peopleRepository.people
+        return .none
     }
-    
-    func update(model: PersonInputView.Model) -> (PersonInputView.Model, Cmd<PersonInputView.Msg>) {
-        (.init(name: model.name, profile: model.profile, people: peopleRepository.people),
-         .none)
+
+    func update() {
+        print(String(describing: Self.self) + "." + #function)
+        seed.people = peopleRepository.people
     }
-    
-    func receive(model: PersonInputView.Model, msg: PersonInputView.Msg) {
+
+    func receive(msg: PersonInputView.Msg) {
         switch msg {
         case .save:
-            guard !model.name.isEmpty else { return }
-            peopleRepository.add(person: Person(name: model.name, profile: model.profile))
+            guard !seed.name.isEmpty else { return }
+
+            // After adding, EnvironmentObject will publish, and PersonInputSeeder.initialize() will be invoked.
+            peopleRepository.add(person: Person(name: seed.name, profile: seed.profile))
+            seed.name = ""
+            seed.profile = ""
+            seed.people = peopleRepository.people
         }
     }
 }
 
 struct PersonDisplaySeeder: Seedable {
-    var person: Person
-
-    func initialize() -> (Person, Cmd<Never>) {
-        (person, .none)
-    }
+    @Seed var seed: Person
 }

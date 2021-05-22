@@ -17,14 +17,14 @@ struct PersonInputView: View {
                     TextField("Profile", text: $seeder.profile)
                     Button("Save") { _seeder(.save) }
                 }
-                
+
                 ForEach(seeder.people) { person in
                     NavigationLink(destination: router(.displayPerson(person))) { Text(person.name) }
                 }
             }
-            .navigationTitle("Input Person")
+                .navigationTitle("Input Person")
         }
-        .navigationViewStyle(StackNavigationViewStyle())
+            .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

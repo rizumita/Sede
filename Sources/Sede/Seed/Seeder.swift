@@ -3,11 +3,12 @@
 //
 
 import SwiftUI
+import Combine
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 @propertyWrapper
 @dynamicMemberLookup
-public struct Seeder<Model, Msg> {
+public struct Seeder<Model, Msg>: DynamicProperty {
     @EnvironmentObject private var seeder: SeederWrapper<Model, Msg>
 
     public var wrappedValue: Model {
@@ -34,13 +35,10 @@ public struct Seeder<Model, Msg> {
     }
 
     public func callAsFunction(_ msg: Msg) {
-        seeder.receive(model: wrappedValue, msg: msg)
+        seeder.receive(msg: msg)
     }
-}
 
-@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-extension Seeder: DynamicProperty {
     public func update() {
-        seeder.updateCyclically()
+        seeder.update()
     }
 }
