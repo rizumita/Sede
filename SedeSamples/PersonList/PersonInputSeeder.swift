@@ -36,7 +36,6 @@ struct PersonInputSeeder: Seedable {
 
             seed.name = ""
             seed.profile = ""
-            seed.people = peopleRepository.people
         }
     }
 }

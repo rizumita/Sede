@@ -27,7 +27,6 @@ final public class SeederWrapper<Model, Msg>: ObservableObject {
     }
 
     init<S>(seeder: S) where S: Seedable, S.Model == Model, S.Msg == Msg {
-        print(String(describing: Self.self) + "." + #function)
         _getModel = { seeder.seed }
         _setModel = { seeder.seed = $0 }
         _initialize = { seeder.initialize().dispatch(seeder.receive(msg:)) }
