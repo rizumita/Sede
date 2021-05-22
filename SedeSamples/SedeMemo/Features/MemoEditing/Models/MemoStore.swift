@@ -4,8 +4,8 @@
 
 import Foundation
 
-class MemoStore:ObservableObject {
-    @Published var memos: [Memo] = []
+class MemoStore: ObservableObject {
+    var memos: [Memo] = []
     @Published var selectedMemo: Memo?
 
     func insert(memo: Memo) {

@@ -17,10 +17,8 @@ public struct Seeder<Model, Msg>: DynamicProperty {
     }
 
     public var projectedValue: Binding<Model> {
-        Binding(
-            get: { wrappedValue },
-            set: { wrappedValue = $0 }
-        )
+        Binding(get: { seeder.model },
+                set: { seeder.model = $0 })
     }
 
     public init() {}

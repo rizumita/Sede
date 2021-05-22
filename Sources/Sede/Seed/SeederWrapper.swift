@@ -11,25 +11,19 @@ import Combine
 final public class SeederWrapper<Model, Msg>: ObservableObject {
     private var _getModel: () -> Model
     private var _setModel: (Model) -> () = { _ in }
-    private var _initialize: () -> () = {}
     private var _update: () -> () = {}
     private var _receive: (Msg) -> ()
-    private var isInitialized = false
     private var isUpdating = false
     private var cancellables = Set<AnyCancellable>()
 
     var model: Model {
-        get {
-            initializeIfNeeded()
-            return _getModel()
-        }
+        get { _getModel() }
         set { _setModel(newValue) }
     }
 
     init<S>(seeder: S) where S: Seedable, S.Model == Model, S.Msg == Msg {
         _getModel = { seeder.seed }
         _setModel = { seeder.seed = $0 }
-        _initialize = { seeder.initialize().dispatch(seeder.receive(msg:)) }
         _update = seeder.update
         _receive = seeder.receive(msg:)
         seeder.objectWillChange
@@ -38,19 +32,12 @@ final public class SeederWrapper<Model, Msg>: ObservableObject {
                 self?.objectWillChange.send()
             })
             .store(in: &cancellables)
-
         seeder.initialize().dispatch(seeder.receive(msg:))
     }
 
     init(model: Model, receive: @escaping (Msg) -> ()) {
         _getModel = { model }
         _receive = receive
-    }
-
-    private func initializeIfNeeded() {
-        guard !isInitialized else { return }
-        isInitialized = true
-        _initialize()
     }
 
     func update() {

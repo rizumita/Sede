@@ -29,6 +29,7 @@ enum SearchRepositoriesWorkflow {
                 .flatMap(search(url:))
                 .map(\.repositories)
                 .map { (text, page, $0) }
+                .receive(on: DispatchQueue.main)
                 .handleEvents(receiveOutput: update)
                 .map(Events.success)
                 .catch { Just<Events>(.failure($0)) }

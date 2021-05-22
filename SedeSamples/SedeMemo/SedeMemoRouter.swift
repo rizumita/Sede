@@ -20,6 +20,7 @@ struct SedeMemoRouter: Routable {
         case .selector:
             MemoSelectorView()
                 .seed(MemoSelectorSeeder())
+                .seed(MemoEditorViewSeeder())
         }
     }
 }

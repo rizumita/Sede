@@ -4,18 +4,20 @@
 
 import Foundation
 import Sede
+import Combine
 
-struct AppModel {
+class AppModel: ObservableObject {
     enum Feature {
         case searchingRepositories
         case searchingUsers
     }
 
-    var feature: Feature
+    @Published var feature: Feature
+
+    init(feature: Feature) { self.feature = feature }
 }
 
 struct AppSeeder: Seedable {
-    func initialize() -> (AppModel, Cmd<Never>){
-        (AppModel(feature: .searchingUsers), .none)
-    }
+    @Seed var seed = AppModel(feature: .searchingUsers)
+    var objectWillChange: some Publisher { seed.objectWillChange }
 }

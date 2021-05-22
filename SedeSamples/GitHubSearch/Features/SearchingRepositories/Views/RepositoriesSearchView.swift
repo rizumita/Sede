@@ -17,10 +17,10 @@ struct RepositoriesSearchView: View {
         NavigationView {
             List {
                 SearchField(searchText: $seeder.searchText) {
-                    _seeder(.search)
+                    _seeder(.searchFirst)
                 }
 
-                RepositoryListView(repositories: seeder.repositories) { _seeder(.search) }
+                RepositoryListView(repositories: seeder.repositories) { _seeder(.searchNext) }
             }
                 .navigationTitle(seeder.title)
         }
@@ -29,21 +29,21 @@ struct RepositoriesSearchView: View {
 
 extension RepositoriesSearchView {
     enum Msg {
-        case search
+        case searchFirst
+        case searchNext
     }
 
-    struct Model {
-        var searchText: String = ""
-        var repositories: [Repository] = []
-        var title: String = "Search Repositories"
+    class Model: ObservableObject {
+        @Published var searchText: String = ""
+        @Published var repositories: [Repository] = []
+        @Published var title: String = "Search Repositories"
+        var page = 0
     }
 }
 
 struct RepositoriesSearchView_Previews: PreviewProvider {
     static var previews: some View {
         RepositoriesSearchView()
-            .environmentObject(SeederWrapper<RepositoriesSearchView.Model, RepositoriesSearchView.Msg>() { .init() } receive: {
-                _, _ in
-            })
+            .seed(model: RepositoriesSearchView.Model()) { (_: RepositoriesSearchView.Msg) in }
     }
 }

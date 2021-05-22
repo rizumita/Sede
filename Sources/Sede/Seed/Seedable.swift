@@ -7,7 +7,7 @@ import Combine
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public protocol Seedable: ViewModifier, Hashable {
-    associatedtype Model
+    associatedtype Model = ()
     associatedtype Msg = Never
     associatedtype Observed: Publisher
 
@@ -24,7 +24,7 @@ public protocol Seedable: ViewModifier, Hashable {
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension Seedable {
-    var objectWillChange: some Publisher { Empty<Model, Never>() }
+    var objectWillChange: Empty<Model, Never> { Empty<Model, Never>() }
 
     func initialize() -> Cmd<Msg> { .none }
 
@@ -35,6 +35,14 @@ public extension Seedable {
     }
 
     static func ==(lhs: Self, rhs: Self) -> Bool { true }
+}
+
+@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+public extension Seedable where Model == () {
+    var seed: Model {
+        get {}
+        nonmutating set {}
+    }
 }
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -74,7 +82,7 @@ public extension Seedable where Msg == Never {
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension Seedable {
     func body(content: Content) -> some View {
-        content.environmentObject(getWrappers(seeder: self))
+        content.environmentObject(getWrapper(seeder: self))
     }
 }
 
@@ -85,7 +93,7 @@ private final class WeakRef {
 private var cachedWrappers = [AnyHashable : WeakRef]()
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-private func getWrappers<S>(seeder: S) -> SeederWrapper<S.Model, S.Msg> where S: Seedable {
+private func getWrapper<S>(seeder: S) -> SeederWrapper<S.Model, S.Msg> where S: Seedable {
     let cachedInstance = cachedWrappers[seeder]?.value
     if let cachedInstance = cachedInstance as? SeederWrapper<S.Model, S.Msg> {
         return cachedInstance

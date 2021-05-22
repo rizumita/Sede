@@ -13,7 +13,6 @@ import Combine
 
 struct MemoEditorView: View {
     @Seeder<Model, Msg> var seeder
-    @State var showsMemoSelector = false
     @Router<SedeMemoRoute> var router
 
     var body: some View {
@@ -26,14 +25,14 @@ struct MemoEditorView: View {
                     .navigationViewStyle(StackNavigationViewStyle())
                     .navigationBarTitle("", displayMode: .inline)
             }
-        }.sheet(isPresented: $showsMemoSelector) {
+        }.sheet(isPresented: $seeder.showsMemoSelector) {
             router(.selector)
-        }
+        }.onChange(of: seeder.content) { _ in }
     }
 
     var navigationBarItemLeading: some View {
         NavigationItemButton(enabled: seeder.memosButtonEnabled,
-                             action: { showsMemoSelector.toggle() },
+                             action: { seeder.showsMemoSelector.toggle() },
                              label: { Text("Memos") })
     }
 
@@ -45,11 +44,12 @@ struct MemoEditorView: View {
 }
 
 extension MemoEditorView {
-    struct Model {
-        let id: UUID?
-        var content: String
+    class Model: ObservableObject {
+        var id: UUID?
+        @Published var content: String
         var memosButtonEnabled: Bool
         var canSave: Bool { !content.isEmpty }
+        @Published var showsMemoSelector = false
 
         init(id: UUID?, content: String, memosButtonEnabled: Bool) {
             self.id = id
@@ -59,6 +59,7 @@ extension MemoEditorView {
     }
 
     enum Msg {
+        case load
         case save(UUID?, String)
     }
 }
@@ -67,6 +68,6 @@ struct MemoEditorView_Previews: PreviewProvider {
     static var previews: some View {
         MemoEditorView()
             .seed(model: MemoEditorView.Model(id: .none, content: "Preview", memosButtonEnabled: false),
-                  receive: { (_, _: MemoEditorView.Msg) in })
+                  receive: { (_: MemoEditorView.Msg) in })
     }
 }

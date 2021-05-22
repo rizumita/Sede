@@ -25,7 +25,7 @@ struct NavigationItemButton<Label>: View where Label: View {
     }
 }
 
-struct DisableableButton_Previews: PreviewProvider {
+struct NavigationItemButton_Previews: PreviewProvider {
     static var previews: some View {
         NavigationItemButton(enabled: true, action: { print("tapped") }, label: { Text("Button") })
     }
