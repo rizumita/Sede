@@ -47,7 +47,7 @@ extension MemoEditorView {
     class Model: ObservableObject {
         var id: UUID?
         @Published var content: String
-        var memosButtonEnabled: Bool
+        @Published var memosButtonEnabled: Bool
         var canSave: Bool { !content.isEmpty }
         @Published var showsMemoSelector = false
 
@@ -59,6 +59,7 @@ extension MemoEditorView {
     }
 
     enum Msg {
+        case memoStoreUpdated
         case load
         case save(UUID?, String)
     }

@@ -15,6 +15,7 @@ final public class SeederWrapper<Model, Msg>: ObservableObject {
     private var _receive: (Msg) -> ()
     private var isUpdating = false
     private var cancellables = Set<AnyCancellable>()
+    private var cancellables2 = Set<AnyCancellable>()
 
     var model: Model {
         get { _getModel() }
@@ -32,7 +33,7 @@ final public class SeederWrapper<Model, Msg>: ObservableObject {
                 self?.objectWillChange.send()
             })
             .store(in: &cancellables)
-        seeder.initialize().dispatch(seeder.receive(msg:))
+        seeder.initialize().dispatch(seeder.receive(msg:), cancellables: &cancellables)
     }
 
     init(model: Model, receive: @escaping (Msg) -> ()) {

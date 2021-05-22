@@ -8,14 +8,22 @@ import Sede
 
 struct MemoEditorViewSeeder: Seedable {
     @EnvironmentObject var memoStore: MemoStore
-    @Seed var seed = MemoEditorView.Model(id: .none, content: "", memosButtonEnabled: false)
+    @State var seed = MemoEditorView.Model(id: .none, content: "", memosButtonEnabled: false)
 
-    var objectWillChange: some Publisher {
-        seed.objectWillChange
+    func initialize() -> Cmd<MemoEditorView.Msg> {
+        .batch([Task(memoStore.objectWillChange).attemptToMsg { _ in .memoStoreUpdated },
+                .ofMsg(.save(.none, "a")),
+                .ofMsg(.save(.none, "b")),
+                .ofMsg(.save(.none, "c"))])
     }
 
     func receive(msg: MemoEditorView.Msg) {
         switch msg {
+        case .memoStoreUpdated:
+            seed.id = memoStore.selectedMemo?.id
+            seed.content = memoStore.selectedMemo?.content ?? ""
+            seed.memosButtonEnabled = !memoStore.memos.isEmpty
+
         case .load:
             seed.id = memoStore.selectedMemo?.id
             seed.content = memoStore.selectedMemo?.content ?? seed.content
@@ -25,9 +33,6 @@ struct MemoEditorViewSeeder: Seedable {
             let memo = Memo(id: id ?? UUID(), content: content)
             memoStore.insert(memo: memo)
             memoStore.selectedMemo = .none
-            seed.id = .none
-            seed.content = ""
-            seed.memosButtonEnabled = !memoStore.memos.isEmpty
         }
     }
 }

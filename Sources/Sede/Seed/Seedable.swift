@@ -6,14 +6,11 @@ import SwiftUI
 import Combine
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public protocol Seedable: ViewModifier, Hashable {
+public protocol Seedable: ViewModifier, ObservableValue, Hashable {
     associatedtype Model = ()
     associatedtype Msg = Never
-    associatedtype Observed: Publisher
 
     var seed: Model { get nonmutating set }
-
-    @ObservedBuilder var objectWillChange: Observed { get }
 
     func initialize() -> Cmd<Msg>
 
@@ -24,8 +21,6 @@ public protocol Seedable: ViewModifier, Hashable {
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension Seedable {
-    var objectWillChange: Empty<Model, Never> { Empty<Model, Never>() }
-
     func initialize() -> Cmd<Msg> { .none }
 
     func update() {}
@@ -77,6 +72,11 @@ public extension Seedable where Model: Hashable {
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension Seedable where Msg == Never {
     func receive(msg: Msg) {}
+}
+
+@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+public extension ObservableValue where Self: Seedable, Self.Model: ObservableObject {
+    var objectWillChange: Self.Model.ObjectWillChangePublisher { seed.objectWillChange }
 }
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
