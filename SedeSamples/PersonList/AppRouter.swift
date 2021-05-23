@@ -14,12 +14,10 @@ struct AppRouter: Routable {
     func locate(route: AppRoute) -> some View {
         switch route {
         case .inputPerson:
-            PersonInputView()
-                .seed(PersonInputSeeder())
+            PersonInputView().seed(PersonInputSeeder())
 
         case .displayPerson(let person):
-            PersonDisplayView()
-                .seed(VariableSeeder(seed: person))
+            PersonDisplayView().seed(VariableSeeder(seed: person))
         }
     }
 }

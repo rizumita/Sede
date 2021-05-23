@@ -1,5 +1,5 @@
 # Sede
-Sede is a library for SwiftUI to bind a view and a model, and to provide routing.
+Sede is a library for SwiftUI to connect views and models, and to provide routing.
 
 ## Concept
 Sede aimed to compatible with SwiftUI by fully utilizing SwiftUI features.
@@ -29,25 +29,32 @@ struct PersonInputView: View {
         NavigationView {
             List {
                 VStack {
-                    TextField("Name", text: $seeder.name)   // Read Model.name by $seeder.name as binding
-                    Button("Save") { _seeder(.save) }       // Send Msg.save to Seeder
+                    TextField("Name", text: $seeder.name)
+                    Button("Save") { _seeder(.save) }
                 }
 
-                ForEach(seeder.people) { person in          // Read model.people
-                    NavigationLink(destination: router(.displayPerson(person))) { Text(person.name) }   // Route AppRoute.displayPerson(Person)
+                ForEach(seeder.people) { person in
+                    NavigationLink(destination: router(.displayPerson(person))) { Text(person.name) }
                 }
-            }
-        }
+            }.navigationTitle("Input Person")
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
 extension PersonInputView {
-    struct Model {
+    // Model is class or struct.
+    class Model: ObservableObject {
         var name: String
-        var people: [Person]
+        @Published var people: [Person]
+
+        init(name: String, people: [Person]) {
+            self.name = name
+            self.people = people
+        }
     }
 
     enum Msg {
+        case update
         case save
     }
 }
@@ -77,10 +84,10 @@ struct AppRouter: Routable {
     func locate(route: AppRoute) -> some View {
         switch route {
         case .inputPerson:
-            PersonInputView().seed(PersonInputSeeder())     // Set seeder typed for Seeder<Model, Msg>
+            PersonInputView().seed(PersonInputSeeder())
 
         case .displayPerson(let person):
-            PersonDisplayView().seed(PersonDisplaySeeder(person: person))   // Set seeder typed for Seeder<Person, Never>
+            PersonDisplayView().seed(VariableSeeder(seed: person))
         }
     }
 }
@@ -105,38 +112,36 @@ class PeopleRepository: ObservableObject {
 
 ### Create seeders
 
-`Seedable.initialize()` method must return a tuple of a model and message wrapped by Cmd.
-
-`Seedable.update(model:)` method must return a tuple of updated model and message wrapped by Cmd.
-
 ```swift
 struct PersonInputSeeder: Seedable {
     @EnvironmentObject var peopleRepository: PeopleRepository
-    
-    func initialize() -> (PersonInputView.Model, Cmd<PersonInputView.Msg>) {    // Return Model and Msg wrapped by Cmd
-        (.init(name: "", people: []),
-         .none)
+    @Seed var seed = PersonInputView.Model(name: "test", people: [])
+
+    func initialize() -> Cmd<PersonInputView.Msg> {
+        .batch([
+                   // When the peopleRepository is updated, the `update` message is sent.
+                   Task(peopleRepository.objectWillChange.debounce(for: .milliseconds(500), scheduler: DispatchQueue.main))
+                       .attemptToMsg { _ in .update },
+                   // The `update` message is sent immediately.
+                   .ofMsg(.update)
+               ])
     }
-    
-    func update(model: PersonInputView.Model) -> (PersonInputView.Model, Cmd<PersonInputView.Msg>) {    // Return update model and Msg wrapped by Cmd
-        (.init(name: model.name, people: peopleRepository.people),
-         .none)
-    }
-    
-    func receive(model: PersonInputView.Model, msg: PersonInputView.Msg) {      // Handle msg with current model 
+
+    func receive(msg: PersonInputView.Msg) -> Cmd<PersonInputView.Msg> {
+        print(msg)
         switch msg {
+        case .update:
+            seed.people = peopleRepository.people
+            return .none
+
         case .save:
-            guard !model.name.isEmpty else { return }
-            peopleRepository.add(person: Person(name: model.name))  // Repository sends with objectWillChanged by @Published and Self.update(model:Model) method will be called
+            guard !seed.name.isEmpty else { return .none }
+
+            peopleRepository.add(person: Person(name: seed.name))
+
+            seed.name = ""
+            return .none
         }
-    }
-}
-
-struct PersonDisplaySeeder: Seedable {
-    var person: Person
-
-    func initialize() -> (Person, Cmd<Never>) {     // Return the person
-        (person, .none)
     }
 }
 ```
@@ -148,6 +153,13 @@ ex.
 Cmd<Msg>.none                                                // Not run any message
 Cmd<Msg>.ofMsg(.someMessage)                                 // Run .someMessage
 Cmd<Msg>.batch([.ofMsg(.someMessage), .ofMsg(.someMessage)]) // Run .someMessage twice
+```
+
+Task expressed an async task to be run messages.
+
+ex.
+```swift
+Task(publisher).attemptToMsg { _ in .update }   // When the publisher sends value, Msg.update is sent. 
 ```
 
 ### Create app
