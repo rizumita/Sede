@@ -12,6 +12,7 @@ final public class SeederWrapper<Model, Msg>: ObservableObject {
     private var _getModel: () -> Model
     private var _setModel: (Model) -> () = { _ in }
     private var _receive: (Msg) -> Cmd<Msg>
+    private var isUpdating = false
     private var cancellables = Set<AnyCancellable>()
 
     var model: Model {
@@ -24,9 +25,11 @@ final public class SeederWrapper<Model, Msg>: ObservableObject {
         _setModel = { seeder.seed = $0 }
         _receive = seeder.receive(msg:)
         seeder.objectWillChange
-            .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] _ in self?.objectWillChange.send() })
+            .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] _ in
+                self?.receive(cmd: seeder.updateCmd)
+            })
             .store(in: &cancellables)
-        seeder.initialize().dispatch({ [weak self] msg in self?.receive(msg: msg) }, cancellables: &cancellables)
+        receive(cmd: seeder.initialize())
     }
 
     init(model: Model, receive: @escaping (Msg) -> Cmd<Msg> = { _ in .none }) {
@@ -37,9 +40,23 @@ final public class SeederWrapper<Model, Msg>: ObservableObject {
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension SeederWrapper {
+    private func receive(cmd: Cmd<Msg>) {
+        if cmd.value.isEmpty {
+            objectWillChange.send()
+        } else {
+            isUpdating = true
+            cmd.dispatch({ [weak self] msg in self?.receive(msg: msg) }, cancellables: &self.cancellables)
+        }
+    }
+
     func receive(msg: Msg) {
         DispatchQueue.main.async {
-            self._receive(msg).dispatch({ [weak self] msg in self?.receive(msg: msg) }, cancellables: &self.cancellables)
+            if self.isUpdating {
+                self.isUpdating = false
+                self.objectWillChange.send()
+            }
+            self._receive(msg)
+                .dispatch({ [weak self] msg in self?.receive(msg: msg) }, cancellables: &self.cancellables)
         }
     }
 }

@@ -9,7 +9,7 @@ import Combine
 public protocol ObservableValue {
     associatedtype ChangePublisher: Publisher
 
-    var objectWillChange: ChangePublisher { get }
+    @ObservedBuilder var objectWillChange: ChangePublisher { get }
 }
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)

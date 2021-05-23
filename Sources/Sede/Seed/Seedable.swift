@@ -12,6 +12,8 @@ public protocol Seedable: ViewModifier, ObservableValue, Hashable {
 
     var seed: Model { get nonmutating set }
 
+    var updateCmd: Cmd<Msg> { get }
+
     func initialize() -> Cmd<Msg>
 
     func receive(msg: Msg) -> Cmd<Msg>
@@ -19,6 +21,8 @@ public protocol Seedable: ViewModifier, ObservableValue, Hashable {
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension Seedable {
+    var updateCmd: Cmd<Msg> { .none }
+
     func initialize() -> Cmd<Msg> { .none }
 
     func hash(into hasher: inout Hasher) {

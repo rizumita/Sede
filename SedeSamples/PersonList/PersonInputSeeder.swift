@@ -12,15 +12,10 @@ import Combine
 struct PersonInputSeeder: Seedable {
     @EnvironmentObject var peopleRepository: PeopleRepository
     @Seed var seed = PersonInputView.Model(name: "test", profile: "", people: [])
-
-    func initialize() -> Cmd<PersonInputView.Msg> {
-        .batch([Task(peopleRepository.objectWillChange.debounce(for: .milliseconds(500), scheduler: DispatchQueue.main))
-                    .attemptToMsg { _ in .update },
-                .ofMsg(.update)])
-    }
+    var objectWillChange: some Publisher {peopleRepository.objectWillChange}
+    var updateCmd: Cmd<PersonInputView.Msg> = .ofMsg(.update)
 
     func receive(msg: PersonInputView.Msg) -> Cmd<PersonInputView.Msg> {
-        print(msg)
         switch msg {
         case .update:
             seed.people = peopleRepository.people
@@ -28,9 +23,7 @@ struct PersonInputSeeder: Seedable {
 
         case .save:
             guard !seed.name.isEmpty else { return .none }
-
             peopleRepository.add(person: Person(name: seed.name, profile: seed.profile))
-
             seed.name = ""
             seed.profile = ""
             return .none
