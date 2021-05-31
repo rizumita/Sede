@@ -9,7 +9,7 @@ import SwiftUI
 import Sede
 
 struct ContentView: View {
-    @Seeder<AppModel, Never> var seeder
+    @Seeded<AppModel, Never> var seeder
     @Router<GitHubSearchRoute> var router
 
     var body: some View {

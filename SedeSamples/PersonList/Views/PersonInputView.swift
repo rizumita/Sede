@@ -6,7 +6,7 @@ import SwiftUI
 import Sede
 
 struct PersonInputView: View {
-    @Seeder<Model, Msg> var seeder
+    @Seeded<Model, Msg> var seeder
     @Router<AppRoute> var router
     
     var body: some View {
@@ -15,7 +15,7 @@ struct PersonInputView: View {
                 VStack {
                     TextField("Name", text: $seeder.name)
                     TextField("Profile", text: $seeder.profile)
-                    Button("Save") { _seeder(.save) }
+                    Button("Save") { seeder(.save) }
                 }
 
                 ForEach(seeder.people) { person in
@@ -29,13 +29,18 @@ struct PersonInputView: View {
 }
 
 extension PersonInputView {
-    struct Model {
+    struct Model: ObservableValue {
+        static var published: [PartialKeyPath<PersonInputView.Model>] {
+            \Self.people
+        }
+
         var name: String
         var profile: String
         var people: [Person]
     }
-    
+
     enum Msg {
+        case resetFields
         case update
         case save
     }

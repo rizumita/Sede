@@ -10,17 +10,18 @@ import SwiftUI
 import Sede
 
 enum MemoSelectorMsg {
+    case update
     case select(UUID)
 }
 
 struct MemoSelectorView: View {
-    @Seeder<[Memo], MemoSelectorMsg> var seeder
+    @Seeded<[Memo], MemoSelectorMsg> var model
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
-        List(seeder, id: \.id) { memo in
+        List(model(), id: \Memo.id) { memo in
             Button(action: {
-                _seeder(.select(memo.id))
+                model.send(.select(memo.id))
                 presentationMode.wrappedValue.dismiss()
             },
                    label: { Text(memo.content) })

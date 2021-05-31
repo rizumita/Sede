@@ -5,6 +5,7 @@
 import Foundation
 import Sede
 import Combine
+import SwiftUI
 
 class AppModel: ObservableObject {
     enum Feature {
@@ -18,6 +19,6 @@ class AppModel: ObservableObject {
 }
 
 struct AppSeeder: Seedable {
-    @Seed var seed = AppModel(feature: .searchingUsers)
+    @Seed(AppModel(feature: .searchingUsers)) var seed
     var objectWillChange: some Publisher { seed.objectWillChange }
 }

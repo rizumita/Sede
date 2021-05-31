@@ -12,49 +12,49 @@ import Sede
 import Combine
 
 struct MemoEditorView: View {
-    @Seeder<Model, Msg> var seeder
+    @Seeded<Model, Msg> var model
     @Router<SedeMemoRoute> var router
 
     var body: some View {
         NavigationView {
             VStack {
-                TextEditor(text: $seeder.content)
+                TextEditor(text: $model.content)
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                     .navigationBarItems(leading: navigationBarItemLeading,
                                         trailing: navigationBarItemTrailing)
                     .navigationViewStyle(StackNavigationViewStyle())
                     .navigationBarTitle("", displayMode: .inline)
             }
-        }.sheet(isPresented: $seeder.showsMemoSelector) {
+        }.sheet(isPresented: $model.showsMemoSelector) {
             router(.selector)
-        }.onChange(of: seeder.content) { _ in }
+        }
     }
 
     var navigationBarItemLeading: some View {
-        NavigationItemButton(enabled: seeder.memosButtonEnabled,
-                             action: { seeder.showsMemoSelector.toggle() },
+        NavigationItemButton(enabled: model.memosButtonEnabled,
+                             action: { model.showsMemoSelector.toggle() },
                              label: { Text("Memos") })
     }
 
     var navigationBarItemTrailing: some View {
-        NavigationItemButton(enabled: seeder.canSave,
-                             action: { _seeder(.save(seeder.id, seeder.content)) },
+        NavigationItemButton(enabled: model.canSave,
+                             action: { model.send(.save(model.id, model.content)) },
                              label: { Text("Save") })
     }
 }
 
 extension MemoEditorView {
-    class Model: ObservableObject {
+    struct Model: ObservableValue {
         var id: UUID?
-        @Published var content: String
-        @Published var memosButtonEnabled: Bool
+        var content: String
+        var memosButtonEnabled: Bool
         var canSave: Bool { !content.isEmpty }
-        @Published var showsMemoSelector = false
+        var showsMemoSelector = false
 
-        init(id: UUID?, content: String, memosButtonEnabled: Bool) {
-            self.id = id
-            self.content = content
-            self.memosButtonEnabled = memosButtonEnabled
+        static var published: [PartialKeyPath<Model>] {
+            \Model.content
+            \Model.memosButtonEnabled
+            \Model.showsMemoSelector
         }
     }
 

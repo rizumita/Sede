@@ -10,13 +10,24 @@ import Sede
 import Combine
 
 struct PersonInputSeeder: Seedable {
+    @Seeded<PersonInputView.Model, PersonInputView.Msg> var seed
+
     @EnvironmentObject var peopleRepository: PeopleRepository
-    @Seed var seed = PersonInputView.Model(name: "test", profile: "", people: [])
-    var objectWillChange: some Publisher {peopleRepository.objectWillChange}
-    var updateCmd: Cmd<PersonInputView.Msg> = .ofMsg(.update)
+    var observedObjects: some ObservableObject { peopleRepository }
+    var update: Cmd<PersonInputView.Msg> = .ofMsg(.update)
+
+    func initialize() -> (PersonInputView.Model, Cmd<PersonInputView.Msg>) {
+        (PersonInputView.Model(name: "test", profile: "", people: peopleRepository.people),
+         .none)
+    }
 
     func receive(msg: PersonInputView.Msg) -> Cmd<PersonInputView.Msg> {
         switch msg {
+        case .resetFields:
+            seed.name = ""
+            seed.profile = ""
+            return .none
+
         case .update:
             seed.people = peopleRepository.people
             return .none
@@ -24,9 +35,7 @@ struct PersonInputSeeder: Seedable {
         case .save:
             guard !seed.name.isEmpty else { return .none }
             peopleRepository.add(person: Person(name: seed.name, profile: seed.profile))
-            seed.name = ""
-            seed.profile = ""
-            return .none
+            return .batch(.ofMsg(.resetFields), .ofMsg(.update))
         }
     }
 }

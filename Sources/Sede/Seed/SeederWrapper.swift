@@ -9,32 +9,55 @@ import Combine
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 final public class SeederWrapper<Model, Msg>: ObservableObject {
-    private var _getModel: () -> Model
-    private var _setModel: (Model) -> () = { _ in }
-    private var _receive: (Msg) -> Cmd<Msg>
+    private var _initialize: () -> (Model, Cmd<Msg>) = { fatalError() }
+    private var _receive: (Msg) -> Cmd<Msg> = { _ in .none }
+    private var _objectWillChange: () -> AnyPublisher<(), Never> = { fatalError() }
+    private var _update: Cmd<Msg> = .none
     private var isUpdating = false
     private var cancellables = Set<AnyCancellable>()
 
+    private var _model: Model?
     var model: Model {
-        get { _getModel() }
-        set { _setModel(newValue) }
+        get {
+            if let _model = _model {
+                return _model
+            } else {
+                cancellables = .init()
+                _objectWillChange()
+                    .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] _ in
+                        guard let self = self else { return }
+                        self.receive(cmd: self._update)
+                    })
+                    .store(in: &cancellables)
+
+                let (model, cmd) = _initialize()
+                _model = model
+                receive(cmd: cmd)
+                return model
+            }
+        }
+        set { _model = newValue }
     }
 
     init<S>(seeder: S) where S: Seedable, S.Model == Model, S.Msg == Msg {
-        _getModel = { seeder.seed }
-        _setModel = { seeder.seed = $0 }
-        _receive = seeder.receive(msg:)
-        seeder.objectWillChange
-            .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] _ in
-                self?.receive(cmd: seeder.updateCmd)
-            })
-            .store(in: &cancellables)
-        receive(cmd: seeder.initialize())
+        update(seeder: seeder)
     }
 
     init(model: Model, receive: @escaping (Msg) -> Cmd<Msg> = { _ in .none }) {
-        _getModel = { model }
+        self._initialize = { (model, .none) }
         _receive = receive
+    }
+
+    func update<S>(seeder: S) where S: Seedable, S.Model == Model, S.Msg == Msg {
+        _initialize = seeder.initialize
+        _receive = seeder.receive(msg:)
+        _objectWillChange = { seeder.observedObjects.objectWillChange.toVoidNever().eraseToAnyPublisher() }
+        _update = seeder.update
+    }
+
+    func keyPathWillChange(_ keyPath: PartialKeyPath<Model>, in publishedKeyPaths: [PartialKeyPath<Model>]) {
+        guard publishedKeyPaths.contains(keyPath) else { return }
+        objectWillChange.send()
     }
 }
 

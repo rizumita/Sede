@@ -6,22 +6,26 @@ import SwiftUI
 import Combine
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public protocol Seedable: ViewModifier, ObservableValue, Hashable {
+public protocol Seedable: ViewModifier, Hashable {
     associatedtype Model = ()
     associatedtype Msg = Never
+    associatedtype ObservableObjectType: ObservableObject
 
-    var seed: Model { get nonmutating set }
+    var seed: Seeded<Model, Msg>.WrappedValueWrapper { get }
 
-    var updateCmd: Cmd<Msg> { get }
+    @ObservedBuilder var observedObjects: ObservableObjectType { get }
 
-    func initialize() -> Cmd<Msg>
+    var update: Cmd<Msg> { get }
+
+    func initialize() -> (Model, Cmd<Msg>)
 
     func receive(msg: Msg) -> Cmd<Msg>
 }
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension Seedable {
-    var updateCmd: Cmd<Msg> { .none }
+    var update: Cmd<Msg> { .none }
+    var observedObjects: some ObservableObject { ObservableObjectsContainer(objectWillChanges: []) }
 
     func initialize() -> Cmd<Msg> { .none }
 
@@ -34,49 +38,26 @@ public extension Seedable {
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension Seedable where Model == () {
-    var seed: Model {
-        get {}
-        nonmutating set {}
+    func initialize() -> (Model, Cmd<Msg>) {
+        ((), .none)
     }
 }
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public extension Seedable where Model: Identifiable {
+public extension Seedable where Self: Identifiable {
     func hash(into hasher: inout Hasher) {
-        hasher.combine(seed.id)
+        hasher.combine(String(describing: Self.self))
+        hasher.combine(id)
     }
 
     static func ==(lhs: Self, rhs: Self) -> Bool {
-        lhs.seed.id == rhs.seed.id
-    }
-}
-
-@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public extension Seedable where Model: Equatable {
-    static func ==(lhs: Self, rhs: Self) -> Bool {
-        lhs.seed == rhs.seed
-    }
-}
-
-@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public extension Seedable where Model: Hashable {
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(seed)
-    }
-
-    static func ==(lhs: Self, rhs: Self) -> Bool {
-        lhs.seed.hashValue == rhs.seed.hashValue
+        lhs.id == rhs.id
     }
 }
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension Seedable where Msg == Never {
     func receive(msg: Msg) -> Cmd<Msg> { .none }
-}
-
-@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public extension ObservableValue where Self: Seedable, Self.Model: ObservableObject {
-    var objectWillChange: Self.Model.ObjectWillChangePublisher { seed.objectWillChange }
 }
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -93,9 +74,10 @@ private final class WeakRef {
 private var cachedWrappers = [AnyHashable : WeakRef]()
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-private func getWrapper<S>(seeder: S) -> SeederWrapper<S.Model, S.Msg> where S: Seedable {
+func getWrapper<S>(seeder: S) -> SeederWrapper<S.Model, S.Msg> where S: Seedable {
     let cachedInstance = cachedWrappers[seeder]?.value
     if let cachedInstance = cachedInstance as? SeederWrapper<S.Model, S.Msg> {
+        cachedInstance.update(seeder: seeder)
         return cachedInstance
     } else {
         let newInstance = SeederWrapper(seeder: seeder)

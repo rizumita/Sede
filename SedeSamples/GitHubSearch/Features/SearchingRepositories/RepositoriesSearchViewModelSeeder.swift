@@ -8,8 +8,7 @@ import Sede
 
 struct RepositoriesSearchViewModelSeeder: Seedable {
     @Environment(\.repositoryStore) var repositoryStore
-    @State var seed = RepositoriesSearchView.Model()
-    @State var page = 0
+    @Seed(RepositoriesSearchView.Model()) var seed
 
     func initialize() -> Cmd<RepositoriesSearchView.Msg> {
         repositoryStore.searchText = "Sede"
@@ -17,13 +16,15 @@ struct RepositoriesSearchViewModelSeeder: Seedable {
     }
 
     func receive(msg: RepositoriesSearchView.Msg) -> Cmd<RepositoriesSearchView.Msg> {
+        print(String(describing: Self.self) + "." + #function)
         let workflow = SearchRepositoriesWorkflow.workflow { searchText, page, repositories in
             repositoryStore.update(searchText: searchText, reachedPage: page, repositories: repositories)
-            self.page = page
+            seed.page = page
         }
 
         switch msg {
         case .update:
+            print(repositoryStore.repositories.count)
             seed.searchText = repositoryStore.searchText
             seed.repositories = repositoryStore.repositories
             seed.title = repositoryStore.searchText
@@ -37,8 +38,7 @@ struct RepositoriesSearchViewModelSeeder: Seedable {
                 .attemptToMsg { _ in .update }
 
         case .searchNext:
-            let page = self.page + 1
-            return Task(workflow(text: seed.searchText, page: page)
+            return Task(workflow(text: seed.searchText, page: seed.page + 1)
                             .subscribe(on: DispatchQueue.global()))
                 .attemptToMsg { _ in .update }
         }

@@ -45,6 +45,10 @@ public struct Cmd<Msg> {
         Cmd(value: cmds.flatMap { cmd in cmd.value })
     }
 
+    public static func batch(_ cmds: Cmd<Msg>...) -> Cmd<Msg> {
+        Cmd(value: cmds.flatMap { cmd in cmd.value })
+    }
+
     public static func ofSub(_ sub: @escaping Sub<Msg>) -> Cmd<Msg> {
         Cmd(value: [sub])
     }

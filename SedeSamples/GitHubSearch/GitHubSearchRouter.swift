@@ -6,7 +6,7 @@ import SwiftUI
 import Sede
 
 struct GitHubSearchRouter: Routable {
-    @Seeder<AppModel, Never> var seeder
+    @Seeded<AppModel, Never> var seeder
 
     func locate(route: GitHubSearchRoute) -> some View {
         switch route {

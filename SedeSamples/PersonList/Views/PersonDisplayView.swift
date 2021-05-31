@@ -6,7 +6,7 @@ import SwiftUI
 import Sede
 
 struct PersonDisplayView: View {
-    @Seeder<Person, Never> var seeder
+    @Seeded<Person, Never> var seeder
 
     var body: some View {
         VStack {

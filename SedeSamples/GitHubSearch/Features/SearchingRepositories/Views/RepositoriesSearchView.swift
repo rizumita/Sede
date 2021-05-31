@@ -9,20 +9,21 @@ import SwiftUI
 import Sede
 
 struct RepositoriesSearchView: View {
-    @Seeder<Model, Msg> var seeder
+    @Seeded<Model, Msg> var model
 
     @State private var selectedID: Int? = nil
 
     var body: some View {
-        NavigationView {
+        print(model())
+        return NavigationView {
             List {
-                SearchField(searchText: $seeder.searchText) {
-                    _seeder(.searchFirst)
+                SearchField(searchText: $model.searchText) {
+                    model.send(.searchFirst)
                 }
 
-                RepositoryListView(repositories: seeder.repositories) { _seeder(.searchNext) }
+                RepositoryListView(repositories: model.repositories) { model.send(.searchNext) }
             }
-                .navigationTitle(seeder.title)
+                .navigationTitle(model.title)
         }
     }
 }
@@ -34,11 +35,13 @@ extension RepositoriesSearchView {
         case searchNext
     }
 
-    class Model: ObservableObject {
-        @Published var searchText: String = ""
-        @Published var repositories: [Repository] = []
-        @Published var title: String = "Search Repositories"
+    struct Model: ObservableValue {
+        var searchText: String = ""
+        var repositories: [Repository] = []
+        var title: String = "Search Repositories"
         var page = 0
+
+        static let published: [PartialKeyPath<Model>] = [\Self.searchText, \Self.repositories, \Self.title]
     }
 }
 

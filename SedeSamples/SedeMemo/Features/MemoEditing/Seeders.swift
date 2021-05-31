@@ -9,15 +9,17 @@ import Sede
 struct MemoEditorViewSeeder: Seedable {
     @EnvironmentObject var memoStore: MemoStore
     @State var seed = MemoEditorView.Model(id: .none, content: "", memosButtonEnabled: false)
+    var objectWillChange: some Publisher { memoStore.objectWillChange }
+    private(set) var update: Cmd<MemoEditorView.Msg> = .ofMsg(.update)
 
     func initialize() -> Cmd<MemoEditorView.Msg> {
-        .batch([Task(memoStore.objectWillChange).attemptToMsg { _ in .update },
-                .ofMsg(.save(.none, "a")),
+        .batch([.ofMsg(.save(.none, "a")),
                 .ofMsg(.save(.none, "b")),
                 .ofMsg(.save(.none, "c"))])
     }
 
     func receive(msg: MemoEditorView.Msg) -> Cmd<MemoEditorView.Msg> {
+        print(msg)
         switch msg {
         case .update:
             seed.id = memoStore.selectedMemo?.id
@@ -36,19 +38,20 @@ struct MemoEditorViewSeeder: Seedable {
 
 struct MemoSelectorSeeder: Seedable {
     @EnvironmentObject var memoStore: MemoStore
-    @Seed var seed = [Memo]()
-    @Seeder<MemoEditorView.Model, MemoEditorView.Msg> var editorSeeder
+    @State var seed = [Memo]()
 
     func initialize() -> Cmd<MemoSelectorMsg> {
-        seed = memoStore.memos
-        return .none
+        .ofMsg(.update)
     }
 
     func receive(msg: MemoSelectorMsg) -> Cmd<MemoSelectorMsg> {
         switch msg {
+        case .update:
+            seed = memoStore.memos
+            return .none
+
         case .select(let id):
             memoStore.selectedMemo = memoStore.memos.first { $0.id == id }
-            _editorSeeder(.update)
             return .none
         }
     }
