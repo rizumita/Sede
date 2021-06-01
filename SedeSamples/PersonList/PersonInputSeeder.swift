@@ -35,7 +35,10 @@ struct PersonInputSeeder: Seedable {
         case .save:
             guard !seed.name.isEmpty else { return .none }
             peopleRepository.add(person: Person(name: seed.name, profile: seed.profile))
-            return .batch(.ofMsg(.resetFields), .ofMsg(.update))
+            return .batch {
+                Msg.resetFields
+                Msg.update
+            }
         }
     }
 }

@@ -49,6 +49,10 @@ public struct Cmd<Msg> {
         Cmd(value: cmds.flatMap { cmd in cmd.value })
     }
 
+    public static func batch<Msg>(@CmdBuilder<Msg> _ cmd: () -> Cmd<Msg>) -> Cmd<Msg> {
+        cmd()
+    }
+
     public static func ofSub(_ sub: @escaping Sub<Msg>) -> Cmd<Msg> {
         Cmd(value: [sub])
     }
@@ -136,5 +140,41 @@ public struct Cmd<Msg> {
             }
         ]
         )
+    }
+}
+
+@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+@resultBuilder
+public struct CmdBuilder<Msg> {
+    public static func buildBlock(_ components: Any?...) -> [Any] {
+        components.flatMap { component -> [Any] in
+            if let array = component as? [Any] {
+                return array
+            } else if let value = component {
+                return [value]
+            } else {
+                return []
+            }
+        }
+    }
+
+    public static func buildOptional<T>(_ children: T?) -> T? {
+        children
+    }
+
+    public static func buildEither<T>(first child: T) -> T {
+        child
+    }
+
+    public static func buildEither<T>(second child: T) -> T {
+        child
+    }
+
+    public static func buildArray(_ components: [Any]) -> Any {
+        components.flatMap { buildBlock($0) }
+    }
+
+    public static func buildFinalResult(_ components: [Any]) -> Cmd<Msg> {
+        .batch(components.map { $0 as? Msg }.map(Cmd<Msg>.ofMsgOptional))
     }
 }
