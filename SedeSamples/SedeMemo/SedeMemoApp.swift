@@ -12,7 +12,7 @@ import Sede
 struct SedeMemoApp: App {
     var body: some Scene {
         WindowGroup {
-            SedeMemoRouter().base(.editor).environmentObject(MemoStore())
+            SedeMemoRouter().base(.editor)
         }
     }
 }

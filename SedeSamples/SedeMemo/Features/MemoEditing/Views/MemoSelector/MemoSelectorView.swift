@@ -15,13 +15,13 @@ enum MemoSelectorMsg {
 }
 
 struct MemoSelectorView: View {
-    @Seeded<[Memo], MemoSelectorMsg> var model
+    @Seeded<[Memo], MemoSelectorMsg> var seed
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
-        List(model(), id: \Memo.id) { memo in
+        List(_seed.model, id: \Memo.id) { memo in
             Button(action: {
-                model.send(.select(memo.id))
+                seed(.select(memo.id))
                 presentationMode.wrappedValue.dismiss()
             },
                    label: { Text(memo.content) })
@@ -33,6 +33,6 @@ struct MemoSelectorView: View {
 struct MemoSelectorView_Previews: PreviewProvider {
     static var previews: some View {
         MemoSelectorView()
-            .seed(model: [Memo(id: UUID(), content: "Preview")], receive: { (_: MemoSelectorMsg) in .none })
+            .seed(model: [Memo(id: UUID(), content: "Preview")], receive: { (_: MemoSelectorMsg) in })
     }
 }

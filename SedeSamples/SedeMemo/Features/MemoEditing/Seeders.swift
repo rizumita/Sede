@@ -7,52 +7,54 @@ import Combine
 import Sede
 
 struct MemoEditorViewSeeder: Seedable {
-    @EnvironmentObject var memoStore: MemoStore
-    @State var seed = MemoEditorView.Model(id: .none, content: "", memosButtonEnabled: false)
-    var objectWillChange: some Publisher { memoStore.objectWillChange }
-    private(set) var update: Cmd<MemoEditorView.Msg> = .ofMsg(.update)
+    @Seeded<MemoEditorView.Model, MemoEditorView.Msg> var seed
 
-    func initialize() -> Cmd<MemoEditorView.Msg> {
-        .batch([.ofMsg(.save(.none, "a")),
-                .ofMsg(.save(.none, "b")),
-                .ofMsg(.save(.none, "c"))])
+    @Environment(\.memoStore) var memoStore
+    var observedObjects: some ObservableObject { memoStore }
+    var update: Cmd<MemoEditorView.Msg> = .ofMsg(.update)
+
+    func initialize() -> MemoEditorView.Model {
+        seed {
+            Msg.save(.none, "a")
+            Msg.save(.none, "b")
+            Msg.save(.none, "c")
+        }
+        return .init(id: .none, content: "", memosButtonEnabled: false)
     }
 
-    func receive(msg: MemoEditorView.Msg) -> Cmd<MemoEditorView.Msg> {
-        print(msg)
+    func receive(msg: MemoEditorView.Msg) {
         switch msg {
         case .update:
             seed.id = memoStore.selectedMemo?.id
             seed.content = memoStore.selectedMemo?.content ?? ""
             seed.memosButtonEnabled = !memoStore.memos.isEmpty
-            return .none
 
         case .save(let id, let content):
             let memo = Memo(id: id ?? UUID(), content: content)
             memoStore.insert(memo: memo)
             memoStore.selectedMemo = .none
-            return .none
         }
     }
 }
 
 struct MemoSelectorSeeder: Seedable {
-    @EnvironmentObject var memoStore: MemoStore
-    @State var seed = [Memo]()
+    @Seeded<[Memo], MemoSelectorMsg> var seed
 
-    func initialize() -> Cmd<MemoSelectorMsg> {
-        .ofMsg(.update)
+    @Environment(\.memoStore) var memoStore
+    var observedObjects: some ObservableObject { memoStore }
+    var update: Cmd<MemoSelectorMsg> = .ofMsg(.update)
+
+    func initialize() -> [Memo] {
+        return memoStore.memos
     }
 
-    func receive(msg: MemoSelectorMsg) -> Cmd<MemoSelectorMsg> {
+    func receive(msg: MemoSelectorMsg) {
         switch msg {
         case .update:
-            seed = memoStore.memos
-            return .none
+            _seed.model = memoStore.memos
 
         case .select(let id):
             memoStore.selectedMemo = memoStore.memos.first { $0.id == id }
-            return .none
         }
     }
 }

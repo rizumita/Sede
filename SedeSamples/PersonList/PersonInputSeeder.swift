@@ -16,28 +16,30 @@ struct PersonInputSeeder: Seedable {
     var observedObjects: some ObservableObject { peopleRepository }
     var update: Cmd<PersonInputView.Msg> = .ofMsg(.update)
 
-    func initialize() -> (PersonInputView.Model, Cmd<PersonInputView.Msg>) {
-        (PersonInputView.Model(name: "test", profile: "", people: peopleRepository.people),
-         .none)
+    func initialize() -> PersonInputView.Model {
+        defer { seed(.print) }
+        return PersonInputView.Model(name: "test", profile: "", people: peopleRepository.people)
     }
 
-    func receive(msg: PersonInputView.Msg) -> Cmd<PersonInputView.Msg> {
+    func receive(msg: PersonInputView.Msg) {
         switch msg {
+        case .print:
+            print(_seed.model)
+
         case .resetFields:
             seed.name = ""
             seed.profile = ""
-            return .none
 
         case .update:
             seed.people = peopleRepository.people
-            return .none
 
         case .save:
-            guard !seed.name.isEmpty else { return .none }
+            guard !seed.name.isEmpty else { return }
             peopleRepository.add(person: Person(name: seed.name, profile: seed.profile))
-            return .batch {
+            seed {
                 Msg.resetFields
                 Msg.update
+                Msg.print
             }
         }
     }

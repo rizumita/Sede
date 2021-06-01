@@ -38,7 +38,7 @@ struct MemoEditorView: View {
 
     var navigationBarItemTrailing: some View {
         NavigationItemButton(enabled: model.canSave,
-                             action: { model.send(.save(model.id, model.content)) },
+                             action: { model(.save(model.id, model.content)) },
                              label: { Text("Save") })
     }
 }
@@ -68,6 +68,6 @@ struct MemoEditorView_Previews: PreviewProvider {
     static var previews: some View {
         MemoEditorView()
             .seed(model: MemoEditorView.Model(id: .none, content: "Preview", memosButtonEnabled: false),
-                  receive: { (_: MemoEditorView.Msg) in .none })
+                  receive: { (_: MemoEditorView.Msg) in })
     }
 }

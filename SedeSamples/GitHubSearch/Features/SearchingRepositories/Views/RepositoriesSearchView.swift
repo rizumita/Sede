@@ -14,14 +14,13 @@ struct RepositoriesSearchView: View {
     @State private var selectedID: Int? = nil
 
     var body: some View {
-        print(model())
-        return NavigationView {
+        NavigationView {
             List {
                 SearchField(searchText: $model.searchText) {
-                    model.send(.searchFirst)
+                    model(.searchFirst)
                 }
 
-                RepositoryListView(repositories: model.repositories) { model.send(.searchNext) }
+                RepositoryListView(repositories: model.repositories) { model(.searchNext) }
             }
                 .navigationTitle(model.title)
         }
@@ -48,6 +47,6 @@ extension RepositoriesSearchView {
 struct RepositoriesSearchView_Previews: PreviewProvider {
     static var previews: some View {
         RepositoriesSearchView()
-            .seed(model: RepositoriesSearchView.Model()) { (_: RepositoriesSearchView.Msg) in .none }
+            .seed(model: RepositoriesSearchView.Model())
     }
 }

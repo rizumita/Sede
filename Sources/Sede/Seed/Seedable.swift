@@ -17,9 +17,9 @@ public protocol Seedable: ViewModifier, Hashable {
 
     var update: Cmd<Msg> { get }
 
-    func initialize() -> (Model, Cmd<Msg>)
+    func initialize() -> Model
 
-    func receive(msg: Msg) -> Cmd<Msg>
+    func receive(msg: Msg)
 }
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -38,9 +38,7 @@ public extension Seedable {
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension Seedable where Model == () {
-    func initialize() -> (Model, Cmd<Msg>) {
-        ((), .none)
-    }
+    func initialize() -> Model {}
 }
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -57,7 +55,7 @@ public extension Seedable where Self: Identifiable {
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension Seedable where Msg == Never {
-    func receive(msg: Msg) -> Cmd<Msg> { .none }
+    func receive(msg: Msg) {}
 }
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)

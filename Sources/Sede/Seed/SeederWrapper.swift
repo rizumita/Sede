@@ -9,8 +9,8 @@ import Combine
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 final public class SeederWrapper<Model, Msg>: ObservableObject {
-    private var _initialize: () -> (Model, Cmd<Msg>) = { fatalError() }
-    private var _receive: (Msg) -> Cmd<Msg> = { _ in .none }
+    private var _initialize: () -> Model = { fatalError() }
+    private var _receive: (Msg) -> () = { _ in }
     private var _objectWillChange: () -> AnyPublisher<(), Never> = { fatalError() }
     private var _update: Cmd<Msg> = .none
     private var isUpdating = false
@@ -30,9 +30,8 @@ final public class SeederWrapper<Model, Msg>: ObservableObject {
                     })
                     .store(in: &cancellables)
 
-                let (model, cmd) = _initialize()
+                let model = _initialize()
                 _model = model
-                receive(cmd: cmd)
                 return model
             }
         }
@@ -43,8 +42,8 @@ final public class SeederWrapper<Model, Msg>: ObservableObject {
         update(seeder: seeder)
     }
 
-    init(model: Model, receive: @escaping (Msg) -> Cmd<Msg> = { _ in .none }) {
-        self._initialize = { (model, .none) }
+    init(model: Model, receive: @escaping (Msg) -> () = { _ in }) {
+        self._initialize = { model }
         _receive = receive
     }
 
@@ -63,7 +62,7 @@ final public class SeederWrapper<Model, Msg>: ObservableObject {
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension SeederWrapper {
-    private func receive(cmd: Cmd<Msg>) {
+    func receive(cmd: Cmd<Msg>) {
         if cmd.value.isEmpty {
             objectWillChange.send()
         } else {
@@ -79,7 +78,6 @@ extension SeederWrapper {
                 self.objectWillChange.send()
             }
             self._receive(msg)
-                .dispatch({ [weak self] msg in self?.receive(msg: msg) }, cancellables: &self.cancellables)
         }
     }
 }

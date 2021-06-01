@@ -10,8 +10,8 @@ public struct VariableSeeder<Model>: Seedable, Identifiable where Model: Identif
     @Seeded<Model, Never> public var seed
     private var model: Model
 
-    public func initialize() -> (Model, Cmd<Never>) {
-        (model, .none)
+    public func initialize() -> Model {
+        model
     }
 
     public init(seed: Model) {

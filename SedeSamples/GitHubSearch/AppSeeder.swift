@@ -7,18 +7,23 @@ import Sede
 import Combine
 import SwiftUI
 
-class AppModel: ObservableObject {
+struct AppModel: ObservableValue {
     enum Feature {
         case searchingRepositories
         case searchingUsers
     }
 
-    @Published var feature: Feature
-
-    init(feature: Feature) { self.feature = feature }
+    var feature: Feature
+    
+    static var published: [PartialKeyPath<AppModel>] {
+        \Self.feature
+    }
 }
 
 struct AppSeeder: Seedable {
-    @Seed(AppModel(feature: .searchingUsers)) var seed
-    var objectWillChange: some Publisher { seed.objectWillChange }
+    @Seeded<AppModel, Never> var seed
+
+    func initialize() -> AppModel {
+        .init(feature: .searchingUsers)
+    }
 }

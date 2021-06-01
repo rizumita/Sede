@@ -19,7 +19,7 @@ public struct Seeded<Model, Msg>: DynamicProperty {
 
     public var model: Model {
         get { wrappedValue.seederWrapper.model }
-        set { wrappedValue.seederWrapper.model = newValue }
+        nonmutating set { wrappedValue.seederWrapper.model = newValue }
     }
 
     public init() {}
@@ -32,16 +32,17 @@ public struct Seeded<Model, Msg>: DynamicProperty {
             seederWrapper.model[keyPath: keyPath]
         }
 
-        public func send(_ msg: Msg) {
-            seederWrapper.receive(msg: msg)
+        public func callAsFunction(_ msgs: Msg?...) {
+            let cmd = Cmd<Msg>.batch(msgs.map(Cmd.ofMsgOptional))
+            seederWrapper.receive(cmd: cmd)
         }
 
-        public func callAsFunction(_ msg: Msg) {
-            seederWrapper.receive(msg: msg)
+        public func callAsFunction(_ cmd: Cmd<Msg>) {
+            seederWrapper.receive(cmd: cmd)
         }
 
-        public func callAsFunction() -> Model {
-            seederWrapper.model
+        public func callAsFunction(@CmdBuilder<Msg> _ cmd: () -> Cmd<Msg>) {
+            seederWrapper.receive(cmd: cmd())
         }
     }
 

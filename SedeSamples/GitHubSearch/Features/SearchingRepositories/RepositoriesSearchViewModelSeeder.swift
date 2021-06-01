@@ -8,15 +8,15 @@ import Sede
 
 struct RepositoriesSearchViewModelSeeder: Seedable {
     @Environment(\.repositoryStore) var repositoryStore
-    @Seed(RepositoriesSearchView.Model()) var seed
+    @Seeded<RepositoriesSearchView.Model, RepositoriesSearchView.Msg> var seed
 
-    func initialize() -> Cmd<RepositoriesSearchView.Msg> {
+    func initialize() -> RepositoriesSearchView.Model {
         repositoryStore.searchText = "Sede"
-        return .batch([.ofMsg(.update), .ofMsg(.searchFirst)])
+        defer { seed(Msg.update, Msg.searchFirst) }
+        return .init()
     }
 
-    func receive(msg: RepositoriesSearchView.Msg) -> Cmd<RepositoriesSearchView.Msg> {
-        print(String(describing: Self.self) + "." + #function)
+    func receive(msg: RepositoriesSearchView.Msg) {
         let workflow = SearchRepositoriesWorkflow.workflow { searchText, page, repositories in
             repositoryStore.update(searchText: searchText, reachedPage: page, repositories: repositories)
             seed.page = page
@@ -24,23 +24,21 @@ struct RepositoriesSearchViewModelSeeder: Seedable {
 
         switch msg {
         case .update:
-            print(repositoryStore.repositories.count)
             seed.searchText = repositoryStore.searchText
             seed.repositories = repositoryStore.repositories
             seed.title = repositoryStore.searchText
-            return .none
 
         case .searchFirst:
             repositoryStore.searchText = seed.searchText
             repositoryStore.repositories = []
-            return Task(workflow(text: seed.searchText, page: 0)
-                            .subscribe(on: DispatchQueue.global()))
-                .attemptToMsg { _ in .update }
+            seed(Task(workflow(text: seed.searchText, page: 0)
+                          .subscribe(on: DispatchQueue.global()))
+                     .attemptToMsg { _ in .update })
 
         case .searchNext:
-            return Task(workflow(text: seed.searchText, page: seed.page + 1)
-                            .subscribe(on: DispatchQueue.global()))
-                .attemptToMsg { _ in .update }
+            seed(Task(workflow(text: seed.searchText, page: seed.page + 1)
+                          .subscribe(on: DispatchQueue.global()))
+                     .attemptToMsg { _ in .update })
         }
     }
 }

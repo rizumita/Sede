@@ -40,6 +40,7 @@ extension PersonInputView {
     }
 
     enum Msg {
+        case print
         case resetFields
         case update
         case save
