@@ -6,7 +6,7 @@ import SwiftUI
 import Sede
 
 struct PersonInputView: View {
-    @Seeded<Model, Msg> var seeder
+    @Seed<Model, Msg> var seeder
     @Router<AppRoute> var router
     
     var body: some View {

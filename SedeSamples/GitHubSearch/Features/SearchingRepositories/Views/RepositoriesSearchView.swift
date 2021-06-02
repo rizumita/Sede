@@ -9,7 +9,7 @@ import SwiftUI
 import Sede
 
 struct RepositoriesSearchView: View {
-    @Seeded<Model, Msg> var model
+    @Seed<Model, Msg> var model
 
     @State private var selectedID: Int? = nil
 

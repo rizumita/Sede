@@ -12,7 +12,7 @@ import Sede
 import Combine
 
 struct MemoEditorView: View {
-    @Seeded<Model, Msg> var model
+    @Seed<Model, Msg> var model
     @Router<SedeMemoRoute> var router
 
     var body: some View {

@@ -21,7 +21,7 @@ struct AppModel: ObservableValue {
 }
 
 struct AppSeeder: Seedable {
-    @Seeded<AppModel, Never> var seed
+    @Seed<AppModel, Never> var seed
 
     func initialize() -> AppModel {
         .init(feature: .searchingUsers)

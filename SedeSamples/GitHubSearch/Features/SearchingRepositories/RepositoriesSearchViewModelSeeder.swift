@@ -8,7 +8,7 @@ import Sede
 
 struct RepositoriesSearchViewModelSeeder: Seedable {
     @Environment(\.repositoryStore) var repositoryStore
-    @Seeded<RepositoriesSearchView.Model, RepositoriesSearchView.Msg> var seed
+    @Seed<RepositoriesSearchView.Model, RepositoriesSearchView.Msg> var seed
 
     func initialize() -> RepositoriesSearchView.Model {
         repositoryStore.searchText = "Sede"

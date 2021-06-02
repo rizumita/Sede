@@ -7,7 +7,7 @@ import Combine
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public struct VariableSeeder<Model>: Seedable, Identifiable where Model: Identifiable {
-    @Seeded<Model, Never> public var seed
+    @Seed<Model, Never> public var seed
     private var model: Model
 
     public func initialize() -> Model {

@@ -7,7 +7,7 @@ import Combine
 import Sede
 
 struct MemoEditorViewSeeder: Seedable {
-    @Seeded<MemoEditorView.Model, MemoEditorView.Msg> var seed
+    @Seed<MemoEditorView.Model, MemoEditorView.Msg> var seed
 
     @Environment(\.memoStore) var memoStore
     var observedObjects: some ObservableObject { memoStore }
@@ -38,7 +38,7 @@ struct MemoEditorViewSeeder: Seedable {
 }
 
 struct MemoSelectorSeeder: Seedable {
-    @Seeded<[Memo], MemoSelectorMsg> var seed
+    @Seed<[Memo], MemoSelectorMsg> var seed
 
     @Environment(\.memoStore) var memoStore
     var observedObjects: some ObservableObject { memoStore }

@@ -10,7 +10,7 @@ import Sede
 import Combine
 
 struct PersonInputSeeder: Seedable {
-    @Seeded<PersonInputView.Model, PersonInputView.Msg> var seed
+    @Seed<PersonInputView.Model, PersonInputView.Msg> var seed
 
     @EnvironmentObject var peopleRepository: PeopleRepository
     var observedObjects: some ObservableObject { peopleRepository }

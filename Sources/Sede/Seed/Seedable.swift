@@ -11,7 +11,7 @@ public protocol Seedable: ViewModifier, Hashable {
     associatedtype Msg = Never
     associatedtype ObservableObjectType: ObservableObject
 
-    var seed: Seeded<Model, Msg>.WrappedValueWrapper { get }
+    var seed: Seed<Model, Msg>.WrappedValueWrapper { get }
 
     @ObservedBuilder var observedObjects: ObservableObjectType { get }
 
