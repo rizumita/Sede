@@ -16,27 +16,16 @@ final public class SeederWrapper<Model, Msg>: ObservableObject {
     private var isUpdating = false
     private var cancellables = Set<AnyCancellable>()
 
-    private var _model: Model?
-    var model: Model {
-        get {
-            if let _model = _model {
-                return _model
-            } else {
-                cancellables = .init()
-                _objectWillChange()
-                    .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] _ in
-                        guard let self = self else { return }
-                        self.receive(cmd: self._update)
-                    })
-                    .store(in: &cancellables)
+    lazy var model: Model = {
+        _objectWillChange()
+            .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] _ in
+                guard let self = self else { return }
+                self.receive(cmd: self._update)
+            })
+            .store(in: &cancellables)
 
-                let model = _initialize()
-                _model = model
-                return model
-            }
-        }
-        set { _model = newValue }
-    }
+        return _initialize()
+    }()
 
     init<S>(seeder: S) where S: Seedable, S.Model == Model, S.Msg == Msg {
         update(seeder: seeder)
