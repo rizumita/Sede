@@ -22,49 +22,53 @@ You can install Sede by Swift Package Manager.
 import Sede
 
 struct PersonInputView: View {
-    @Seeder<Model, Msg> var seeder
+    @Seeded<Model, Msg> var seed
     @Router<AppRoute> var router
 
     var body: some View {
         NavigationView {
             List {
                 VStack {
-                    TextField("Name", text: $seeder.name)
-                    Button("Save") { _seeder(.save) }
+                    TextField("Name", text: $seed.name)
+                    TextField("Profile", text: $seed.profile)
+                    Button("Save") { seed(.save) }
                 }
 
-                ForEach(seeder.people) { person in
+                ForEach(seed.people) { person in
                     NavigationLink(destination: router(.displayPerson(person))) { Text(person.name) }
                 }
-            }.navigationTitle("Input Person")
-        }.navigationViewStyle(StackNavigationViewStyle())
+            }
+                .navigationTitle("Input Person")
+        }
+            .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
 extension PersonInputView {
-    // Model is class or struct.
-    class Model: ObservableObject {
-        var name: String
-        @Published var people: [Person]
-
-        init(name: String, people: [Person]) {
-            self.name = name
-            self.people = people
+    struct Model: ObservableValue {
+        static var published: [PartialKeyPath<PersonInputView.Model>] {
+            \Self.people
         }
+
+        var name: String
+        var profile: String
+        var people: [Person]
     }
 
     enum Msg {
+        case resetFields
         case update
         case save
     }
 }
 
 struct PersonDisplayView: View {
-    @Seeder<Person, Never> var seeder
+    @Seeded<Person, Never> var seed
 
     var body: some View {
         VStack {
-            Text(seeder.name)
+            Text(seed.name)
+            Text(seed.profile)
         }
     }
 }
@@ -87,7 +91,7 @@ struct AppRouter: Routable {
             PersonInputView().seed(PersonInputSeeder())
 
         case .displayPerson(let person):
-            PersonDisplayView().seed(VariableSeeder(seed: person))
+            PersonDisplayView().seed(VariableSeeder(person))
         }
     }
 }
@@ -96,14 +100,15 @@ struct AppRouter: Routable {
 ### Create models
 
 ```swift
-struct Person: Identifiable, Hashable {
+struct Person: Identifiable {
     var id: UUID = UUID()
     var name: String
+    var profile: String
 }
 
 class PeopleRepository: ObservableObject {
     @Published private(set) var people: [Person] = []
-    
+
     func add(person: Person) {
         people.append(person)
     }
@@ -114,33 +119,36 @@ class PeopleRepository: ObservableObject {
 
 ```swift
 struct PersonInputSeeder: Seedable {
-    @EnvironmentObject var peopleRepository: PeopleRepository
-    @Seed var seed = PersonInputView.Model(name: "test", people: [])
+    @Seeding<PersonInputView.Model, PersonInputView.Msg> var seed
 
-    func initialize() -> Cmd<PersonInputView.Msg> {
-        .batch([
-                   // When the peopleRepository is updated, the `update` message is sent.
-                   Task(peopleRepository.objectWillChange.debounce(for: .milliseconds(500), scheduler: DispatchQueue.main))
-                       .attemptToMsg { _ in .update },
-                   // The `update` message is sent immediately.
-                   .ofMsg(.update)
-               ])
+    @EnvironmentObject var peopleRepository: PeopleRepository
+    var observedObjects: some ObservableObject { peopleRepository }
+
+    func initialize() {
+        seed.initialize(PersonInputView.Model(name: "test", profile: "", people: peopleRepository.people))
     }
 
-    func receive(msg: PersonInputView.Msg) -> Cmd<PersonInputView.Msg> {
-        print(msg)
+    func update() {
+        seed(.update)
+    }
+
+    func receive(msg: PersonInputView.Msg) {
         switch msg {
+        case .resetFields:
+            seed.name = ""
+            seed.profile = ""
+
         case .update:
             seed.people = peopleRepository.people
-            return .none
 
         case .save:
-            guard !seed.name.isEmpty else { return .none }
-
-            peopleRepository.add(person: Person(name: seed.name))
-
-            seed.name = ""
-            return .none
+            guard !seed.name.isEmpty else { return }
+            peopleRepository.add(person: Person(name: seed.name, profile: seed.profile))
+            seed {
+                Msg.resetFields
+                Msg.update
+                Msg.print
+            }
         }
     }
 }
