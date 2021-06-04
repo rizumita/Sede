@@ -14,7 +14,7 @@ You can install Sede by Swift Package Manager.
 
 ### Create views
 
-@Seeder provides a model's data and dispatches messages.
+@Seeded provides a model's data and dispatches messages.
 
 @Router provides a routing function.
 
