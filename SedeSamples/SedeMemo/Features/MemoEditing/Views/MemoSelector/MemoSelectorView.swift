@@ -15,7 +15,7 @@ enum MemoSelectorMsg {
 }
 
 struct MemoSelectorView: View {
-    @Seed<[Memo], MemoSelectorMsg> var seed
+    @Seeded<[Memo], MemoSelectorMsg> var seed
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {

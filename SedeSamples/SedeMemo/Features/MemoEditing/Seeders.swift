@@ -7,19 +7,23 @@ import Combine
 import Sede
 
 struct MemoEditorViewSeeder: Seedable {
-    @Seed<MemoEditorView.Model, MemoEditorView.Msg> var seed
+    @Seeding<MemoEditorView.Model, MemoEditorView.Msg> var seed
 
     @Environment(\.memoStore) var memoStore
     var observedObjects: some ObservableObject { memoStore }
-    var update: Cmd<MemoEditorView.Msg> = .ofMsg(.update)
 
-    func initialize() -> MemoEditorView.Model {
+    func initialize() {
+        print(String(describing: Self.self) + "." + #function)
         seed {
             Msg.save(.none, "a")
             Msg.save(.none, "b")
             Msg.save(.none, "c")
         }
-        return .init(id: .none, content: "", memosButtonEnabled: false)
+        seed.initialize(.init(id: .none, content: "", memosButtonEnabled: false))
+    }
+
+    func update() {
+        seed(.update)
     }
 
     func receive(msg: MemoEditorView.Msg) {
@@ -38,20 +42,23 @@ struct MemoEditorViewSeeder: Seedable {
 }
 
 struct MemoSelectorSeeder: Seedable {
-    @Seed<[Memo], MemoSelectorMsg> var seed
+    @Seeding<[Memo], MemoSelectorMsg> var seed
 
     @Environment(\.memoStore) var memoStore
     var observedObjects: some ObservableObject { memoStore }
-    var update: Cmd<MemoSelectorMsg> = .ofMsg(.update)
 
-    func initialize() -> [Memo] {
-        return memoStore.memos
+    func initialize() {
+        seed.initialize(memoStore.memos)
+    }
+
+    func update() {
+        seed(.update)
     }
 
     func receive(msg: MemoSelectorMsg) {
         switch msg {
         case .update:
-            _seed.model = memoStore.memos
+            seed.initialize(memoStore.memos)
 
         case .select(let id):
             memoStore.selectedMemo = memoStore.memos.first { $0.id == id }

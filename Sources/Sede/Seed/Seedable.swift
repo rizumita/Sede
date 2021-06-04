@@ -11,23 +11,24 @@ public protocol Seedable: ViewModifier, Hashable {
     associatedtype Msg = Never
     associatedtype ObservableObjectType: ObservableObject
 
-    var seed: Seed<Model, Msg>.WrappedValueWrapper { get }
+    var seed: Seeding<Model, Msg>.Wrapper { get }
 
     @ObservedBuilder var observedObjects: ObservableObjectType { get }
 
-    var update: Cmd<Msg> { get }
+    func initialize()
 
-    func initialize() -> Model
+    func update()
 
     func receive(msg: Msg)
 }
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension Seedable {
-    var update: Cmd<Msg> { .none }
     var observedObjects: some ObservableObject { ObservableObjectsContainer(objectWillChanges: []) }
 
-    func initialize() -> Cmd<Msg> { .none }
+    func initialize() {}
+
+    func update() {}
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(String(describing: Self.self))
@@ -38,7 +39,7 @@ public extension Seedable {
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension Seedable where Model == () {
-    func initialize() -> Model {}
+    func initialize() {}
 }
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)

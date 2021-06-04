@@ -10,15 +10,18 @@ import Sede
 import Combine
 
 struct PersonInputSeeder: Seedable {
-    @Seed<PersonInputView.Model, PersonInputView.Msg> var seed
+    @Seeding<PersonInputView.Model, PersonInputView.Msg> var seed
 
     @EnvironmentObject var peopleRepository: PeopleRepository
     var observedObjects: some ObservableObject { peopleRepository }
-    var update: Cmd<PersonInputView.Msg> = .ofMsg(.update)
 
-    func initialize() -> PersonInputView.Model {
+    func initialize() {
         defer { seed(.print) }
-        return PersonInputView.Model(name: "test", profile: "", people: peopleRepository.people)
+        seed.initialize(PersonInputView.Model(name: "test", profile: "", people: peopleRepository.people))
+    }
+
+    func update() {
+        seed(.update)
     }
 
     func receive(msg: PersonInputView.Msg) {

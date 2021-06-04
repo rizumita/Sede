@@ -6,12 +6,12 @@ import SwiftUI
 import Sede
 
 struct PersonDisplayView: View {
-    @Seed<Person, Never> var seeder
+    @Seeded<Person, Never> var seed
 
     var body: some View {
         VStack {
-            Text(seeder.name)
-            Text(seeder.profile)
+            Text(seed.name)
+            Text(seed.profile)
         }
     }
 }

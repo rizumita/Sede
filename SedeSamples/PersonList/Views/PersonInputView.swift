@@ -6,19 +6,19 @@ import SwiftUI
 import Sede
 
 struct PersonInputView: View {
-    @Seed<Model, Msg> var seeder
+    @Seeded<Model, Msg> var seed
     @Router<AppRoute> var router
     
     var body: some View {
         NavigationView {
             List {
                 VStack {
-                    TextField("Name", text: $seeder.name)
-                    TextField("Profile", text: $seeder.profile)
-                    Button("Save") { seeder(.save) }
+                    TextField("Name", text: $seed.name)
+                    TextField("Profile", text: $seed.profile)
+                    Button("Save") { seed(.save) }
                 }
 
-                ForEach(seeder.people) { person in
+                ForEach(seed.people) { person in
                     NavigationLink(destination: router(.displayPerson(person))) { Text(person.name) }
                 }
             }

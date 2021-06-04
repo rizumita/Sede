@@ -7,16 +7,11 @@ import Combine
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public struct VariableSeeder<Model>: Seedable, Identifiable where Model: Identifiable {
-    @Seed<Model, Never> public var seed
-    private var model: Model
+    @Seeding<Model, Never> public var seed
 
-    public func initialize() -> Model {
-        model
+    public init(_ model: Model) {
+        seed.initialize(model)
     }
 
-    public init(seed: Model) {
-        self.model = seed
-    }
-
-    public var id: Model.ID { model.id }
+    public var id: Model.ID { seed.id }
 }

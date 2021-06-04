@@ -3,16 +3,16 @@
 //
 
 import SwiftUI
-import Combine
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 @propertyWrapper
-public struct Seed<Model, Msg>: DynamicProperty {
+public struct Seeded<Model, Msg>: DynamicProperty {
     @EnvironmentObject private var seederWrapper: SeederWrapper<Model, Msg>
 
     public var wrappedValue: WrappedValueWrapper {
         WrappedValueWrapper(seederWrapper: seederWrapper)
     }
+
     public var projectedValue: ProjectedValueWrapper {
         ProjectedValueWrapper(seederWrapper: seederWrapper)
     }
@@ -53,7 +53,7 @@ public struct Seed<Model, Msg>: DynamicProperty {
 }
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-extension Seed.WrappedValueWrapper {
+extension Seeded.WrappedValueWrapper {
     public subscript<Subject>(dynamicMember keyPath: WritableKeyPath<Model, Subject>) -> Subject {
         get { seederWrapper.model[keyPath: keyPath] }
         nonmutating set {
@@ -63,7 +63,7 @@ extension Seed.WrappedValueWrapper {
 }
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-extension Seed.WrappedValueWrapper where Model: ObservableValue {
+extension Seeded.WrappedValueWrapper where Model: ObservableValue {
     public subscript<Subject>(dynamicMember keyPath: WritableKeyPath<Model, Subject>) -> Subject {
         get { seederWrapper.model[keyPath: keyPath] }
         nonmutating set {
@@ -75,7 +75,7 @@ extension Seed.WrappedValueWrapper where Model: ObservableValue {
 }
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-extension Seed.ProjectedValueWrapper {
+extension Seeded.ProjectedValueWrapper {
     public subscript<Subject>(dynamicMember keyPath: WritableKeyPath<Model, Subject>) -> Binding<Subject> {
         Binding(get: { seederWrapper.model[keyPath: keyPath] },
                 set: {
@@ -87,7 +87,7 @@ extension Seed.ProjectedValueWrapper {
 }
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-extension Seed.ProjectedValueWrapper where Model: ObservableValue {
+extension Seeded.ProjectedValueWrapper where Model: ObservableValue {
     public subscript<Subject>(dynamicMember keyPath: WritableKeyPath<Model, Subject>) -> Binding<Subject> {
         Binding(get: { seederWrapper.model[keyPath: keyPath] },
                 set: {

@@ -9,11 +9,11 @@ import SwiftUI
 import Sede
 
 struct ContentView: View {
-    @Seed<AppModel, Never> var seeder
+    @Seeded<AppModel, Never> var seed
     @Router<GitHubSearchRoute> var router
 
     var body: some View {
-        switch seeder.feature {
+        switch seed.feature {
         case .searchingRepositories:
             router(.searchingRepositories)
         case .searchingUsers:

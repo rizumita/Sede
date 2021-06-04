@@ -4,10 +4,10 @@
 
 import SwiftUI
 
-@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+@available(macOS 10.15, iOS 14.0, tvOS 13.0, watchOS 6.0, *)
 public extension View {
     func seed<S>(_ seeder: S) -> some View where S: Seedable {
-        modifier(seeder).environmentObject(getWrapper(seeder: seeder))
+        modifier(seeder)
     }
 
     func seed<Model, Msg>(model: Model, receive: @escaping (Msg) -> () = { _ in }) -> some View {
