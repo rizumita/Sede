@@ -91,10 +91,10 @@ extension Seeded.ProjectedValueWrapper where Model: ObservableValue {
     public subscript<Subject>(dynamicMember keyPath: WritableKeyPath<Model, Subject>) -> Binding<Subject> {
         Binding(get: { seederWrapper.model[keyPath: keyPath] },
                 set: {
-                    seederWrapper.keyPathWillChange(keyPath, in: Model.published)
                     var model = seederWrapper.model
                     model[keyPath: keyPath] = $0
                     seederWrapper.model = model
+                    seederWrapper.update()
                 })
     }
 }

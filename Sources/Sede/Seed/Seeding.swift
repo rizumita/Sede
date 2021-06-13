@@ -76,6 +76,17 @@ extension Seeding.Wrapper {
             seederWrapper?.model[keyPath: keyPath] = newValue
         }
     }
+
+    public subscript<Subject>(dynamicMember keyPath: WritableKeyPath<Model, Subject>) -> Subject where Subject: Equatable {
+        get {
+            value[keyPath: keyPath]
+        }
+        set {
+            guard value[keyPath: keyPath] != newValue else { return }
+            value[keyPath: keyPath] = newValue
+            seederWrapper?.model[keyPath: keyPath] = newValue
+        }
+    }
 }
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -90,4 +101,14 @@ extension Seeding.Wrapper where Model: ObservableValue {
         }
     }
 
+    public subscript<Subject>(dynamicMember keyPath: WritableKeyPath<Model, Subject>) -> Subject where Subject: Equatable {
+        get {
+            value[keyPath: keyPath]
+        }
+        set {
+            guard value[keyPath: keyPath] != newValue else { return }
+            seederWrapper?.keyPathWillChange(keyPath, in: Model.published)
+            value[keyPath: keyPath] = newValue
+        }
+    }
 }
