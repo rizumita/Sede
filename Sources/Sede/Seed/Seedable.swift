@@ -62,28 +62,8 @@ public extension Seedable where Msg == Never {
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension Seedable {
     func body(content: Content) -> some View {
-        content.environmentObject(getWrapper(seeder: self))
+        let seederWrapper = seed.seederWrapper ?? SeederWrapper(seeder: self)
+        seed.seederWrapper = seederWrapper
+        return content.environmentObject(seederWrapper)
     }
-}
-
-private final class WeakRef {
-    weak var value: AnyObject?
-}
-
-private var cachedWrappers = [AnyHashable : WeakRef]()
-
-@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-func getWrapper<S>(seeder: S) -> SeederWrapper<S.Model, S.Msg> where S: Seedable {
-    if let ref = cachedWrappers[seeder] {
-        if let instance = ref.value as? SeederWrapper<S.Model, S.Msg> {
-            instance.update(seeder: seeder)
-            return instance
-        }
-    }
-
-    let newInstance = SeederWrapper(seeder: seeder)
-    let ref = WeakRef()
-    ref.value = newInstance
-    cachedWrappers[seeder] = ref
-    return newInstance
 }

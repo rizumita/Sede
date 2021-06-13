@@ -26,7 +26,7 @@ public struct Seeding<Model, Msg>: DynamicProperty {
 
     @dynamicMemberLookup
     public class Wrapper {
-        private var _value: Model?
+        var _value: Model?
         var value: Model {
             get {
                 guard let value = _value else { fatalError("You should call initialize function before using seed") }

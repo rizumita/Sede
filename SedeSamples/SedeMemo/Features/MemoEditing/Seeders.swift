@@ -10,7 +10,6 @@ struct MemoEditorViewSeeder: Seedable {
     @Seeding<MemoEditorView.Model, MemoEditorView.Msg> var seed
 
     @Environment(\.memoStore) var memoStore
-    var observedObjects: some ObservableObject { memoStore }
 
     func initialize() {
         print(String(describing: Self.self) + "." + #function)
@@ -46,6 +45,7 @@ struct MemoEditorViewSeeder: Seedable {
 
 struct MemoSelectorSeeder: Seedable {
     @Seeding<[Memo], MemoSelectorMsg> var seed
+    @Seeded<MemoEditorView.Model, MemoEditorView.Msg> var editorSeed
 
     @Environment(\.memoStore) var memoStore
     var observedObjects: some ObservableObject { memoStore }
@@ -65,6 +65,7 @@ struct MemoSelectorSeeder: Seedable {
 
         case .select(let id):
             memoStore.selectedMemo = memoStore.memos.first { $0.id == id }
+            editorSeed(.update)
         }
     }
 }

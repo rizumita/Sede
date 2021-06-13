@@ -38,7 +38,9 @@ final public class SeederWrapper<Model, Msg>: ObservableObject {
                 .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] _ in self?.update() })
                 .store(in: &self.cancellables)
 
-            seeder.initialize()
+            if seeder.seed._value == nil {
+                seeder.initialize()
+            }
 
             self._initialize = .none
         }
