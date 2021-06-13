@@ -74,15 +74,16 @@ private var cachedWrappers = [AnyHashable : WeakRef]()
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 func getWrapper<S>(seeder: S) -> SeederWrapper<S.Model, S.Msg> where S: Seedable {
-    let cachedInstance = cachedWrappers[seeder]?.value
-    if let cachedInstance = cachedInstance as? SeederWrapper<S.Model, S.Msg> {
-        cachedInstance.update(seeder: seeder)
-        return cachedInstance
-    } else {
-        let newInstance = SeederWrapper(seeder: seeder)
-        let ref = WeakRef()
-        ref.value = newInstance
-        cachedWrappers[seeder] = ref
-        return newInstance
+    if let ref = cachedWrappers[seeder] {
+        if let instance = ref.value as? SeederWrapper<S.Model, S.Msg> {
+            instance.update(seeder: seeder)
+            return instance
+        }
     }
+
+    let newInstance = SeederWrapper(seeder: seeder)
+    let ref = WeakRef()
+    ref.value = newInstance
+    cachedWrappers[seeder] = ref
+    return newInstance
 }
