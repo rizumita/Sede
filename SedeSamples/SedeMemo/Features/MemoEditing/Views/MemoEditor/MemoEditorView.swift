@@ -48,11 +48,12 @@ extension MemoEditorView {
         var id: UUID?
         var content: String
         var memosButtonEnabled: Bool
-        var canSave: Bool { !content.isEmpty }
+        var canSave: Bool = false
         var showsMemoSelector = false
 
         static var published: [PartialKeyPath<Model>] {
             \Model.content
+            \Model.canSave
             \Model.memosButtonEnabled
             \Model.showsMemoSelector
         }

@@ -23,7 +23,8 @@ struct MemoEditorViewSeeder: Seedable {
     }
 
     func update() {
-        seed(.update)
+        seed.canSave = !seed.content.isEmpty
+        seed.memosButtonEnabled = !memoStore.memos.isEmpty
     }
 
     func receive(msg: MemoEditorView.Msg) {
@@ -31,12 +32,14 @@ struct MemoEditorViewSeeder: Seedable {
         case .update:
             seed.id = memoStore.selectedMemo?.id
             seed.content = memoStore.selectedMemo?.content ?? ""
+            seed.canSave = !seed.content.isEmpty
             seed.memosButtonEnabled = !memoStore.memos.isEmpty
 
         case .save(let id, let content):
             let memo = Memo(id: id ?? UUID(), content: content)
             memoStore.insert(memo: memo)
             memoStore.selectedMemo = .none
+            seed(.update)
         }
     }
 }
