@@ -45,20 +45,16 @@ final public class SeederWrapper<Model, Msg>: ObservableObject {
             self._initialize = .none
         }
 
-        update(seeder: seeder)
-    }
-
-    init(model: Model, receive: @escaping (Msg) -> () = { _ in }) {
-        _getModel = { model }
-        _receive = receive
-    }
-
-    func update<S>(seeder: S) where S: Seedable, S.Model == Model, S.Msg == Msg {
         _getModel = { seeder.seed.value }
         _setModel = { seeder.seed.value = $0 }
         _update = seeder.update
         _receive = seeder.receive(msg:)
         _objectWillChange = { seeder.observedObjects.objectWillChange.toVoidNever().eraseToAnyPublisher() }
+    }
+
+    init(model: Model, receive: @escaping (Msg) -> () = { _ in }) {
+        _getModel = { model }
+        _receive = receive
     }
 
     func keyPathWillChange(_ keyPath: PartialKeyPath<Model>, in publishedKeyPaths: [PartialKeyPath<Model>]) {
